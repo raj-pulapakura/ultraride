@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  cache:
+    image: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - "cacheVol:/data"
+  server:
+    build: ./server
+    ports:
+      - "4000:80"
+    volumes:
+      - "./server:/app"
+      - "./app/node_modules"
+      - "./app/dist"
+    env_file:
+      - "./env/server.env"
+  db:
+    image: mysql
+    ports: 
+      - "3307:3306"
+    env_file: "./env/db.env"
+volumes:
+  cacheVol:
