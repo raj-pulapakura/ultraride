@@ -1,0 +1,10 @@
+query Product($productIdOrName: ID!) {
+  product(productIdOrName: $productIdOrName) {
+    id
+    name
+    description
+    price
+    category
+    imageUrl
+  }
+}

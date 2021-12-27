@@ -1,7 +1,6 @@
 import { Field, Float, ID, Int, ObjectType } from "type-graphql";
 import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 import { BaseModel } from "../objects/BaseModel";
-import { Category } from "./Category";
 import { Purchase } from "./Purchase";
 
 @Entity()
@@ -11,7 +10,7 @@ export class Product extends BaseModel {
   @Field(() => String)
   name!: string;
 
-  @Column({ type: "varchar" })
+  @Column({ type: "text" })
   @Field(() => String)
   description!: string;
 
@@ -20,11 +19,12 @@ export class Product extends BaseModel {
   price!: number;
 
   @Column({ type: "varchar" })
-  @Field(() => ID)
-  categoryId!: string;
+  @Field(() => String)
+  category!: string;
 
-  @ManyToOne(() => Category, (category) => category.products)
-  category!: Category;
+  @Column({ type: "varchar" })
+  @Field(() => String)
+  imageUrl!: string;
 
   @OneToMany(() => Purchase, (purchase) => purchase.product)
   purchases!: Purchase[];

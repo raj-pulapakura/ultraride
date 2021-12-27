@@ -21,5 +21,8 @@ services:
     ports: 
       - "3307:3306"
     env_file: "./env/db.env"
+    volumes:
+      - dbVol:/var/lib/mysql
 volumes:
   cacheVol:
+  dbVol:

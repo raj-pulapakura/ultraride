@@ -74,4 +74,14 @@ export class AccountResolver {
       account: newAccount,
     };
   }
+
+  @Mutation(() => AccountResponse)
+  async login(): Promise<AccountResponse | null> {
+    return null;
+  }
+
+  @Mutation(() => AccountResponse)
+  async adminLogin(): Promise<AccountResponse | null> {
+    return null;
+  }
 }

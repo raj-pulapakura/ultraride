@@ -11,6 +11,9 @@ export class ProductInput {
   @Field(() => Float)
   price!: number;
 
-  @Field(() => ID)
-  categoryId!: string;
+  @Field(() => String)
+  category!: string;
+
+  @Field(() => String)
+  imageUrl!: string;
 }

@@ -1,8 +1,6 @@
 import { Arg, Query, Resolver, ID, Mutation } from "type-graphql";
 import { Product } from "../entities/Product";
 import { ProductResponse } from "../objects/Product/ProductResponse";
-import { DummyResponse } from "../objects/DummyResponse";
-import { hash } from "argon2";
 import { ProductInput } from "../objects/Product/ProductInput";
 
 @Resolver()
@@ -32,7 +30,7 @@ export class ProductResolver {
     @Arg("input", () => ProductInput)
     createProductInput: ProductInput
   ): Promise<ProductResponse> {
-    const { name, description, price, categoryId } = createProductInput;
+    const { name, description, price, category, imageUrl } = createProductInput;
 
     const productAlreadyExists = await Product.findOne({ where: { name } });
     if (productAlreadyExists) {
@@ -49,17 +47,28 @@ export class ProductResolver {
       name,
       description,
       price,
-      categoryId,
+      category,
+      imageUrl,
     }).save();
     return {
       product: newProduct,
     };
   }
 
-  // @Mutation(() => ProductResponse)
-  // async deleteProduct(
-  //   @Arg("productIdOrName", () => String) productIdOrName: string
-  // ): Promise<ProductResponse> {
-  //   const product = await Product.delete({ id: productIdOrName });
-  // }
+  @Mutation(() => Boolean)
+  async deleteProduct(
+    @Arg("productIdOrName", () => String) productIdOrName: string
+  ): Promise<Boolean> {
+    try {
+      await Product.delete({ id: productIdOrName }); // throws error if cannot delete
+      return true;
+    } catch (e) {
+      try {
+        await Product.delete({ name: productIdOrName });
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+  }
 }

@@ -11,9 +11,8 @@ import { sessionCookieConfig } from "./config/sessionCookie";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { AccountResolver } from "./resolvers/AccountResolver";
-import { CategoryResolver } from "./resolvers/CategoryResolver";
 import { ProductResolver } from "./resolvers/ProductResolver";
-import { PurchaseResolver } from "./resolvers/PurchaseResponse";
+import { PurchaseResolver } from "./resolvers/PurchaseResolver";
 
 const main = async () => {
   console.log("Starting server...");
@@ -40,12 +39,7 @@ const main = async () => {
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
       validate: false,
-      resolvers: [
-        AccountResolver,
-        CategoryResolver,
-        ProductResolver,
-        PurchaseResolver,
-      ],
+      resolvers: [AccountResolver, ProductResolver, PurchaseResolver],
     }),
     context: ({ req, res }) => ({ req, res, redis: redisClient }),
   });
