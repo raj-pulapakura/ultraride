@@ -1,0 +1,16 @@
+mutation CreatePurchase($input: PurchaseInput!) {
+  createPurchase(input: $input) {
+    purchase {
+      accountId
+      productId
+      quantity
+      price
+      total
+    }
+    error {
+      field
+      message
+      ufm
+    }
+  }
+}

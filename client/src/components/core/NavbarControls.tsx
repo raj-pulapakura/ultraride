@@ -2,9 +2,8 @@ import React from "react";
 import { IconButton, Typography } from "@mui/material";
 import { Flex } from "../helper/Flex";
 import { Menu, ShoppingCart } from "@mui/icons-material";
-import { makeStyles } from "@mui/styles";
 import { useDispatch } from "react-redux";
-import { setMenuOpen } from "../../store/design/designActions";
+import { setMenuOpen } from "../../store/menu/menuActions";
 import { useNavigate } from "react-router-dom";
 import { useNavbarControlsStyles } from "./NavbarControls.styles";
 

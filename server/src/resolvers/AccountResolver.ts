@@ -2,9 +2,11 @@ import { Arg, Query, Resolver, ID, Mutation, Ctx } from "type-graphql";
 import { Account } from "../entities/Account";
 import { AccountResponse } from "../objects/Account/AccountResponse";
 import { DummyResponse } from "../objects/DummyResponse";
-import { hash } from "argon2";
+import { hash, verify } from "argon2";
 import { AccountInput } from "../objects/Account/AccountInput";
 import { Context } from "../types";
+import { AccountLoginInput } from "../objects/Account/AccountLoginInput";
+import { AUTH_COOKIE } from "../constants";
 
 @Resolver()
 export class AccountResolver {
@@ -89,9 +91,46 @@ export class AccountResolver {
     return { account };
   }
 
+  @Mutation(() => Boolean)
+  logout(@Ctx() { res }: Context): Boolean {
+    try {
+      res.clearCookie(AUTH_COOKIE);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
   @Mutation(() => AccountResponse)
-  async login(): Promise<AccountResponse | null> {
-    return null;
+  async login(
+    @Arg("input", () => AccountLoginInput) accountLoginInput: AccountLoginInput,
+    @Ctx() { req }: Context
+  ): Promise<AccountResponse> {
+    const { email, password } = accountLoginInput;
+    const account = await Account.findOne({ where: { email } });
+    if (!account) {
+      return {
+        error: {
+          field: "email",
+          message: "a user with that email does not exists",
+          ufm: "Incorrect email. Please try again.",
+        },
+      };
+    }
+
+    const validPassword = await verify(account.password, password);
+    if (!validPassword) {
+      return {
+        error: {
+          field: "password",
+          message: "a user with that password does not exist",
+          ufm: "Incorrect password. Please try again",
+        },
+      };
+    }
+
+    req.session.accountId = account.id;
+    return { account };
   }
 
   @Mutation(() => AccountResponse)

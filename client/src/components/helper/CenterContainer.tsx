@@ -1,5 +1,4 @@
 import { Box, BoxProps } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 import React from "react";
 import { useCenterContainerStyles } from "./CenterContainer.styles";
 

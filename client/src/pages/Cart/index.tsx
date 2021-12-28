@@ -4,6 +4,11 @@ import { StoreState } from "../../store";
 import { CartItemList } from "./components/CartItemList";
 import { Button, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import { EmptyCart } from "./components/EmptyCart";
+import { useMeQuery, useProductQuery } from "../../graphql/generated";
+import { graphqlClient } from "../../graphql/client";
+import { useQueries } from "react-query";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
   continueToCheckoutButton: {
@@ -15,12 +20,19 @@ interface CartPageProps {}
 
 export const CartPage: React.FC<CartPageProps> = ({}) => {
   const classes = useStyles();
+  const navigate = useNavigate();
 
   const cartItems = useSelector<StoreState>(
     (state) => state.cart.items
   ) as StoreState["cart"]["items"];
 
-  // const grandTotal = cartItems.red2uce((acc, curr) => acc.)
+  const { data: meData } = useMeQuery(graphqlClient);
+
+  const onContinueToCheckoutClick = () => {
+    if (!meData?.me?.account) {
+      navigate("/register?next=cart");
+    }
+  };
 
   return (
     <>
@@ -31,12 +43,13 @@ export const CartPage: React.FC<CartPageProps> = ({}) => {
             variant="outlined"
             fullWidth
             className={classes.continueToCheckoutButton}
+            onClick={onContinueToCheckoutClick}
           >
             Continue to Checkout
           </Button>
         </>
       ) : (
-        <Typography variant="h5">You have no products in your cart.</Typography>
+        <EmptyCart />
       )}
     </>
   );

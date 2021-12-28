@@ -40,7 +40,6 @@ export const MainForm: React.FC<MainFormProps> = ({
           color="primary"
           marginBottom="1.25rem"
           fontSize="clamp(2rem, 30px, 20rem)"
-          textAlign="center"
         >
           {title}
         </Typography>

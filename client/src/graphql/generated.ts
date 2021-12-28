@@ -39,6 +39,11 @@ export type AccountInput = {
   role: Scalars['String'];
 };
 
+export type AccountLoginInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
 export type AccountResponse = {
   __typename?: 'AccountResponse';
   account?: Maybe<Account>;
@@ -65,6 +70,7 @@ export type Mutation = {
   createPurchase?: Maybe<PurchaseResponse>;
   deleteProduct: Scalars['Boolean'];
   login: AccountResponse;
+  logout: Scalars['Boolean'];
 };
 
 
@@ -85,6 +91,11 @@ export type MutationCreatePurchaseArgs = {
 
 export type MutationDeleteProductArgs = {
   productIdOrName: Scalars['String'];
+};
+
+
+export type MutationLoginArgs = {
+  input: AccountLoginInput;
 };
 
 export type Product = {
@@ -173,6 +184,25 @@ export type CreateAccountMutationVariables = Exact<{
 
 export type CreateAccountMutation = { __typename?: 'Mutation', createAccount?: { __typename?: 'AccountResponse', account?: { __typename?: 'Account', id: string, firstName: string, lastName: string, email: string, password: string, role: string } | null | undefined, error?: { __typename?: 'FieldError', field: string, message: string, ufm: string } | null | undefined } | null | undefined };
 
+export type CreatePurchaseMutationVariables = Exact<{
+  input: PurchaseInput;
+}>;
+
+
+export type CreatePurchaseMutation = { __typename?: 'Mutation', createPurchase?: { __typename?: 'PurchaseResponse', purchase?: { __typename?: 'Purchase', accountId: string, productId: string, quantity: number, price: number, total: number } | null | undefined, error?: { __typename?: 'FieldError', field: string, message: string, ufm: string } | null | undefined } | null | undefined };
+
+export type LoginMutationVariables = Exact<{
+  input: AccountLoginInput;
+}>;
+
+
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'AccountResponse', account?: { __typename?: 'Account', id: string, firstName: string, lastName: string, email: string } | null | undefined, error?: { __typename?: 'FieldError', field: string, message: string, ufm: string } | null | undefined } };
+
+export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LogoutMutation = { __typename?: 'Mutation', logout: boolean };
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -221,6 +251,85 @@ export const useCreateAccountMutation = <
     useMutation<CreateAccountMutation, TError, CreateAccountMutationVariables, TContext>(
       'CreateAccount',
       (variables?: CreateAccountMutationVariables) => fetcher<CreateAccountMutation, CreateAccountMutationVariables>(client, CreateAccountDocument, variables, headers)(),
+      options
+    );
+export const CreatePurchaseDocument = `
+    mutation CreatePurchase($input: PurchaseInput!) {
+  createPurchase(input: $input) {
+    purchase {
+      accountId
+      productId
+      quantity
+      price
+      total
+    }
+    error {
+      field
+      message
+      ufm
+    }
+  }
+}
+    `;
+export const useCreatePurchaseMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreatePurchaseMutation, TError, CreatePurchaseMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreatePurchaseMutation, TError, CreatePurchaseMutationVariables, TContext>(
+      'CreatePurchase',
+      (variables?: CreatePurchaseMutationVariables) => fetcher<CreatePurchaseMutation, CreatePurchaseMutationVariables>(client, CreatePurchaseDocument, variables, headers)(),
+      options
+    );
+export const LoginDocument = `
+    mutation Login($input: AccountLoginInput!) {
+  login(input: $input) {
+    account {
+      id
+      firstName
+      lastName
+      email
+    }
+    error {
+      field
+      message
+      ufm
+    }
+  }
+}
+    `;
+export const useLoginMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<LoginMutation, TError, LoginMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
+      'Login',
+      (variables?: LoginMutationVariables) => fetcher<LoginMutation, LoginMutationVariables>(client, LoginDocument, variables, headers)(),
+      options
+    );
+export const LogoutDocument = `
+    mutation Logout {
+  logout
+}
+    `;
+export const useLogoutMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<LogoutMutation, TError, LogoutMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<LogoutMutation, TError, LogoutMutationVariables, TContext>(
+      'Logout',
+      (variables?: LogoutMutationVariables) => fetcher<LogoutMutation, LogoutMutationVariables>(client, LogoutDocument, variables, headers)(),
       options
     );
 export const MeDocument = `

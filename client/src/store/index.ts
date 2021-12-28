@@ -1,18 +1,18 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { designReducer } from "./design/designReducer";
-import { DesignState } from "./design/designTypes";
+import { menuReducer } from "./menu/menuReducer";
+import { MenuState } from "./menu/menuTypes";
 import { CartState } from "./cart/cartTypes";
 import { cartReducer } from "./cart/cartReducer";
 
 export interface StoreState {
-  design: DesignState;
+  menu: MenuState;
   cart: CartState;
 }
 
 const rootReducer = combineReducers({
-  design: designReducer,
+  menu: menuReducer,
   cart: cartReducer,
 });
 

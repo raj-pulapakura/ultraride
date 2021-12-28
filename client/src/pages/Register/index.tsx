@@ -1,5 +1,6 @@
+import { Typography } from "@mui/material";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { MainForm } from "../../components/helper/MainForm";
 import { graphqlClient } from "../../graphql/client";
 import { useCreateAccountMutation } from "../../graphql/generated";
@@ -8,6 +9,9 @@ interface RegisterPageProps {}
 
 export const RegisterPage: React.FC<RegisterPageProps> = ({}) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+
   const [registerFormState, setRegisterFormState] = useState({
     firstName: "",
     lastName: "",
@@ -43,6 +47,11 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({}) => {
         ...registerFormErrors,
         [data.createAccount.error.field]: data.createAccount.error.ufm,
       });
+    }
+
+    const next = query.get("next");
+    if (next) {
+      return navigate("/" + next);
     }
 
     navigate("/");
@@ -95,6 +104,10 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({}) => {
             }),
         },
       ]}
-    ></MainForm>
+    >
+      <Typography variant="subtitle2" marginTop="1rem">
+        Already have an account? <Link to="/login">Sign in</Link>
+      </Typography>
+    </MainForm>
   );
 };

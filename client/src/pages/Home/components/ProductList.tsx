@@ -10,7 +10,7 @@ export const ProductList: React.FC<ProductListProps> = ({ products }) => {
   return (
     <>
       {products.map((product) => (
-        <SingleProduct product={product} />
+        <SingleProduct key={product.id} product={product} />
       ))}
     </>
   );

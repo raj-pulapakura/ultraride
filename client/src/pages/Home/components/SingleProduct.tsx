@@ -45,11 +45,7 @@ export const SingleProduct: React.FC<SingleProductProps> = ({ product }) => {
   };
 
   return (
-    <Box
-      className={classes.product}
-      key={product.name}
-      onClick={onProductBoxClick}
-    >
+    <Box className={classes.product} onClick={onProductBoxClick}>
       <img className={classes.productImage} src={product.imageUrl} />
       <Box className={classes.productDetails}>
         <Typography variant="subtitle1" fontWeight="bold">
