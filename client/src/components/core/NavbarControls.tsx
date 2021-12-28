@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { setMenuOpen } from "../../store/menu/menuActions";
 import { useNavigate } from "react-router-dom";
 import { useNavbarControlsStyles } from "./NavbarControls.styles";
+import { brandName } from "../../App";
 
 interface NavbarControlsProps {}
 
@@ -29,7 +30,7 @@ export const NavbarControls: React.FC<NavbarControlsProps> = ({}) => {
         <Menu htmlColor="white" />
       </IconButton>
       <Typography className={classes.brand} variant="h5" fontWeight="bold">
-        Ecom-Express
+        {brandName.toUpperCase()}
       </Typography>
       <IconButton onClick={onCartButtonClick}>
         <ShoppingCart htmlColor="white" />

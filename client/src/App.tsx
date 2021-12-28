@@ -7,6 +7,8 @@ import { theme } from "./theme";
 import { AppRouter } from "./AppRouter";
 import { store } from "./store";
 
+export const brandName = "ultraride";
+
 function App() {
   const queryClient = new QueryClient();
 

@@ -11,7 +11,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ ...props }) => {
     <Box {...props} className={classes.searchBar}>
       <input
         className={classes.searchBarInput}
-        placeholder="Search for you fav products..."
+        placeholder="Search for you fav shoes..."
       />
       <IconButton>
         <Search htmlColor="black" />

@@ -18,6 +18,7 @@ import { graphqlClient } from "../../graphql/client";
 import { useMenuStyles } from "./Menu.styles";
 import { useNavigate } from "react-router-dom";
 import { MenuLink } from "../../store/menu/menuTypes";
+import { brandName } from "../../App";
 
 interface MenuProps {}
 
@@ -84,7 +85,9 @@ export const Menu: React.FC<MenuProps> = ({}) => {
             </>
           ) : (
             <>
-              <Typography variant="h6">Welcome to EcomExpress</Typography>
+              <Typography variant="h6">
+                Welcome to {brandName.toUpperCase()}
+              </Typography>
             </>
           )}
         </Box>
