@@ -1,9 +1,10 @@
-import { Arg, Query, Resolver, ID, Mutation } from "type-graphql";
+import { Arg, Query, Resolver, ID, Mutation, Ctx } from "type-graphql";
 import { Account } from "../entities/Account";
 import { AccountResponse } from "../objects/Account/AccountResponse";
 import { DummyResponse } from "../objects/DummyResponse";
 import { hash } from "argon2";
 import { AccountInput } from "../objects/Account/AccountInput";
+import { Context } from "../types";
 
 @Resolver()
 export class AccountResolver {
@@ -36,6 +37,7 @@ export class AccountResolver {
 
   @Mutation(() => AccountResponse, { nullable: true })
   async createAccount(
+    @Ctx() { req }: Context,
     @Arg("input", () => AccountInput)
     createAccountInput: AccountInput
   ): Promise<AccountResponse> {
@@ -70,9 +72,21 @@ export class AccountResolver {
       password: hashedPassword,
       role,
     }).save();
+
+    req.session.accountId = newAccount.id;
+
     return {
       account: newAccount,
     };
+  }
+
+  @Query(() => AccountResponse, { nullable: true })
+  async me(@Ctx() { req }: Context): Promise<AccountResponse | null> {
+    const { accountId } = req.session;
+    if (!accountId) return null;
+    const account = await Account.findOne(accountId);
+    if (!account) return null;
+    return { account };
   }
 
   @Mutation(() => AccountResponse)

@@ -1,6 +1,6 @@
 import { GraphQLClient } from 'graphql-request';
 import { RequestInit } from 'graphql-request/dist/types.dom';
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useMutation, UseMutationOptions, useQuery, UseQueryOptions } from 'react-query';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -143,6 +143,7 @@ export type Query = {
   __typename?: 'Query';
   account?: Maybe<Account>;
   accounts: Array<Account>;
+  me?: Maybe<AccountResponse>;
   product?: Maybe<Product>;
   products: Array<Product>;
   purchase?: Maybe<Purchase>;
@@ -165,6 +166,18 @@ export type QueryPurchaseArgs = {
   purchaseId: Scalars['ID'];
 };
 
+export type CreateAccountMutationVariables = Exact<{
+  input: AccountInput;
+}>;
+
+
+export type CreateAccountMutation = { __typename?: 'Mutation', createAccount?: { __typename?: 'AccountResponse', account?: { __typename?: 'Account', id: string, firstName: string, lastName: string, email: string, password: string, role: string } | null | undefined, error?: { __typename?: 'FieldError', field: string, message: string, ufm: string } | null | undefined } | null | undefined };
+
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'AccountResponse', account?: { __typename?: 'Account', id: string, firstName: string, lastName: string, email: string } | null | undefined, error?: { __typename?: 'FieldError', field: string, message: string, ufm: string } | null | undefined } | null | undefined };
+
 export type ProductQueryVariables = Exact<{
   productIdOrName: Scalars['ID'];
 }>;
@@ -178,6 +191,69 @@ export type ProductsQueryVariables = Exact<{ [key: string]: never; }>;
 export type ProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, name: string, description: string, price: number, category: string, imageUrl: string }> };
 
 
+export const CreateAccountDocument = `
+    mutation CreateAccount($input: AccountInput!) {
+  createAccount(input: $input) {
+    account {
+      id
+      firstName
+      lastName
+      email
+      password
+      role
+    }
+    error {
+      field
+      message
+      ufm
+    }
+  }
+}
+    `;
+export const useCreateAccountMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateAccountMutation, TError, CreateAccountMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateAccountMutation, TError, CreateAccountMutationVariables, TContext>(
+      'CreateAccount',
+      (variables?: CreateAccountMutationVariables) => fetcher<CreateAccountMutation, CreateAccountMutationVariables>(client, CreateAccountDocument, variables, headers)(),
+      options
+    );
+export const MeDocument = `
+    query Me {
+  me {
+    account {
+      id
+      firstName
+      lastName
+      email
+    }
+    error {
+      field
+      message
+      ufm
+    }
+  }
+}
+    `;
+export const useMeQuery = <
+      TData = MeQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: MeQueryVariables,
+      options?: UseQueryOptions<MeQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<MeQuery, TError, TData>(
+      variables === undefined ? ['Me'] : ['Me', variables],
+      fetcher<MeQuery, MeQueryVariables>(client, MeDocument, variables, headers),
+      options
+    );
 export const ProductDocument = `
     query Product($productIdOrName: ID!) {
   product(productIdOrName: $productIdOrName) {

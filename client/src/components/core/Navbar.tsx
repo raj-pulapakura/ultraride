@@ -1,27 +1,13 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import { theme } from "../../theme";
+import { Box } from "@mui/material";
 import { NavbarControls } from "./NavbarControls";
 import { SearchBar } from "./SearchBar";
-
-const useStyles = makeStyles({
-  navbar: {
-    background: theme.palette.primary.main,
-    padding: "1rem 2rem",
-  },
-  navbarInner: {
-    // background: "white",
-  },
-  brand: {
-    color: "white",
-  },
-});
+import { useNavbarStyles } from "./Navbar.styles";
 
 interface NavBarProps {}
 
 export const NavBar: React.FC<NavBarProps> = ({}) => {
-  const classes = useStyles();
+  const classes = useNavbarStyles();
 
   return (
     <Box className={classes.navbar}>

@@ -6,20 +6,12 @@ import { makeStyles } from "@mui/styles";
 import { useDispatch } from "react-redux";
 import { setMenuOpen } from "../../store/design/designActions";
 import { useNavigate } from "react-router-dom";
-
-const useStyles = makeStyles({
-  controls: {},
-  brand: {
-    color: "white",
-    textTransform: "uppercase",
-    letterSpacing: 3,
-  },
-});
+import { useNavbarControlsStyles } from "./NavbarControls.styles";
 
 interface NavbarControlsProps {}
 
 export const NavbarControls: React.FC<NavbarControlsProps> = ({}) => {
-  const classes = useStyles();
+  const classes = useNavbarControlsStyles();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
