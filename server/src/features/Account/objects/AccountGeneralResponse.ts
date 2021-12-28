@@ -1,9 +1,9 @@
 import { Field, ObjectType } from "type-graphql";
-import { Account } from "../../entities/Account";
-import { FieldError } from "../FieldError";
+import { Account } from "../Account";
+import { FieldError } from "../../../objects/FieldError";
 
 @ObjectType()
-export class AccountResponse {
+export class AccountGeneralResponse {
   @Field(() => Account, { nullable: true })
   account?: Account;
 

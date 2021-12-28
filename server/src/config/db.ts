@@ -1,8 +1,8 @@
 import { ConnectionOptions } from "typeorm";
 import { env } from "../constants";
-import { Account } from "../entities/Account";
-import { Product } from "../entities/Product";
-import { Purchase } from "../entities/Purchase";
+import { Account } from "../features/Account/Account";
+import { Product } from "../features/Product/Product";
+import { Purchase } from "../features/Purchase/Purchase";
 
 export const dbConfig: ConnectionOptions = {
   username: env.DB_USERNAME,

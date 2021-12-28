@@ -31,12 +31,10 @@ export type Account = {
   updatedAt: Scalars['String'];
 };
 
-export type AccountInput = {
-  email: Scalars['String'];
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
-  password: Scalars['String'];
-  role: Scalars['String'];
+export type AccountGeneralResponse = {
+  __typename?: 'AccountGeneralResponse';
+  account?: Maybe<Account>;
+  error?: Maybe<FieldError>;
 };
 
 export type AccountLoginInput = {
@@ -44,15 +42,28 @@ export type AccountLoginInput = {
   password: Scalars['String'];
 };
 
-export type AccountResponse = {
-  __typename?: 'AccountResponse';
-  account?: Maybe<Account>;
-  error?: Maybe<FieldError>;
+export type AccountRegisterInput = {
+  email: Scalars['String'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  password: Scalars['String'];
+  role: Scalars['String'];
 };
 
-export type DummyResponse = {
-  __typename?: 'DummyResponse';
-  message: Scalars['String'];
+export type CreateProductInput = {
+  category: Scalars['String'];
+  description: Scalars['String'];
+  imageUrl: Scalars['String'];
+  name: Scalars['String'];
+  price: Scalars['Float'];
+};
+
+export type CreatePurchaseInput = {
+  accountId: Scalars['ID'];
+  price: Scalars['Float'];
+  productId: Scalars['ID'];
+  quantity: Scalars['Int'];
+  total: Scalars['Float'];
 };
 
 export type FieldError = {
@@ -64,28 +75,24 @@ export type FieldError = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  adminLogin: AccountResponse;
-  createAccount?: Maybe<AccountResponse>;
-  createProduct?: Maybe<ProductResponse>;
-  createPurchase?: Maybe<PurchaseResponse>;
+  adminLogin: AccountGeneralResponse;
+  createProduct?: Maybe<ProductGeneralResponse>;
+  createPurchase?: Maybe<PurchaseGeneralResponse>;
   deleteProduct: Scalars['Boolean'];
-  login: AccountResponse;
+  login: AccountGeneralResponse;
   logout: Scalars['Boolean'];
-};
-
-
-export type MutationCreateAccountArgs = {
-  input: AccountInput;
+  purchaseProducts: Scalars['Boolean'];
+  register?: Maybe<AccountGeneralResponse>;
 };
 
 
 export type MutationCreateProductArgs = {
-  input: ProductInput;
+  input: CreateProductInput;
 };
 
 
 export type MutationCreatePurchaseArgs = {
-  input: PurchaseInput;
+  input: CreatePurchaseInput;
 };
 
 
@@ -96,6 +103,16 @@ export type MutationDeleteProductArgs = {
 
 export type MutationLoginArgs = {
   input: AccountLoginInput;
+};
+
+
+export type MutationPurchaseProductsArgs = {
+  input: PurchaseProductsInput;
+};
+
+
+export type MutationRegisterArgs = {
+  input: AccountRegisterInput;
 };
 
 export type Product = {
@@ -110,16 +127,8 @@ export type Product = {
   updatedAt: Scalars['String'];
 };
 
-export type ProductInput = {
-  category: Scalars['String'];
-  description: Scalars['String'];
-  imageUrl: Scalars['String'];
-  name: Scalars['String'];
-  price: Scalars['Float'];
-};
-
-export type ProductResponse = {
-  __typename?: 'ProductResponse';
+export type ProductGeneralResponse = {
+  __typename?: 'ProductGeneralResponse';
   error?: Maybe<FieldError>;
   product?: Maybe<Product>;
 };
@@ -136,154 +145,92 @@ export type Purchase = {
   updatedAt: Scalars['String'];
 };
 
-export type PurchaseInput = {
-  accountId: Scalars['ID'];
-  price: Scalars['Float'];
-  productId: Scalars['ID'];
-  quantity: Scalars['Int'];
-  total: Scalars['Float'];
-};
-
-export type PurchaseResponse = {
-  __typename?: 'PurchaseResponse';
+export type PurchaseGeneralResponse = {
+  __typename?: 'PurchaseGeneralResponse';
   error?: Maybe<FieldError>;
   purchase?: Maybe<Purchase>;
 };
 
+export type PurchaseListingInput = {
+  productId: Scalars['ID'];
+  quantity: Scalars['Int'];
+};
+
+export type PurchaseProductsInput = {
+  accountId: Scalars['ID'];
+  purchaseListings: Array<PurchaseListingInput>;
+};
+
 export type Query = {
   __typename?: 'Query';
-  account?: Maybe<Account>;
-  accounts: Array<Account>;
-  me?: Maybe<AccountResponse>;
-  product?: Maybe<Product>;
-  products: Array<Product>;
-  purchase?: Maybe<Purchase>;
-  purchases: Array<Purchase>;
-  test: DummyResponse;
+  getAccount?: Maybe<Account>;
+  getAccounts: Array<Account>;
+  getMe?: Maybe<AccountGeneralResponse>;
+  getProduct?: Maybe<Product>;
+  getProducts: Array<Product>;
+  getPurchase?: Maybe<Purchase>;
+  getPurchases: Array<Purchase>;
 };
 
 
-export type QueryAccountArgs = {
+export type QueryGetAccountArgs = {
   accountIdOrEmail: Scalars['ID'];
 };
 
 
-export type QueryProductArgs = {
+export type QueryGetProductArgs = {
   productIdOrName: Scalars['ID'];
 };
 
 
-export type QueryPurchaseArgs = {
+export type QueryGetPurchaseArgs = {
   purchaseId: Scalars['ID'];
 };
-
-export type CreateAccountMutationVariables = Exact<{
-  input: AccountInput;
-}>;
-
-
-export type CreateAccountMutation = { __typename?: 'Mutation', createAccount?: { __typename?: 'AccountResponse', account?: { __typename?: 'Account', id: string, firstName: string, lastName: string, email: string, password: string, role: string } | null | undefined, error?: { __typename?: 'FieldError', field: string, message: string, ufm: string } | null | undefined } | null | undefined };
-
-export type CreatePurchaseMutationVariables = Exact<{
-  input: PurchaseInput;
-}>;
-
-
-export type CreatePurchaseMutation = { __typename?: 'Mutation', createPurchase?: { __typename?: 'PurchaseResponse', purchase?: { __typename?: 'Purchase', accountId: string, productId: string, quantity: number, price: number, total: number } | null | undefined, error?: { __typename?: 'FieldError', field: string, message: string, ufm: string } | null | undefined } | null | undefined };
 
 export type LoginMutationVariables = Exact<{
   input: AccountLoginInput;
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'AccountResponse', account?: { __typename?: 'Account', id: string, firstName: string, lastName: string, email: string } | null | undefined, error?: { __typename?: 'FieldError', field: string, message: string, ufm: string } | null | undefined } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'AccountGeneralResponse', account?: { __typename?: 'Account', id: string, firstName: string, lastName: string, email: string } | null | undefined, error?: { __typename?: 'FieldError', field: string, message: string, ufm: string } | null | undefined } };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type LogoutMutation = { __typename?: 'Mutation', logout: boolean };
 
-export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+export type PurchaseProductsMutationVariables = Exact<{
+  input: PurchaseProductsInput;
+}>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'AccountResponse', account?: { __typename?: 'Account', id: string, firstName: string, lastName: string, email: string } | null | undefined, error?: { __typename?: 'FieldError', field: string, message: string, ufm: string } | null | undefined } | null | undefined };
+export type PurchaseProductsMutation = { __typename?: 'Mutation', purchaseProducts: boolean };
 
-export type ProductQueryVariables = Exact<{
+export type RegisterMutationVariables = Exact<{
+  input: AccountRegisterInput;
+}>;
+
+
+export type RegisterMutation = { __typename?: 'Mutation', register?: { __typename?: 'AccountGeneralResponse', account?: { __typename?: 'Account', id: string, firstName: string, lastName: string, email: string, password: string, role: string } | null | undefined, error?: { __typename?: 'FieldError', field: string, message: string, ufm: string } | null | undefined } | null | undefined };
+
+export type GetMeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMeQuery = { __typename?: 'Query', getMe?: { __typename?: 'AccountGeneralResponse', account?: { __typename?: 'Account', id: string, firstName: string, lastName: string, email: string } | null | undefined, error?: { __typename?: 'FieldError', field: string, message: string, ufm: string } | null | undefined } | null | undefined };
+
+export type GetProductQueryVariables = Exact<{
   productIdOrName: Scalars['ID'];
 }>;
 
 
-export type ProductQuery = { __typename?: 'Query', product?: { __typename?: 'Product', id: string, name: string, description: string, price: number, category: string, imageUrl: string } | null | undefined };
+export type GetProductQuery = { __typename?: 'Query', getProduct?: { __typename?: 'Product', id: string, name: string, description: string, price: number, category: string, imageUrl: string } | null | undefined };
 
-export type ProductsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: string, name: string, description: string, price: number, category: string, imageUrl: string }> };
+export type GetProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export const CreateAccountDocument = `
-    mutation CreateAccount($input: AccountInput!) {
-  createAccount(input: $input) {
-    account {
-      id
-      firstName
-      lastName
-      email
-      password
-      role
-    }
-    error {
-      field
-      message
-      ufm
-    }
-  }
-}
-    `;
-export const useCreateAccountMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(
-      client: GraphQLClient,
-      options?: UseMutationOptions<CreateAccountMutation, TError, CreateAccountMutationVariables, TContext>,
-      headers?: RequestInit['headers']
-    ) =>
-    useMutation<CreateAccountMutation, TError, CreateAccountMutationVariables, TContext>(
-      'CreateAccount',
-      (variables?: CreateAccountMutationVariables) => fetcher<CreateAccountMutation, CreateAccountMutationVariables>(client, CreateAccountDocument, variables, headers)(),
-      options
-    );
-export const CreatePurchaseDocument = `
-    mutation CreatePurchase($input: PurchaseInput!) {
-  createPurchase(input: $input) {
-    purchase {
-      accountId
-      productId
-      quantity
-      price
-      total
-    }
-    error {
-      field
-      message
-      ufm
-    }
-  }
-}
-    `;
-export const useCreatePurchaseMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(
-      client: GraphQLClient,
-      options?: UseMutationOptions<CreatePurchaseMutation, TError, CreatePurchaseMutationVariables, TContext>,
-      headers?: RequestInit['headers']
-    ) =>
-    useMutation<CreatePurchaseMutation, TError, CreatePurchaseMutationVariables, TContext>(
-      'CreatePurchase',
-      (variables?: CreatePurchaseMutationVariables) => fetcher<CreatePurchaseMutation, CreatePurchaseMutationVariables>(client, CreatePurchaseDocument, variables, headers)(),
-      options
-    );
+export type GetProductsQuery = { __typename?: 'Query', getProducts: Array<{ __typename?: 'Product', id: string, name: string, description: string, price: number, category: string, imageUrl: string }> };
+
+
 export const LoginDocument = `
     mutation Login($input: AccountLoginInput!) {
   login(input: $input) {
@@ -332,9 +279,59 @@ export const useLogoutMutation = <
       (variables?: LogoutMutationVariables) => fetcher<LogoutMutation, LogoutMutationVariables>(client, LogoutDocument, variables, headers)(),
       options
     );
-export const MeDocument = `
-    query Me {
-  me {
+export const PurchaseProductsDocument = `
+    mutation PurchaseProducts($input: PurchaseProductsInput!) {
+  purchaseProducts(input: $input)
+}
+    `;
+export const usePurchaseProductsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<PurchaseProductsMutation, TError, PurchaseProductsMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<PurchaseProductsMutation, TError, PurchaseProductsMutationVariables, TContext>(
+      'PurchaseProducts',
+      (variables?: PurchaseProductsMutationVariables) => fetcher<PurchaseProductsMutation, PurchaseProductsMutationVariables>(client, PurchaseProductsDocument, variables, headers)(),
+      options
+    );
+export const RegisterDocument = `
+    mutation Register($input: AccountRegisterInput!) {
+  register(input: $input) {
+    account {
+      id
+      firstName
+      lastName
+      email
+      password
+      role
+    }
+    error {
+      field
+      message
+      ufm
+    }
+  }
+}
+    `;
+export const useRegisterMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<RegisterMutation, TError, RegisterMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<RegisterMutation, TError, RegisterMutationVariables, TContext>(
+      'Register',
+      (variables?: RegisterMutationVariables) => fetcher<RegisterMutation, RegisterMutationVariables>(client, RegisterDocument, variables, headers)(),
+      options
+    );
+export const GetMeDocument = `
+    query GetMe {
+  getMe {
     account {
       id
       firstName
@@ -349,23 +346,23 @@ export const MeDocument = `
   }
 }
     `;
-export const useMeQuery = <
-      TData = MeQuery,
+export const useGetMeQuery = <
+      TData = GetMeQuery,
       TError = unknown
     >(
       client: GraphQLClient,
-      variables?: MeQueryVariables,
-      options?: UseQueryOptions<MeQuery, TError, TData>,
+      variables?: GetMeQueryVariables,
+      options?: UseQueryOptions<GetMeQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) =>
-    useQuery<MeQuery, TError, TData>(
-      variables === undefined ? ['Me'] : ['Me', variables],
-      fetcher<MeQuery, MeQueryVariables>(client, MeDocument, variables, headers),
+    useQuery<GetMeQuery, TError, TData>(
+      variables === undefined ? ['GetMe'] : ['GetMe', variables],
+      fetcher<GetMeQuery, GetMeQueryVariables>(client, GetMeDocument, variables, headers),
       options
     );
-export const ProductDocument = `
-    query Product($productIdOrName: ID!) {
-  product(productIdOrName: $productIdOrName) {
+export const GetProductDocument = `
+    query GetProduct($productIdOrName: ID!) {
+  getProduct(productIdOrName: $productIdOrName) {
     id
     name
     description
@@ -375,23 +372,23 @@ export const ProductDocument = `
   }
 }
     `;
-export const useProductQuery = <
-      TData = ProductQuery,
+export const useGetProductQuery = <
+      TData = GetProductQuery,
       TError = unknown
     >(
       client: GraphQLClient,
-      variables: ProductQueryVariables,
-      options?: UseQueryOptions<ProductQuery, TError, TData>,
+      variables: GetProductQueryVariables,
+      options?: UseQueryOptions<GetProductQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) =>
-    useQuery<ProductQuery, TError, TData>(
-      ['Product', variables],
-      fetcher<ProductQuery, ProductQueryVariables>(client, ProductDocument, variables, headers),
+    useQuery<GetProductQuery, TError, TData>(
+      ['GetProduct', variables],
+      fetcher<GetProductQuery, GetProductQueryVariables>(client, GetProductDocument, variables, headers),
       options
     );
-export const ProductsDocument = `
-    query Products {
-  products {
+export const GetProductsDocument = `
+    query GetProducts {
+  getProducts {
     id
     name
     description
@@ -401,17 +398,17 @@ export const ProductsDocument = `
   }
 }
     `;
-export const useProductsQuery = <
-      TData = ProductsQuery,
+export const useGetProductsQuery = <
+      TData = GetProductsQuery,
       TError = unknown
     >(
       client: GraphQLClient,
-      variables?: ProductsQueryVariables,
-      options?: UseQueryOptions<ProductsQuery, TError, TData>,
+      variables?: GetProductsQueryVariables,
+      options?: UseQueryOptions<GetProductsQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) =>
-    useQuery<ProductsQuery, TError, TData>(
-      variables === undefined ? ['Products'] : ['Products', variables],
-      fetcher<ProductsQuery, ProductsQueryVariables>(client, ProductsDocument, variables, headers),
+    useQuery<GetProductsQuery, TError, TData>(
+      variables === undefined ? ['GetProducts'] : ['GetProducts', variables],
+      fetcher<GetProductsQuery, GetProductsQueryVariables>(client, GetProductsDocument, variables, headers),
       options
     );

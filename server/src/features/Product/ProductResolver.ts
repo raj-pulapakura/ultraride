@@ -1,17 +1,17 @@
 import { Arg, Query, Resolver, ID, Mutation } from "type-graphql";
-import { Product } from "../entities/Product";
-import { ProductResponse } from "../objects/Product/ProductResponse";
-import { ProductInput } from "../objects/Product/ProductInput";
+import { Product } from "./Product";
+import { ProductGeneralResponse } from "./objects/ProductGeneralResponse";
+import { CreateProductInput } from "./inputs/CreateProductInput";
 
 @Resolver()
 export class ProductResolver {
   @Query(() => [Product])
-  products(): Promise<Product[]> {
+  getProducts(): Promise<Product[]> {
     return Product.find({});
   }
 
   @Query(() => Product, { nullable: true })
-  async product(
+  async getProduct(
     @Arg("productIdOrName", () => ID) productIdOrName: string
   ): Promise<Product | null> {
     const productById = await Product.findOne(productIdOrName);
@@ -25,11 +25,11 @@ export class ProductResolver {
     return null;
   }
 
-  @Mutation(() => ProductResponse, { nullable: true })
+  @Mutation(() => ProductGeneralResponse, { nullable: true })
   async createProduct(
-    @Arg("input", () => ProductInput)
-    createProductInput: ProductInput
-  ): Promise<ProductResponse> {
+    @Arg("input", () => CreateProductInput)
+    createProductInput: CreateProductInput
+  ): Promise<ProductGeneralResponse> {
     const { name, description, price, category, imageUrl } = createProductInput;
 
     const productAlreadyExists = await Product.findOne({ where: { name } });

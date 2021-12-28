@@ -1,0 +1,10 @@
+query GetProduct($productIdOrName: ID!) {
+  getProduct(productIdOrName: $productIdOrName) {
+    id
+    name
+    description
+    price
+    category
+    imageUrl
+  }
+}

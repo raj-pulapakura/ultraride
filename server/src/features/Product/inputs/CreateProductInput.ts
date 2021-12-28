@@ -1,7 +1,7 @@
 import { Field, Float, ID, InputType } from "type-graphql";
 
 @InputType()
-export class ProductInput {
+export class CreateProductInput {
   @Field(() => String)
   name!: string;
 

@@ -1,5 +1,5 @@
-query Products {
-  products {
+query GetProducts {
+  getProducts {
     id
     name
     description

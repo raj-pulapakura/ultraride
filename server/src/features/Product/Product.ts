@@ -1,7 +1,7 @@
 import { Field, Float, ID, Int, ObjectType } from "type-graphql";
 import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
-import { BaseModel } from "../objects/BaseModel";
-import { Purchase } from "./Purchase";
+import { BaseModel } from "../../objects/BaseModel";
+import { Purchase } from "../Purchase/Purchase";
 
 @Entity()
 @ObjectType()

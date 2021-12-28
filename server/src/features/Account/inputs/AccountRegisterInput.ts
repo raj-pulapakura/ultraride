@@ -1,7 +1,7 @@
 import { Field, InputType } from "type-graphql";
 
 @InputType()
-export class AccountInput {
+export class AccountRegisterInput {
   @Field(() => String)
   firstName!: string;
 

@@ -3,7 +3,6 @@ import {
   Drawer,
   Box,
   Typography,
-  Button,
   IconButton,
   List,
   ListItem,
@@ -14,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { StoreState } from "../../store";
 import { Close } from "@mui/icons-material";
 import { setMenuOpen } from "../../store/menu/menuActions";
-import { useMeQuery } from "../../graphql/generated";
+import { useGetMeQuery } from "../../graphql/generated";
 import { graphqlClient } from "../../graphql/client";
 import { useMenuStyles } from "./Menu.styles";
 import { useNavigate } from "react-router-dom";
@@ -35,7 +34,7 @@ export const Menu: React.FC<MenuProps> = ({}) => {
     (state) => state.menu.menuLinks
   ) as StoreState["menu"]["menuLinks"];
 
-  const { data: meData, isLoading: meDataIsLoading } = useMeQuery(
+  const { data: meData, isLoading: meDataIsLoading } = useGetMeQuery(
     graphqlClient,
     {},
     { refetchInterval: 1000 }
@@ -65,25 +64,22 @@ export const Menu: React.FC<MenuProps> = ({}) => {
               <Close htmlColor="black" />
             </IconButton>
           </Box>
-          <Typography
-            variant="h5"
-            marginBottom="0.5rem"
-            fontWeight="bold"
-            sx={{ color: "black" }}
-          >
-            Browse
-          </Typography>
-          {meData?.me?.account ? (
+
+          {meData?.getMe?.account ? (
             <>
               <Typography variant="h6">
                 {meDataIsLoading
                   ? "Loading..."
-                  : `Welcome, ${meData?.me?.account?.firstName} ${meData?.me?.account?.lastName}`}
+                  : `Welcome, ${meData?.getMe?.account?.firstName} ${meData?.getMe?.account?.lastName}`}
               </Typography>
-              <Typography variant="caption">
+              <Typography
+                variant="subtitle2"
+                marginTop="0.5rem"
+                sx={{ color: "grey" }}
+              >
                 {meDataIsLoading
                   ? "Loading..."
-                  : `${meData?.me?.account?.email}`}
+                  : `${meData?.getMe?.account?.email}`}
               </Typography>
             </>
           ) : (

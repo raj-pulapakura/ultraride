@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { MainForm } from "../../components/helper/MainForm";
 import { graphqlClient } from "../../graphql/client";
-import { useCreateAccountMutation } from "../../graphql/generated";
+import { useRegisterMutation } from "../../graphql/generated";
 
 interface RegisterPageProps {}
 
@@ -26,7 +26,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({}) => {
   });
 
   const { mutateAsync: createAccount, isLoading: createAccountIsLoading } =
-    useCreateAccountMutation(graphqlClient);
+    useRegisterMutation(graphqlClient);
 
   const onRegisterFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,10 +42,10 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({}) => {
       input: { ...registerFormState, role: "consumer" },
     });
 
-    if (data?.createAccount?.error) {
+    if (data?.register?.error) {
       return setRegisterFormErrors({
         ...registerFormErrors,
-        [data.createAccount.error.field]: data.createAccount.error.ufm,
+        [data.register.error.field]: data.register.error.ufm,
       });
     }
 

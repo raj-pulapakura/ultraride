@@ -10,9 +10,9 @@ import { connectToDB } from "./utils/connectToDB";
 import { sessionCookieConfig } from "./config/sessionCookie";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
-import { AccountResolver } from "./resolvers/AccountResolver";
-import { ProductResolver } from "./resolvers/ProductResolver";
-import { PurchaseResolver } from "./resolvers/PurchaseResolver";
+import { AccountResolver } from "./features/Account/AccountResolver";
+import { ProductResolver } from "./features/Product/ProductResolver";
+import { PurchaseResolver } from "./features/Purchase/PurchaseResolver";
 
 const main = async () => {
   console.log("Starting server...");

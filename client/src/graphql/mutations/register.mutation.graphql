@@ -1,5 +1,5 @@
-mutation CreateAccount($input: AccountInput!) {
-  createAccount(input: $input) {
+mutation Register($input: AccountRegisterInput!) {
+  register(input: $input) {
     account {
       id
       firstName

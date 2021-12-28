@@ -5,15 +5,12 @@ import { Box, IconButton } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { useModalStyles } from "./Modal.styles";
 interface ModalProps {
-  setModalVisibility: (value: boolean) => void;
+  onClose: () => void;
 }
 
-export const Modal: React.FC<ModalProps> = ({
-  children,
-  setModalVisibility,
-}) => {
+export const Modal: React.FC<ModalProps> = ({ children, onClose }) => {
   const onCloseButtonClick = () => {
-    setModalVisibility(false);
+    onClose();
   };
 
   const classes = useModalStyles();

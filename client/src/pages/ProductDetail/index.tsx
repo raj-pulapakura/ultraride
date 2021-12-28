@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Typography, Button } from "@mui/material";
 import { LoadingText } from "../../components/helper/LoadingText";
 import { graphqlClient } from "../../graphql/client";
-import { useProductQuery } from "../../graphql/generated";
+import { useGetProductQuery } from "../../graphql/generated";
 import { makeStyles } from "@mui/styles";
 import { AddToCartModal } from "./components/AddToCartModal";
 
@@ -29,11 +29,11 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({}) => {
   const [modalVisibility, setModalVisibility] = useState(false);
 
   const { data: productData, isLoading: productDataIsLoading } =
-    useProductQuery(graphqlClient, {
+    useGetProductQuery(graphqlClient, {
       productIdOrName: params.productId,
     });
 
-  if (productDataIsLoading || !productData?.product) {
+  if (productDataIsLoading || !productData?.getProduct) {
     return <LoadingText>Loading product...</LoadingText>;
   }
 
@@ -41,8 +41,12 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({}) => {
     setModalVisibility(true);
   };
 
+  const onAddToCartModalClosed = () => {
+    setModalVisibility(false);
+  };
+
   const { id, name, price, category, description, imageUrl } =
-    productData.product;
+    productData.getProduct;
 
   return (
     <>
@@ -75,8 +79,8 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({}) => {
       </Button>
       {modalVisibility && (
         <AddToCartModal
-          product={productData.product}
-          setModalVisibility={setModalVisibility}
+          product={productData.getProduct}
+          onClose={onAddToCartModalClosed}
         />
       )}
     </>

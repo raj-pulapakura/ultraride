@@ -1,7 +1,7 @@
 import React from "react";
 import { CartItem } from "../../../store/cart/cartTypes";
 import { Box, Button, ButtonGroup, Typography } from "@mui/material";
-import { useProductQuery } from "../../../graphql/generated";
+import { useGetProductQuery } from "../../../graphql/generated";
 import { LoadingText } from "../../../components/helper/LoadingText";
 import { graphqlClient } from "../../../graphql/client";
 import { useDispatch } from "react-redux";
@@ -17,15 +17,15 @@ export const SingleCartItem: React.FC<SingleCartItemProps> = ({ cartItem }) => {
   const dispatch = useDispatch();
 
   const { data: productData, isLoading: productDataIsLoading } =
-    useProductQuery(graphqlClient, {
+    useGetProductQuery(graphqlClient, {
       productIdOrName: cartItem.productId,
     });
 
-  if (productDataIsLoading || !productData?.product) {
+  if (productDataIsLoading || !productData?.getProduct) {
     return <LoadingText>Loading cart items...</LoadingText>;
   }
 
-  const { product } = productData;
+  const { getProduct: product } = productData;
 
   const onDeleteButtonClick = () => {
     dispatch(deleteCartItem(cartItem.productId));
@@ -50,16 +50,13 @@ export const SingleCartItem: React.FC<SingleCartItemProps> = ({ cartItem }) => {
   };
 
   return (
-    <>
+    <Box>
       <Box className={classes.productBox}>
         <img src={product?.imageUrl} className={classes.productImage} />
         <Box className={classes.productDetails}>
           <Typography variant="subtitle1" fontWeight="bold">
             {product?.name}
           </Typography>
-          {/* <Typography variant="h6">{`$${product.price} x ${
-            cartItem.quantity
-          } = $${product.price * cartItem.quantity}`}</Typography> */}
           <Typography variant="subtitle2">
             {"Cost: $" + product?.price}
           </Typography>
@@ -88,6 +85,6 @@ export const SingleCartItem: React.FC<SingleCartItemProps> = ({ cartItem }) => {
           </Button>
         </ButtonGroup>
       </Box>
-    </>
+    </Box>
   );
 };

@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "./components/core/Layout";
 import { graphqlClient } from "./graphql/client";
-import { useMeQuery } from "./graphql/generated";
+import { useGetMeQuery } from "./graphql/generated";
 import { CartPage } from "./pages/Cart";
 import { HomePage } from "./pages/Home";
 import { LoginPage } from "./pages/Login";
@@ -21,7 +21,7 @@ import { setMenuLinks } from "./store/menu/menuActions";
 import { MenuLink } from "./store/menu/menuTypes";
 
 export function AppRouter() {
-  const { data: meData } = useMeQuery(
+  const { data: meData } = useGetMeQuery(
     graphqlClient,
     {},
     { refetchInterval: 1000 }
@@ -43,7 +43,7 @@ export function AppRouter() {
   ];
 
   useEffect(() => {
-    if (meData?.me?.account) {
+    if (meData?.getMe?.account) {
       dispatch(
         setMenuLinks([
           ...sharedMenuLinks,
@@ -71,7 +71,7 @@ export function AppRouter() {
         ])
       );
     }
-  }, [meData?.me?.account]);
+  }, [meData?.getMe?.account]);
 
   return (
     <BrowserRouter>
@@ -81,7 +81,7 @@ export function AppRouter() {
           <Route path="/products/:productId" element={<ProductDetailPage />} />
           <Route path="/cart" element={<CartPage />} />
 
-          {meData?.me?.account ? (
+          {meData?.getMe?.account ? (
             <>
               <Route path="/logout" element={<LogoutPage />} />
             </>

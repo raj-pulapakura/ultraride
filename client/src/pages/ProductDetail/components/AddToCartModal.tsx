@@ -1,48 +1,23 @@
 import React, { useState } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import { ProductQuery } from "../../../graphql/generated";
+import { GetProductQuery } from "../../../graphql/generated";
 import { useDispatch, useSelector } from "react-redux";
 import { addCartItem } from "../../../store/cart/cartActions";
 import { LoadingText } from "../../../components/helper/LoadingText";
 import { Modal } from "../../../components/helper/Modal";
 import { StoreState } from "../../../store";
-
-const useStyles = makeStyles({
-  alreadyInCart: {
-    color: "green",
-  },
-  productBox: {
-    display: "flex",
-    marginTop: "1rem",
-    marginBottom: "1rem",
-  },
-  productDetails: {
-    padding: "1rem",
-  },
-  productCategory: {
-    color: "grey",
-  },
-  productImage: {
-    width: "40%",
-    borderRadius: "1rem",
-  },
-  quantityInput: {},
-  addToCartButton: {
-    marginTop: "1rem",
-  },
-});
+import { useAddToCartModalStyles } from "./AddToCartModal.styles";
 
 interface AddToCartModalProps {
-  product: ProductQuery["product"];
-  setModalVisibility: (value: boolean) => void;
+  product: GetProductQuery["getProduct"];
+  onClose: () => void;
 }
 
 export const AddToCartModal: React.FC<AddToCartModalProps> = ({
   product,
-  setModalVisibility,
+  onClose,
 }) => {
-  const classes = useStyles();
+  const classes = useAddToCartModalStyles();
   const dispatch = useDispatch();
 
   const cartItems = useSelector<StoreState>(
@@ -66,13 +41,13 @@ export const AddToCartModal: React.FC<AddToCartModalProps> = ({
       return;
     }
     dispatch(
-      addCartItem({ productId: product?.name, quantity: productQuantity })
+      addCartItem({ productId: product?.id, quantity: productQuantity })
     );
-    setModalVisibility(false);
+    onClose();
   };
 
   return (
-    <Modal setModalVisibility={setModalVisibility}>
+    <Modal onClose={onClose}>
       <Typography variant="h6">Add product to cart</Typography>
       {currentCartItem && (
         <Typography variant="subtitle1" className={classes.alreadyInCart}>

@@ -3,12 +3,12 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { SimpleContainer } from "../../components/helper/SimpleContainer";
 import { graphqlClient } from "../../graphql/client";
-import { useLogoutMutation, useMeQuery } from "../../graphql/generated";
+import { useLogoutMutation, useGetMeQuery } from "../../graphql/generated";
 
 interface LogoutPageProps {}
 
 export const LogoutPage: React.FC<LogoutPageProps> = ({}) => {
-  const { data: meData } = useMeQuery(graphqlClient);
+  const { data: meData } = useGetMeQuery(graphqlClient);
 
   const { mutateAsync: logout, isLoading: logoutIsLoading } =
     useLogoutMutation(graphqlClient);
@@ -16,7 +16,7 @@ export const LogoutPage: React.FC<LogoutPageProps> = ({}) => {
   const navigate = useNavigate();
 
   const onLogoutButtonClick = async () => {
-    const data = await logout({}, {});
+    await logout({}, {});
     navigate("/");
   };
 
@@ -24,7 +24,7 @@ export const LogoutPage: React.FC<LogoutPageProps> = ({}) => {
     <>
       <SimpleContainer>
         <Typography variant="h6" textAlign="center">
-          {`Are you sure you want to logout, ${meData?.me?.account?.firstName}?`}
+          {`Are you sure you want to logout, ${meData?.getMe?.account?.firstName}?`}
         </Typography>
       </SimpleContainer>
       <Button

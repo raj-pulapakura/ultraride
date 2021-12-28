@@ -1,5 +1,5 @@
 import React from "react";
-import { ProductsQuery } from "../../../graphql/generated";
+import { GetProductsQuery } from "../../../graphql/generated";
 import { Typography, Box, IconButton } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { theme } from "../../../theme";
@@ -32,7 +32,7 @@ const useStyles = makeStyles({
 });
 
 interface SingleProductProps {
-  product: ProductsQuery["products"][0];
+  product: GetProductsQuery["getProducts"][0];
 }
 
 export const SingleProduct: React.FC<SingleProductProps> = ({ product }) => {

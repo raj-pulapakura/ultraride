@@ -1,5 +1,4 @@
 import React from "react";
-import { createEmitAndSemanticDiagnosticsBuilderProgram } from "typescript";
 import { CartItem } from "../../../store/cart/cartTypes";
 import { SingleCartItem } from "./SingleCartItem";
 

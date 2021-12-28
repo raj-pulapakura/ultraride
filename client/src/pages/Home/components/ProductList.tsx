@@ -1,9 +1,9 @@
 import React from "react";
-import { ProductsQuery } from "../../../graphql/generated";
+import { GetProductsQuery } from "../../../graphql/generated";
 import { SingleProduct } from "./SingleProduct";
 
 interface ProductListProps {
-  products: ProductsQuery["products"];
+  products: GetProductsQuery["getProducts"];
 }
 
 export const ProductList: React.FC<ProductListProps> = ({ products }) => {

@@ -1,8 +1,8 @@
 import { Field, ID, Int, ObjectType } from "type-graphql";
 import { Column, Entity, ManyToOne } from "typeorm";
-import { Account } from "./Account";
-import { BaseModel } from "../objects/BaseModel";
-import { Product } from "./Product";
+import { Account } from "../Account/Account";
+import { BaseModel } from "../../objects/BaseModel";
+import { Product } from "../Product/Product";
 
 @Entity()
 @ObjectType()

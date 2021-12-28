@@ -1,9 +1,9 @@
 import { Field, ObjectType } from "type-graphql";
-import { Product } from "../../entities/Product";
-import { FieldError } from "../FieldError";
+import { Product } from "../Product";
+import { FieldError } from "../../../objects/FieldError";
 
 @ObjectType()
-export class ProductResponse {
+export class ProductGeneralResponse {
   @Field(() => Product, { nullable: true })
   product?: Product;
 
