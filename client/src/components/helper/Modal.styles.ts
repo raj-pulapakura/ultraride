@@ -10,6 +10,9 @@ export const useModalStyles = makeStyles({
     background: "white",
     borderRadius: "1rem",
     padding: "1rem",
+    zIndex: 5,
+    maxHeight: "60vh",
+    overflowY: "scroll",
   },
   closeButton: {
     position: "absolute",

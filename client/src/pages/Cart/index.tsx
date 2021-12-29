@@ -65,12 +65,12 @@ export const CartPage: React.FC<CartPageProps> = ({}) => {
     if (!meData?.getMe?.account) {
       navigate("/register?next=cart");
     }
-    purchaseProducts({
-      input: {
-        purchaseListings: cartItems,
-        accountId: meData?.getMe?.account?.id as string,
-      },
-    });
+    // purchaseProducts({
+    //   input: {
+    //     purchaseListings: cartItems,
+    //     accountId: meData?.getMe?.account?.id as string,
+    //   },
+    // });
   };
 
   return (

@@ -77,7 +77,11 @@ export const SingleCartItem: React.FC<SingleCartItemProps> = ({ cartItem }) => {
           >
             Delete
           </Button>
-          <Button variant="contained" onClick={onMinusButtonClick}>
+          <Button
+            variant="contained"
+            onClick={onMinusButtonClick}
+            disabled={cartItem.quantity <= 1}
+          >
             Decrease
           </Button>
           <Button variant="contained" onClick={onPlusButtonClick}>

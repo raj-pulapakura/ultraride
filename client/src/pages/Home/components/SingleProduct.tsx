@@ -1,71 +1,40 @@
 import React from "react";
 import { GetProductsQuery } from "../../../graphql/generated";
-import { Typography, Box, IconButton } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import { theme } from "../../../theme";
-import { Add } from "@mui/icons-material";
+import { Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
-const useStyles = makeStyles({
-  product: {
-    borderRadius: "1rem",
-    background: "white",
-    display: "flex",
-    marginBottom: "1rem",
-    boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.25)",
-  },
-  productImage: {
-    width: "40%",
-  },
-  productDetails: {
-    padding: "0.5rem 1rem",
-  },
-  productDetailsPrice: {},
-  productDetailsCategory: {
-    color: "grey",
-  },
-  productDetailsStockAvailable: {
-    color: "green",
-  },
-  productDetailsAddToCart: {},
-  productDetailsAddToCartButton: {},
-});
+import { grey } from "@mui/material/colors";
+import { useSingleProductStyles } from "./SingleProduct.styles";
 
 interface SingleProductProps {
   product: GetProductsQuery["getProducts"][0];
 }
 
 export const SingleProduct: React.FC<SingleProductProps> = ({ product }) => {
-  const classes = useStyles();
+  const classes = useSingleProductStyles();
 
   const navigate = useNavigate();
 
   const onProductBoxClick = () => {
-    navigate(`products/${product.name}`);
+    navigate(`products/${product.id}`);
   };
 
   return (
     <Box className={classes.product} onClick={onProductBoxClick}>
       <img className={classes.productImage} src={product.imageUrl} />
-      <Box className={classes.productDetails}>
-        <Typography variant="subtitle1" fontWeight="bold">
+      <Box sx={{ padding: "1rem" }}>
+        <Typography variant="h6" fontWeight="bold">
           {product.name}
         </Typography>
-        <Typography
-          className={classes.productDetailsCategory}
-          variant="subtitle1"
-        >
+        <Typography sx={{ color: grey[600] }} variant="subtitle1">
           {product.category}
         </Typography>
         <Typography
-          className={classes.productDetailsStockAvailable}
+          sx={{ color: "green", marginTop: "1rem" }}
           variant="subtitle2"
         >
           In Stock
         </Typography>
-        <Typography className={classes.productDetailsPrice} variant="subtitle2">
-          {"$" + product.price}
-        </Typography>
+        <Typography variant="subtitle2">{"$" + product.price}</Typography>
       </Box>
     </Box>
   );

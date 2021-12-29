@@ -6,7 +6,8 @@ export enum MenuActionTypes {
 export interface MenuLink {
   text: string;
   to: string;
-  icon: JSX.Element;
+  iconPrimary: JSX.Element;
+  iconWhite: JSX.Element;
 }
 
 export interface MenuState {

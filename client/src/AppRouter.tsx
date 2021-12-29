@@ -33,12 +33,14 @@ export function AppRouter() {
     {
       text: "Shop",
       to: "/",
-      icon: <LocalOffer color="primary" />,
+      iconPrimary: <LocalOffer color="primary" />,
+      iconWhite: <LocalOffer sx={{ color: "white" }} />,
     },
     {
       text: "Cart",
       to: "/cart",
-      icon: <ShoppingCart color="primary" />,
+      iconPrimary: <ShoppingCart color="primary" />,
+      iconWhite: <ShoppingCart sx={{ color: "white" }} />,
     },
   ];
 
@@ -50,7 +52,8 @@ export function AppRouter() {
           {
             text: "Logout",
             to: "/logout",
-            icon: <Logout color="primary" />,
+            iconPrimary: <Logout color="primary" />,
+            iconWhite: <Logout sx={{ color: "white" }} />,
           },
         ])
       );
@@ -61,12 +64,14 @@ export function AppRouter() {
           {
             text: "Sign up",
             to: "/register",
-            icon: <AccountCircle color="primary" />,
+            iconPrimary: <AccountCircle color="primary" />,
+            iconWhite: <AccountCircle sx={{ color: "white" }} />,
           },
           {
             text: "Sign in",
             to: "/login",
-            icon: <Login color="primary" />,
+            iconPrimary: <Login color="primary" />,
+            iconWhite: <Login sx={{ color: "white" }} />,
           },
         ])
       );

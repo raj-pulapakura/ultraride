@@ -1,5 +1,5 @@
 import React from "react";
-import { NavBar } from "./Navbar";
+import { NavBar } from "./navigation/Navbar";
 import { Box } from "@mui/material";
 import { Menu } from "./Menu";
 import { useLayoutStyles } from "./Layout.styles";

@@ -19,6 +19,7 @@ import { useMenuStyles } from "./Menu.styles";
 import { useNavigate } from "react-router-dom";
 import { MenuLink } from "../../store/menu/menuTypes";
 import { brandName } from "../../App";
+import { brandFont } from "../../theme";
 
 interface MenuProps {}
 
@@ -62,7 +63,7 @@ export const Menu: React.FC<MenuProps> = ({}) => {
         <Box className={classes.mainBox}>
           <Box className={classes.closeButton}>
             <IconButton onClick={onCloseButtonClick}>
-              <Close htmlColor="black" />
+              <Close htmlColor="white" />
             </IconButton>
           </Box>
 
@@ -85,8 +86,13 @@ export const Menu: React.FC<MenuProps> = ({}) => {
             </>
           ) : (
             <>
-              <Typography variant="h6">
-                Welcome to {brandName.toUpperCase()}
+              <Typography
+                variant="h4"
+                sx={{ color: "white" }}
+                fontFamily={brandFont}
+                // fontWeight="bold"
+              >
+                Browse
               </Typography>
             </>
           )}
@@ -99,7 +105,7 @@ export const Menu: React.FC<MenuProps> = ({}) => {
                 key={menuLink.text}
                 onClick={() => onMenuLinkClicked(menuLink.to)}
               >
-                <ListItemIcon>{menuLink.icon}</ListItemIcon>
+                <ListItemIcon>{menuLink.iconPrimary}</ListItemIcon>
                 <ListItemText primary={menuLink.text} />
               </ListItem>
             ))}

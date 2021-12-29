@@ -7,6 +7,7 @@ import { LoadingText } from "../../../components/helper/LoadingText";
 import { Modal } from "../../../components/helper/Modal";
 import { StoreState } from "../../../store";
 import { useAddToCartModalStyles } from "./AddToCartModal.styles";
+import { SmallProductDisplay } from "../../../components/helper/SmallProductDisplay";
 
 interface AddToCartModalProps {
   product: GetProductQuery["getProduct"];
@@ -25,7 +26,7 @@ export const AddToCartModal: React.FC<AddToCartModalProps> = ({
   ) as StoreState["cart"]["items"];
 
   const currentCartItem = cartItems.find(
-    (cartItem) => cartItem.productId === product?.name
+    (cartItem) => cartItem.productId === product?.id
   );
 
   const [productQuantity, setProductQuantity] = useState(
@@ -51,28 +52,16 @@ export const AddToCartModal: React.FC<AddToCartModalProps> = ({
       <Typography variant="h6">Add product to cart</Typography>
       {currentCartItem && (
         <Typography variant="subtitle1" className={classes.alreadyInCart}>
-          This product is already in you cart
+          This product is already in your cart
         </Typography>
       )}
-      <Box className={classes.productBox}>
-        <img src={product?.imageUrl} className={classes.productImage} />
-        <Box className={classes.productDetails}>
-          <Typography variant="subtitle1">{product?.name}</Typography>
-          <Typography variant="subtitle2" className={classes.productCategory}>
-            {product?.category}
-          </Typography>
-          <Typography variant="subtitle2" className={classes.productCategory}>
-            {"$" + product?.price}
-          </Typography>
-        </Box>
-      </Box>
+      <SmallProductDisplay product={product} />
       <TextField
         fullWidth
         label="Quantity"
         type="number"
         value={productQuantity}
         onChange={(e) => setProductQuantity(parseInt(e.target.value))}
-        className={classes.quantityInput}
         InputProps={{ inputProps: { min: 1 } }}
       />
       <Typography variant="body1" marginTop="1rem">

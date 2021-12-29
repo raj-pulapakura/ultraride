@@ -7,18 +7,20 @@ import { useGetProductQuery } from "../../graphql/generated";
 import { makeStyles } from "@mui/styles";
 import { AddToCartModal } from "./components/AddToCartModal";
 
+// <Typography
+//   variant="subtitle1"
+//   className={classes.productStockAvailability}
+//   marginTop="1rem"
+//   marginBottom="1rem"
+// >
+//   In Stock
+// </Typography>;
+
 const useStyles = makeStyles({
-  productTitle: {
-    marginBottom: "1rem",
-  },
   productImage: {
     width: "100%",
     borderRadius: "2rem",
   },
-  productStockAvailability: {
-    color: "green",
-  },
-  addToCartButton: {},
 });
 
 interface ProductDetailPageProps {}
@@ -51,32 +53,27 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({}) => {
   return (
     <>
       <Typography
-        variant="h4"
+        variant="h5"
         fontWeight="bold"
-        className={classes.productTitle}
+        sx={{ marginBottom: "0.2rem" }}
       >
         {name}
       </Typography>
-      <Typography
-        variant="subtitle1"
-        className={classes.productStockAvailability}
-        marginTop="1rem"
-        marginBottom="1rem"
-      >
-        In Stock
+      <Typography variant="subtitle1" sx={{ marginBottom: "1rem" }}>
+        {category}
       </Typography>
       <img src={imageUrl} className={classes.productImage} />
-      <Typography variant="body1" marginTop="1rem" marginBottom="1rem">
-        {description}
-      </Typography>
       <Button
         variant="contained"
         fullWidth
-        className={classes.addToCartButton}
         onClick={onAddToCartButtonClicked}
+        sx={{ marginTop: "1rem" }}
       >
         Add to cart
       </Button>
+      <Typography variant="body1" marginTop="1rem">
+        {description}
+      </Typography>
       {modalVisibility && (
         <AddToCartModal
           product={productData.getProduct}
