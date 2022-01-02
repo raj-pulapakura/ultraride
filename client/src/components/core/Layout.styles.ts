@@ -2,6 +2,6 @@ import { makeStyles } from "@mui/styles";
 
 export const useLayoutStyles = makeStyles({
   page: {
-    margin: "1rem 1rem 1rem 1rem",
+    margin: "2rem 2rem 1rem 2rem",
   },
 });

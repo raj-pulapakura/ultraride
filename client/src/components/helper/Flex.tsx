@@ -7,10 +7,10 @@ export const Flex: React.FC<FlexProps> = ({ children, style, ...props }) => {
     <div
       {...props}
       style={{
-        ...style,
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
+        ...style,
       }}
     >
       {children}

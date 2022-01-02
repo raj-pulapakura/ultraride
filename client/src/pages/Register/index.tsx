@@ -97,6 +97,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({}) => {
           label: "Password",
           value: registerFormState.password,
           error: registerFormErrors.password,
+          type: "password",
           onChange: (e) =>
             setRegisterFormState({
               ...registerFormState,
@@ -106,7 +107,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({}) => {
       ]}
     >
       <Typography variant="subtitle2" marginTop="1rem">
-        Already have an account? <Link to="/login">Sign in</Link>
+        Already have an account? <Link to="/account/sign-in">Sign in</Link>
       </Typography>
     </MainForm>
   );

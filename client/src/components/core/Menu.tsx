@@ -4,21 +4,17 @@ import {
   Box,
   Typography,
   IconButton,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
+  ButtonGroup,
+  Button,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreState } from "../../store";
 import { Close } from "@mui/icons-material";
 import { setMenuOpen } from "../../store/menu/menuActions";
-import { useGetMeQuery } from "../../graphql/generated";
+import { useMeQuery } from "../../graphql/generated";
 import { graphqlClient } from "../../graphql/client";
 import { useMenuStyles } from "./Menu.styles";
 import { useNavigate } from "react-router-dom";
-import { MenuLink } from "../../store/menu/menuTypes";
-import { brandName } from "../../App";
 import { brandFont } from "../../theme";
 
 interface MenuProps {}
@@ -32,11 +28,7 @@ export const Menu: React.FC<MenuProps> = ({}) => {
     (state) => state.menu.menuIsOpen
   ) as StoreState["menu"]["menuIsOpen"];
 
-  const menuLinks = useSelector<StoreState>(
-    (state) => state.menu.menuLinks
-  ) as StoreState["menu"]["menuLinks"];
-
-  const { data: meData, isLoading: meDataIsLoading } = useGetMeQuery(
+  const { data: meData, isLoading: meDataIsLoading } = useMeQuery(
     graphqlClient,
     {},
     { refetchInterval: 1000 }
@@ -46,10 +38,29 @@ export const Menu: React.FC<MenuProps> = ({}) => {
     dispatch(setMenuOpen(false));
   };
 
-  const onMenuLinkClicked = (path: MenuLink["to"]) => {
+  const onMenuLinkClicked = (path: string) => {
     navigate(path);
-    setTimeout(onCloseButtonClick, 250);
+    onCloseButtonClick();
   };
+
+  const menuLinks: { text: string; to: string }[] = [
+    {
+      text: "Home",
+      to: "/",
+    },
+    {
+      text: "Shoes",
+      to: "/products",
+    },
+    {
+      text: "Cart",
+      to: "/cart",
+    },
+    {
+      text: "Account",
+      to: "/account",
+    },
+  ];
 
   return (
     <Box>
@@ -58,7 +69,7 @@ export const Menu: React.FC<MenuProps> = ({}) => {
         classes={{ paper: classes.drawerPaper }}
         open={menuIsOpen}
         variant="temporary"
-        anchor="left"
+        anchor="right"
       >
         <Box className={classes.mainBox}>
           <Box className={classes.closeButton}>
@@ -67,49 +78,76 @@ export const Menu: React.FC<MenuProps> = ({}) => {
             </IconButton>
           </Box>
 
-          {meData?.getMe?.account ? (
+          {meData?.me?.account ? (
             <>
-              <Typography variant="h6">
+              <Typography
+                variant="h4"
+                fontWeight="bold"
+                sx={{ color: "white" }}
+              >
                 {meDataIsLoading
                   ? "Loading..."
-                  : `Welcome, ${meData?.getMe?.account?.firstName} ${meData?.getMe?.account?.lastName}`}
+                  : `Welcome, ${meData?.me?.account?.firstName} ${meData?.me?.account?.lastName}`}
               </Typography>
               <Typography
                 variant="subtitle2"
                 marginTop="0.5rem"
-                sx={{ color: "grey" }}
+                sx={{ color: "white" }}
               >
                 {meDataIsLoading
                   ? "Loading..."
-                  : `${meData?.getMe?.account?.email}`}
+                  : `${meData?.me?.account?.email}`}
               </Typography>
             </>
           ) : (
             <>
               <Typography
-                variant="h4"
+                variant="subtitle2"
                 sx={{ color: "white" }}
                 fontFamily={brandFont}
                 // fontWeight="bold"
+              >
+                ULTRARIDE
+              </Typography>
+              <Typography
+                variant="h4"
+                sx={{ color: "white" }}
+                fontFamily={brandFont}
+                fontWeight="bold"
               >
                 Browse
               </Typography>
             </>
           )}
         </Box>
-        <Box>
-          <List>
+        <Box sx={{ padding: "2rem" }}>
+          {!meData?.me?.account && (
+            <ButtonGroup sx={{ marginBottom: "2rem" }}>
+              <Button onClick={() => onMenuLinkClicked("/account/sign-in")}>
+                Sign Up
+              </Button>
+              <Button onClick={() => onMenuLinkClicked("/account/sign-in")}>
+                Sign In
+              </Button>
+            </ButtonGroup>
+          )}
+          <Box>
             {menuLinks.map((menuLink) => (
-              <ListItem
-                button
+              <Typography
                 key={menuLink.text}
                 onClick={() => onMenuLinkClicked(menuLink.to)}
+                sx={{
+                  marginBottom: "1rem",
+                  "&:hover": {
+                    textDecoration: "underline",
+                    cursor: "pointer",
+                  },
+                }}
               >
-                <ListItemIcon>{menuLink.iconPrimary}</ListItemIcon>
-                <ListItemText primary={menuLink.text} />
-              </ListItem>
+                {menuLink.text}
+              </Typography>
             ))}
-          </List>
+          </Box>
         </Box>
       </Drawer>
     </Box>

@@ -10,6 +10,8 @@ export type EnvironmentVariables = {
   DB_HOST: string;
   DB_PORT: number;
   DB_DATABASE: string;
+  ADMIN_ID: string;
+  ADMIN_PASSWORD: string;
 } & NodeJS.ProcessEnv;
 
 export interface Context {

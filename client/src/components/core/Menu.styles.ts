@@ -19,8 +19,8 @@ export const useMenuStyles = makeStyles({
   closeButton: {
     position: "absolute",
     width: "fit-content",
-    top: 10,
-    right: 10,
+    top: 5,
+    right: 5,
   },
   menuLinkContainer: {
     padding: "2rem",

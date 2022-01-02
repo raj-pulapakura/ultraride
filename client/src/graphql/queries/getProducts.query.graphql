@@ -1,10 +1,5 @@
-query GetProducts {
-  getProducts {
-    id
-    name
-    description
-    price
-    category
-    imageUrl
+query Products {
+  products {
+    ...ProductFragment
   }
 }

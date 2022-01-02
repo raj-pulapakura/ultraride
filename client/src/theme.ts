@@ -3,16 +3,21 @@ import { createTheme } from "@mui/material";
 export const primaryFont = "Work Sans";
 export const brandFont = "Fira Sans Condensed";
 
+const colors = {
+  royalPurple: "#6500ea",
+  sublimeTeal: "#d2ffee",
+};
+
 export const theme = createTheme({
   typography: {
-    fontFamily: primaryFont,
+    fontFamily: brandFont,
   },
   palette: {
     primary: {
-      main: "#6500EA",
+      main: "#000",
     },
     secondary: {
-      main: "#D2FFEE",
+      main: colors.royalPurple,
     },
     background: {
       default: "#fff",
@@ -20,13 +25,3 @@ export const theme = createTheme({
     },
   },
 });
-
-theme.typography.h3 = {
-  fontSize: "1.2rem",
-  "@media (min-width:600px)": {
-    fontSize: "1.5rem",
-  },
-  [theme.breakpoints.up("md")]: {
-    fontSize: "2.4rem",
-  },
-};

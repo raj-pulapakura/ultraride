@@ -1,10 +1,11 @@
-query GetMe {
-  getMe {
+query Me {
+  me {
     account {
       id
       firstName
       lastName
       email
+      createdAt
     }
     error {
       field

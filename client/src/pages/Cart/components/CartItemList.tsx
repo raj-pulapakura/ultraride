@@ -1,3 +1,4 @@
+import { Grid } from "@mui/material";
 import React from "react";
 import { CartItem } from "../../../store/cart/cartTypes";
 import { SingleCartItem } from "./SingleCartItem";
@@ -8,10 +9,12 @@ interface CartItemListProps {
 
 export const CartItemList: React.FC<CartItemListProps> = ({ cartItems }) => {
   return (
-    <>
+    <Grid container>
       {cartItems.map((cartItem) => (
-        <SingleCartItem key={cartItem.productId} cartItem={cartItem} />
+        <Grid item xs={12}>
+          <SingleCartItem key={cartItem.productId} cartItem={cartItem} />
+        </Grid>
       ))}
-    </>
+    </Grid>
   );
 };

@@ -1,3 +1,0 @@
-mutation PurchaseProducts($input: PurchaseProductsInput!) {
-  purchaseProducts(input: $input)
-}

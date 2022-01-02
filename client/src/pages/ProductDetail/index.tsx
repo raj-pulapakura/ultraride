@@ -1,84 +1,159 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { Typography, Button } from "@mui/material";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import {
+  Typography,
+  Box,
+  Button,
+  useMediaQuery,
+  Chip,
+  Grid,
+} from "@mui/material";
 import { LoadingText } from "../../components/helper/LoadingText";
 import { graphqlClient } from "../../graphql/client";
-import { useGetProductQuery } from "../../graphql/generated";
+import { useProductQuery } from "../../graphql/generated";
 import { makeStyles } from "@mui/styles";
-import { AddToCartModal } from "./components/AddToCartModal";
-
-// <Typography
-//   variant="subtitle1"
-//   className={classes.productStockAvailability}
-//   marginTop="1rem"
-//   marginBottom="1rem"
-// >
-//   In Stock
-// </Typography>;
-
-const useStyles = makeStyles({
-  productImage: {
-    width: "100%",
-    borderRadius: "2rem",
-  },
-});
+import { AddToCartModal } from "../../components/helper/AddToCartModal";
+import { theme } from "../../theme";
+import { Flex } from "../../components/helper/Flex";
+import { ChevronLeft } from "@mui/icons-material";
+import { ProductControls } from "./components/ProductControls";
 
 interface ProductDetailPageProps {}
 
 export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({}) => {
-  const classes = useStyles();
+  const navigate = useNavigate();
   const params = useParams() as { productId: string };
-  const [modalVisibility, setModalVisibility] = useState(false);
 
   const { data: productData, isLoading: productDataIsLoading } =
-    useGetProductQuery(graphqlClient, {
+    useProductQuery(graphqlClient, {
       productIdOrName: params.productId,
     });
 
-  if (productDataIsLoading || !productData?.getProduct) {
-    return <LoadingText>Loading product...</LoadingText>;
+  const screenIsSmall = useMediaQuery(theme.breakpoints.up("sm"));
+  const screenIsMedium = useMediaQuery(theme.breakpoints.up("md"));
+
+  if (productDataIsLoading) {
+    return <LoadingText actionText="Loading product..." />;
   }
 
-  const onAddToCartButtonClicked = () => {
-    setModalVisibility(true);
-  };
-
-  const onAddToCartModalClosed = () => {
-    setModalVisibility(false);
-  };
-
-  const { id, name, price, category, description, imageUrl } =
-    productData.getProduct;
+  if (!productData?.product) {
+    return (
+      <LoadingText
+        actionText="That product does not exist"
+        actionButton="Browse products"
+        actionButtonOnClick={() => navigate("/products")}
+      />
+    );
+  }
 
   return (
     <>
+      <Box sx={{ display: "flex", alignItems: "center", marginBottom: "1rem" }}>
+        <ChevronLeft />
+        <Typography>
+          <Link
+            to="/products"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            All Products
+          </Link>
+        </Typography>
+      </Box>
       <Typography
         variant="h5"
         fontWeight="bold"
         sx={{ marginBottom: "0.2rem" }}
       >
-        {name}
+        {productData?.product.name}
       </Typography>
-      <Typography variant="subtitle1" sx={{ marginBottom: "1rem" }}>
-        {category}
+      <Typography variant="subtitle1">
+        {productData.product.category}
       </Typography>
-      <img src={imageUrl} className={classes.productImage} />
-      <Button
-        variant="contained"
-        fullWidth
-        onClick={onAddToCartButtonClicked}
-        sx={{ marginTop: "1rem" }}
-      >
-        Add to cart
-      </Button>
-      <Typography variant="body1" marginTop="1rem">
-        {description}
-      </Typography>
-      {modalVisibility && (
-        <AddToCartModal
-          product={productData.getProduct}
-          onClose={onAddToCartModalClosed}
-        />
+      <Box sx={{ marginTop: "0.5rem", marginBottom: "1rem" }}>
+        {productData.product.tags.map((tag) => (
+          <Chip
+            color="primary"
+            sx={{ marginLeft: "0.2rem", marginBottom: "0.5rem" }}
+            label={tag.text}
+            key={tag.text}
+          />
+        ))}
+      </Box>
+
+      {screenIsMedium ? (
+        <Flex style={{ gap: "4rem", alignItems: "flex-start" }}>
+          <Grid sx={{ width: "60%" }} container spacing={theme.spacing(1)}>
+            <Grid md={6} item>
+              <img
+                src={productData.product.imageUrl}
+                style={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid md={6} item>
+              <img
+                src={productData.product.imageUrl}
+                style={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid md={6} item>
+              <img
+                src={productData.product.imageUrl}
+                style={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid md={6} item>
+              <img
+                src={productData.product.imageUrl}
+                style={{ width: "100%" }}
+              />
+            </Grid>
+          </Grid>
+          <ProductControls
+            sx={{ width: "40%" }}
+            product={productData.product}
+          />
+        </Flex>
+      ) : screenIsSmall ? (
+        <Flex style={{ gap: "2rem", alignItems: "flex-start" }}>
+          <Grid sx={{ width: "60%" }} container spacing={theme.spacing(1)}>
+            <Grid sm={12} item>
+              <img
+                src={productData.product.imageUrl}
+                style={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid sm={12} item>
+              <img
+                src={productData.product.imageUrl}
+                style={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid sm={12} item>
+              <img
+                src={productData.product.imageUrl}
+                style={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid sm={12} item>
+              <img
+                src={productData.product.imageUrl}
+                style={{ width: "100%" }}
+              />
+            </Grid>
+          </Grid>
+          <ProductControls
+            sx={{ width: "40%" }}
+            product={productData.product}
+          />
+        </Flex>
+      ) : (
+        <Box>
+          <img
+            src={productData.product.imageUrl}
+            style={{ width: "100%", marginBottom: "1rem" }}
+          />
+          <ProductControls product={productData.product} />
+        </Box>
       )}
     </>
   );

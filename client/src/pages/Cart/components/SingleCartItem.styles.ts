@@ -8,15 +8,25 @@ export const useSingleCartItemStyles = makeStyles({
   },
   productDetails: {
     padding: "1rem",
+    paddingTop: "0",
   },
   productCategory: {
     color: "grey",
   },
   productImage: {
-    width: "40%",
+    width: "50%",
     borderRadius: "1rem",
   },
   controls: {
-    marginBottom: "2rem",
+    display: "flex",
+    flexDirection: "row",
+    gap: "0.5rem",
+    marginTop: "1rem",
+  },
+  controlButton: {
+    borderRadius: "5px",
+    border: "none",
+    padding: "0.25rem",
+    backgroundColor: "black",
   },
 });

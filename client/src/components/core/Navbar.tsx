@@ -12,7 +12,6 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
     <Box className={classes.navbar}>
       <Box className={classes.navbarInner}>
         <NavbarControls />
-        {/* <SearchBar marginTop="0.5rem" /> */}
       </Box>
     </Box>
   );

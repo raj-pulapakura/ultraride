@@ -1,27 +1,29 @@
 import { Arg, Query, Resolver, ID, Mutation, Ctx } from "type-graphql";
-import { Account } from "./Account";
+import { AccountEntity } from "./AccountEntity";
+import { AccountGraphql } from "./AccountGraphql";
 import { AccountGeneralResponse } from "./objects/AccountGeneralResponse";
 import { hash, verify } from "argon2";
 import { AccountRegisterInput } from "./inputs/AccountRegisterInput";
 import { Context } from "../../types";
 import { AccountLoginInput } from "./inputs/AccountLoginInput";
-import { AUTH_COOKIE } from "../../constants";
+import { AUTH_COOKIE, env } from "../../constants";
+import { AccountAdminLoginInput } from "./inputs/AccountAdminLoginInput";
 
 @Resolver()
 export class AccountResolver {
-  @Query(() => [Account])
-  getAccounts(): Promise<Account[]> {
-    return Account.find({});
+  @Query(() => [AccountGraphql])
+  accounts(): Promise<AccountGraphql[]> {
+    return AccountEntity.find({});
   }
 
-  @Query(() => Account, { nullable: true })
-  async getAccount(
+  @Query(() => AccountGraphql, { nullable: true })
+  async account(
     @Arg("accountIdOrEmail", () => ID) accountIdOrEmail: string
-  ): Promise<Account | null> {
-    const accountById = await Account.findOne(accountIdOrEmail);
+  ): Promise<AccountGraphql | null> {
+    const accountById = await AccountEntity.findOne(accountIdOrEmail);
     if (accountById) return accountById;
 
-    const accountByEmail = await Account.findOne({
+    const accountByEmail = await AccountEntity.findOne({
       where: { email: accountIdOrEmail },
     });
     if (accountByEmail) return accountByEmail;
@@ -37,7 +39,9 @@ export class AccountResolver {
   ): Promise<AccountGeneralResponse> {
     const { firstName, lastName, email, password, role } = createAccountInput;
 
-    const accountAlreadyExists = await Account.findOne({ where: { email } });
+    const accountAlreadyExists = await AccountEntity.findOne({
+      where: { email },
+    });
     if (accountAlreadyExists) {
       return {
         error: {
@@ -59,7 +63,7 @@ export class AccountResolver {
     }
 
     const hashedPassword = await hash(password);
-    const newAccount = await Account.create({
+    const newAccount = await AccountEntity.create({
       firstName,
       lastName,
       email,
@@ -75,10 +79,10 @@ export class AccountResolver {
   }
 
   @Query(() => AccountGeneralResponse, { nullable: true })
-  async getMe(@Ctx() { req }: Context): Promise<AccountGeneralResponse | null> {
+  async me(@Ctx() { req }: Context): Promise<AccountGeneralResponse | null> {
     const { accountId } = req.session;
     if (!accountId) return null;
-    const account = await Account.findOne(accountId);
+    const account = await AccountEntity.findOne(accountId);
     if (!account) return null;
     return { account };
   }
@@ -99,7 +103,7 @@ export class AccountResolver {
     @Ctx() { req }: Context
   ): Promise<AccountGeneralResponse> {
     const { email, password } = accountLoginInput;
-    const account = await Account.findOne({ where: { email } });
+    const account = await AccountEntity.findOne({ where: { email } });
     if (!account) {
       return {
         error: {
@@ -125,8 +129,18 @@ export class AccountResolver {
     return { account };
   }
 
-  @Mutation(() => AccountGeneralResponse)
-  async adminLogin(): Promise<AccountGeneralResponse | null> {
-    return null;
+  @Mutation(() => Boolean)
+  async adminLogin(
+    // @Ctx() { res }: Context,
+    @Arg("input", () => AccountAdminLoginInput)
+    adminLoginInput: AccountAdminLoginInput
+  ): Promise<Boolean> {
+    const { adminId, adminPassword } = adminLoginInput;
+
+    if (adminId === env.ADMIN_ID && adminPassword === env.ADMIN_PASSWORD) {
+      return true;
+    }
+
+    return false;
   }
 }

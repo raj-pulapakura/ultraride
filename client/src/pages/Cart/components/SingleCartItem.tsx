@@ -1,12 +1,19 @@
 import React from "react";
 import { CartItem } from "../../../store/cart/cartTypes";
-import { Box, Button, ButtonGroup, Typography } from "@mui/material";
-import { useGetProductQuery } from "../../../graphql/generated";
+import {
+  Box,
+  IconButton,
+  ButtonGroup,
+  Typography,
+  Tooltip,
+} from "@mui/material";
+import { useProductQuery } from "../../../graphql/generated";
 import { LoadingText } from "../../../components/helper/LoadingText";
 import { graphqlClient } from "../../../graphql/client";
 import { useDispatch } from "react-redux";
 import { addCartItem, deleteCartItem } from "../../../store/cart/cartActions";
 import { useSingleCartItemStyles } from "./SingleCartItem.styles";
+import { Delete, Add, Remove } from "@mui/icons-material";
 
 interface SingleCartItemProps {
   cartItem: CartItem;
@@ -17,15 +24,9 @@ export const SingleCartItem: React.FC<SingleCartItemProps> = ({ cartItem }) => {
   const dispatch = useDispatch();
 
   const { data: productData, isLoading: productDataIsLoading } =
-    useGetProductQuery(graphqlClient, {
+    useProductQuery(graphqlClient, {
       productIdOrName: cartItem.productId,
     });
-
-  if (productDataIsLoading || !productData?.getProduct) {
-    return <LoadingText>Loading cart items...</LoadingText>;
-  }
-
-  const { getProduct: product } = productData;
 
   const onDeleteButtonClick = () => {
     dispatch(deleteCartItem(cartItem.productId));
@@ -49,45 +50,55 @@ export const SingleCartItem: React.FC<SingleCartItemProps> = ({ cartItem }) => {
     );
   };
 
+  if (productDataIsLoading || !productData?.product) {
+    return <LoadingText>Loading cart items...</LoadingText>;
+  }
+
   return (
-    <Box>
-      <Box className={classes.productBox}>
-        <img src={product?.imageUrl} className={classes.productImage} />
-        <Box className={classes.productDetails}>
-          <Typography variant="subtitle1" fontWeight="bold">
-            {product?.name}
-          </Typography>
-          <Typography variant="subtitle2">
-            {"Cost: $" + product?.price}
-          </Typography>
-          <Typography variant="subtitle2">
-            {"Quantity: " + cartItem.quantity}
-          </Typography>
-          <Typography variant="subtitle2">
-            {"Subtotal: $" + product?.price * cartItem.quantity}
-          </Typography>
+    <Box className={classes.productBox}>
+      <img
+        src={productData.product.imageUrl}
+        className={classes.productImage}
+      />
+      <Box className={classes.productDetails}>
+        <Typography variant="h6" fontWeight="bold">
+          {productData.product.name}
+        </Typography>
+        <Typography variant="subtitle1">
+          {"Cost: $" + productData.product.price}
+        </Typography>
+        <Typography variant="subtitle1">
+          {"Quantity: " + cartItem.quantity}
+        </Typography>
+        <Typography variant="subtitle1">
+          {"Subtotal: $" + productData.product.price * cartItem.quantity}
+        </Typography>
+        <Box className={classes.controls}>
+          <Tooltip title="Remove item from cart" arrow>
+            <button
+              onClick={onDeleteButtonClick}
+              className={classes.controlButton}
+            >
+              <Delete htmlColor="white" />
+            </button>
+          </Tooltip>
+          <Tooltip title="Increase quantity" arrow>
+            <button
+              onClick={onPlusButtonClick}
+              className={classes.controlButton}
+            >
+              <Add htmlColor="white" />
+            </button>
+          </Tooltip>
+          <Tooltip title="Decrease quantity" arrow>
+            <button
+              onClick={onMinusButtonClick}
+              className={classes.controlButton}
+            >
+              <Remove htmlColor="white" />
+            </button>
+          </Tooltip>
         </Box>
-      </Box>
-      <Box className={classes.controls}>
-        <ButtonGroup fullWidth>
-          <Button
-            variant="contained"
-            onClick={onDeleteButtonClick}
-            color="error"
-          >
-            Delete
-          </Button>
-          <Button
-            variant="contained"
-            onClick={onMinusButtonClick}
-            disabled={cartItem.quantity <= 1}
-          >
-            Decrease
-          </Button>
-          <Button variant="contained" onClick={onPlusButtonClick}>
-            Increase
-          </Button>
-        </ButtonGroup>
       </Box>
     </Box>
   );

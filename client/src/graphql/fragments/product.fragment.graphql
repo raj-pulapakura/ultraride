@@ -1,0 +1,13 @@
+fragment ProductFragment on ProductGraphql {
+  id
+  name
+  description
+  price
+  category
+  imageUrl
+  tags {
+    id
+    productId
+    text
+  }
+}

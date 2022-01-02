@@ -45,7 +45,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({}) => {
 
   return (
     <MainForm
-      title="Login"
+      title="Sign In"
       button={loginIsLoading ? "Logining..." : "Login"}
       onSubmit={onLoginFormSubmit}
       fields={[
@@ -63,6 +63,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({}) => {
           label: "Password",
           value: loginFormState.password,
           error: loginFormErrors.password,
+          type: "password",
           onChange: (e) =>
             setLoginFormState({
               ...loginFormState,
@@ -72,7 +73,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({}) => {
       ]}
     >
       <Typography variant="subtitle2" marginTop="1rem">
-        Don't have an account? <Link to="/register">Sign up</Link>
+        Don't have an account? <Link to="/account/register">Sign up</Link>
       </Typography>
     </MainForm>
   );

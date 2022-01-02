@@ -1,22 +1,24 @@
 import { Arg, Query, Resolver, ID, Mutation } from "type-graphql";
-import { Purchase } from "./Purchase";
+import { PurchaseEntity } from "./PurchaseEntity";
+import { PurchaseGraphql } from "./PurchaseGraphql";
+
 import { PurchaseGeneralResponse } from "./objects/PurchaseGeneralResponse";
 import { CreatePurchaseInput } from "./inputs/CreatePurchaseInput";
 import { PurchaseProductsInput } from "./inputs/PurchaseProductsInput";
-import { Product } from "../Product/Product";
+import { ProductEntity } from "../Product/ProductEntity";
 
 @Resolver()
 export class PurchaseResolver {
-  @Query(() => [Purchase])
-  getPurchases(): Promise<Purchase[]> {
-    return Purchase.find({});
+  @Query(() => [PurchaseGraphql])
+  getPurchases(): Promise<PurchaseGraphql[]> {
+    return PurchaseEntity.find({});
   }
 
-  @Query(() => Purchase, { nullable: true })
+  @Query(() => PurchaseGraphql, { nullable: true })
   async getPurchase(
     @Arg("purchaseId", () => ID) purchaseId: string
-  ): Promise<Purchase | null> {
-    const purchase = await Purchase.findOne(purchaseId);
+  ): Promise<PurchaseGraphql | null> {
+    const purchase = await PurchaseEntity.findOne(purchaseId);
     return purchase ? purchase : null;
   }
 
@@ -28,7 +30,7 @@ export class PurchaseResolver {
     const { accountId, productId, quantity, price, total } =
       createPurchaseInput;
 
-    const newPurchase = await Purchase.create({
+    const newPurchase = await PurchaseEntity.create({
       accountId,
       productId,
       quantity,
@@ -48,11 +50,11 @@ export class PurchaseResolver {
     const { purchaseListings, accountId } = purchaseProductsInput;
 
     purchaseListings.forEach(async ({ productId, quantity }) => {
-      const product = await Product.findOne(productId);
+      const product = await ProductEntity.findOne(productId);
       if (!product) {
         return;
       }
-      Purchase.create({
+      PurchaseEntity.create({
         accountId,
         productId,
         quantity,

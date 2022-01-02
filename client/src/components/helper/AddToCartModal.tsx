@@ -1,16 +1,19 @@
 import React, { useState } from "react";
-import { Box, Typography, TextField, Button } from "@mui/material";
-import { GetProductQuery } from "../../../graphql/generated";
+import { Box, Typography, Button } from "@mui/material";
+import { ProductQuery } from "../../graphql/generated";
 import { useDispatch, useSelector } from "react-redux";
-import { addCartItem } from "../../../store/cart/cartActions";
-import { LoadingText } from "../../../components/helper/LoadingText";
-import { Modal } from "../../../components/helper/Modal";
-import { StoreState } from "../../../store";
+import { addCartItem } from "../../store/cart/cartActions";
+import { LoadingText } from "../../components/helper/LoadingText";
+import { Modal } from "../../components/helper/Modal";
+import { StoreState } from "../../store";
 import { useAddToCartModalStyles } from "./AddToCartModal.styles";
-import { SmallProductDisplay } from "../../../components/helper/SmallProductDisplay";
+import { SmallProductDisplay } from "../../components/helper/SmallProductDisplay";
+import { QuantityController } from "./QuantityController";
+import { Flex } from "./Flex";
+import { Close } from "@mui/icons-material";
 
 interface AddToCartModalProps {
-  product: GetProductQuery["getProduct"];
+  product: ProductQuery["product"];
   onClose: () => void;
 }
 
@@ -56,17 +59,20 @@ export const AddToCartModal: React.FC<AddToCartModalProps> = ({
         </Typography>
       )}
       <SmallProductDisplay product={product} />
-      <TextField
-        fullWidth
-        label="Quantity"
-        type="number"
-        value={productQuantity}
-        onChange={(e) => setProductQuantity(parseInt(e.target.value))}
-        InputProps={{ inputProps: { min: 1 } }}
-      />
-      <Typography variant="body1" marginTop="1rem">
-        {`Total Price: $${product.price * productQuantity}`}
-      </Typography>
+      <Box>
+        <Flex>
+          <Typography>Quantity:</Typography>
+          <QuantityController
+            value={productQuantity}
+            onPlusButtonClick={() => setProductQuantity(productQuantity + 1)}
+            onMinusButtonClick={() => setProductQuantity(productQuantity - 1)}
+          />
+        </Flex>
+        <Flex>
+          <Typography>Subtotal:</Typography>
+          <Typography> ${product.price * productQuantity}</Typography>
+        </Flex>
+      </Box>
       <Box className={classes.addToCartButton}>
         <Button variant="contained" fullWidth onClick={onAddToCartButtonClick}>
           {currentCartItem ? "Update cart" : "Add to cart"}

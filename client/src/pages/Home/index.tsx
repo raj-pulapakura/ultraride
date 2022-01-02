@@ -1,37 +1,35 @@
-import React, { useEffect } from "react";
-import { useGetProductsQuery } from "../../graphql/generated";
-import { graphqlClient } from "../../graphql/client";
-import { ProductList } from "./components/ProductList";
-import { LoadingText } from "../../components/helper/LoadingText";
-import { useDispatch, useSelector } from "react-redux";
-import { setProducts } from "../../store/product/productActions";
-import { StoreState } from "../../store";
+import { Box, Button, Typography } from "@mui/material";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 interface HomePageProps {}
 
 export const HomePage: React.FC<HomePageProps> = ({}) => {
-  const { data: productsData, isLoading: productsDataIsLoading } =
-    useGetProductsQuery(graphqlClient);
+  const navigate = useNavigate();
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (productsData?.getProducts) {
-      dispatch(setProducts(productsData?.getProducts));
-    }
-  }, [productsData?.getProducts]);
-
-  const products = useSelector<StoreState>(
-    (state) => state.product.products
-  ) as StoreState["product"]["products"];
-
-  if (productsDataIsLoading || !productsData?.getProducts) {
-    return <LoadingText>Loading products...</LoadingText>;
-  }
+  const onBrowseAllProductsButtonClick = () => {
+    navigate("/products");
+  };
 
   return (
-    <>
-      <ProductList products={products} />
-    </>
+    <Box>
+      <Typography
+        variant="h2"
+        fontWeight="bold"
+        sx={{
+          background: "linear-gradient(to bottom right, #c364fa, #190087)",
+          backgroundClip: "text",
+          color: "transparent",
+        }}
+      ></Typography>
+      <Button
+        onClick={onBrowseAllProductsButtonClick}
+        variant="contained"
+        size="large"
+        fullWidth
+      >
+        Browse All Products
+      </Button>
+    </Box>
   );
 };

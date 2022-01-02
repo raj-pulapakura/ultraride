@@ -1,10 +1,5 @@
-query GetProduct($productIdOrName: ID!) {
-  getProduct(productIdOrName: $productIdOrName) {
-    id
-    name
-    description
-    price
-    category
-    imageUrl
+query Product($productIdOrName: ID!) {
+  product(productIdOrName: $productIdOrName) {
+    ...ProductFragment
   }
 }

@@ -1,28 +1,76 @@
 import { Arg, Query, Resolver, ID, Mutation } from "type-graphql";
-import { Product } from "./Product";
+import { ProductEntity } from "./ProductEntity";
+import { ProductGraphql } from "./ProductGraphql";
 import { ProductGeneralResponse } from "./objects/ProductGeneralResponse";
 import { CreateProductInput } from "./inputs/CreateProductInput";
+import { TagEntity } from "../Tag/TagEntity";
 
 @Resolver()
 export class ProductResolver {
-  @Query(() => [Product])
-  getProducts(): Promise<Product[]> {
-    return Product.find({});
+  @Query(() => ProductGraphql, { nullable: true })
+  async product(
+    @Arg("productIdOrName", () => ID) productIdOrName: string
+  ): Promise<ProductGraphql | null> {
+    let product: ProductEntity | undefined;
+
+    product = await ProductEntity.findOne(productIdOrName);
+
+    if (!product) {
+      product = await ProductEntity.findOne({
+        where: { name: productIdOrName },
+      });
+    }
+
+    if (!product) {
+      return null;
+    }
+
+    const {
+      id,
+      category,
+      price,
+      imageUrl,
+      name,
+      createdAt,
+      updatedAt,
+      description,
+    } = product;
+
+    const tags = (await TagEntity.find({ productId: id })).map((tag) => ({
+      id: tag.id,
+      text: tag.text,
+      productId: tag.productId,
+      createdAt: tag.createdAt,
+      updatedAt: tag.updatedAt,
+    }));
+
+    return {
+      id,
+      category,
+      price,
+      imageUrl,
+      name,
+      createdAt,
+      updatedAt,
+      description,
+      tags,
+    };
   }
 
-  @Query(() => Product, { nullable: true })
-  async getProduct(
-    @Arg("productIdOrName", () => ID) productIdOrName: string
-  ): Promise<Product | null> {
-    const productById = await Product.findOne(productIdOrName);
-    if (productById) return productById;
+  @Query(() => [ProductGraphql])
+  async products(): Promise<ProductGraphql[]> {
+    const productEntities = await ProductEntity.find({});
 
-    const productByName = await Product.findOne({
-      where: { name: productIdOrName },
-    });
-    if (productByName) return productByName;
+    const productObjects: ProductGraphql[] = [];
 
-    return null;
+    for (const productEntity of productEntities) {
+      const productObject = await this.product(productEntity.id);
+      if (productObject) {
+        productObjects.push(productObject);
+      }
+    }
+
+    return productObjects;
   }
 
   @Mutation(() => ProductGeneralResponse, { nullable: true })
@@ -30,9 +78,12 @@ export class ProductResolver {
     @Arg("input", () => CreateProductInput)
     createProductInput: CreateProductInput
   ): Promise<ProductGeneralResponse> {
-    const { name, description, price, category, imageUrl } = createProductInput;
+    const { name, description, price, category, imageUrl, tags } =
+      createProductInput;
 
-    const productAlreadyExists = await Product.findOne({ where: { name } });
+    const productAlreadyExists = await ProductEntity.findOne({
+      where: { name },
+    });
     if (productAlreadyExists) {
       return {
         error: {
@@ -43,13 +94,19 @@ export class ProductResolver {
       };
     }
 
-    const newProduct = await Product.create({
+    const newProduct = await ProductEntity.create({
       name,
       description,
       price,
       category,
       imageUrl,
     }).save();
+
+    tags.forEach(
+      async (tag) =>
+        await TagEntity.create({ productId: newProduct.id, text: tag }).save()
+    );
+
     return {
       product: newProduct,
     };
@@ -60,11 +117,11 @@ export class ProductResolver {
     @Arg("productIdOrName", () => String) productIdOrName: string
   ): Promise<Boolean> {
     try {
-      await Product.delete({ id: productIdOrName }); // throws error if cannot delete
+      await ProductEntity.delete({ id: productIdOrName }); // throws error if cannot delete
       return true;
     } catch (e) {
       try {
-        await Product.delete({ name: productIdOrName });
+        await ProductEntity.delete({ name: productIdOrName });
         return true;
       } catch (e) {
         return false;
