@@ -1,12 +1,6 @@
 import React from "react";
 import { CartItem } from "../../../store/cart/cartTypes";
-import {
-  Box,
-  IconButton,
-  ButtonGroup,
-  Typography,
-  Tooltip,
-} from "@mui/material";
+import { Box, Typography, Tooltip, IconButton } from "@mui/material";
 import { useProductQuery } from "../../../graphql/generated";
 import { LoadingText } from "../../../components/helper/LoadingText";
 import { graphqlClient } from "../../../graphql/client";
@@ -74,30 +68,15 @@ export const SingleCartItem: React.FC<SingleCartItemProps> = ({ cartItem }) => {
           {"Subtotal: $" + productData.product.price * cartItem.quantity}
         </Typography>
         <Box className={classes.controls}>
-          <Tooltip title="Remove item from cart" arrow>
-            <button
-              onClick={onDeleteButtonClick}
-              className={classes.controlButton}
-            >
-              <Delete htmlColor="white" />
-            </button>
-          </Tooltip>
-          <Tooltip title="Increase quantity" arrow>
-            <button
-              onClick={onPlusButtonClick}
-              className={classes.controlButton}
-            >
-              <Add htmlColor="white" />
-            </button>
-          </Tooltip>
-          <Tooltip title="Decrease quantity" arrow>
-            <button
-              onClick={onMinusButtonClick}
-              className={classes.controlButton}
-            >
-              <Remove htmlColor="white" />
-            </button>
-          </Tooltip>
+          <IconButton onClick={onDeleteButtonClick}>
+            <Delete htmlColor="black" />
+          </IconButton>
+          <IconButton onClick={onPlusButtonClick}>
+            <Add htmlColor="black" />
+          </IconButton>
+          <IconButton onClick={onMinusButtonClick}>
+            <Remove htmlColor="black" />
+          </IconButton>
         </Box>
       </Box>
     </Box>

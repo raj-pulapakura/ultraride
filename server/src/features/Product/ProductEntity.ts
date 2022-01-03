@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
+import { Column, Entity, OneToMany } from "typeorm";
 import { BaseModel } from "../../objects/BaseModel";
 import { PurchaseEntity } from "../Purchase/PurchaseEntity";
 import { TagEntity } from "../Tag/TagEntity";

@@ -66,13 +66,14 @@ export const NavbarControls: React.FC<NavbarControlsProps> = ({}) => {
     navigate(path);
   };
 
+  const screenIsXSmall = useMediaQuery(theme.breakpoints.up("xs"));
   const screenIsSmall = useMediaQuery(theme.breakpoints.up("sm"));
   const screenIsMedium = useMediaQuery(theme.breakpoints.up("md"));
 
-  // useEffect(
-  //   () => console.log({ screenIsSmall, screenIsMedium }),
-  //   [screenIsSmall, screenIsMedium]
-  // );
+  useEffect(
+    () => console.log({ screenIsXSmall, screenIsSmall, screenIsMedium }),
+    [screenIsXSmall, screenIsSmall, screenIsMedium]
+  );
 
   const Brand = (
     <Typography
@@ -112,9 +113,7 @@ export const NavbarControls: React.FC<NavbarControlsProps> = ({}) => {
             <Flex style={{ gap: "2rem" }}>
               {navbarLinks.map((navbarLink) => (
                 <Badge
-                  badgeContent={
-                    navbarLink.to === "/cart" ? totalItems : 0
-                  }
+                  badgeContent={navbarLink.to === "/cart" ? totalItems : 0}
                   color="secondary"
                 >
                   <Typography key={navbarLink.text} fontWeight="bold">

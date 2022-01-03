@@ -1,6 +1,5 @@
 import { Field, Float, ID, Int, ObjectType } from "type-graphql";
 import { BaseGraphql } from "../../objects/BaseGraphql";
-import { BaseModel } from "../../objects/BaseModel";
 import { TagGraphql } from "../Tag/TagGraphql";
 
 @ObjectType()

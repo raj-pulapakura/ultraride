@@ -1,22 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import {
-  Typography,
-  Box,
-  Button,
-  useMediaQuery,
-  Chip,
-  Grid,
-} from "@mui/material";
+import { Typography, Box, useMediaQuery, Chip, Grid } from "@mui/material";
 import { LoadingText } from "../../components/helper/LoadingText";
 import { graphqlClient } from "../../graphql/client";
 import { useProductQuery } from "../../graphql/generated";
-import { makeStyles } from "@mui/styles";
-import { AddToCartModal } from "../../components/helper/AddToCartModal";
 import { theme } from "../../theme";
 import { Flex } from "../../components/helper/Flex";
 import { ChevronLeft } from "@mui/icons-material";
 import { ProductControls } from "./components/ProductControls";
+import { RelatedProducts } from "./components/RelatedProducts";
 
 interface ProductDetailPageProps {}
 
@@ -81,71 +73,63 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({}) => {
       </Box>
 
       {screenIsMedium ? (
-        <Flex style={{ gap: "4rem", alignItems: "flex-start" }}>
-          <Grid sx={{ width: "60%" }} container spacing={theme.spacing(1)}>
-            <Grid md={6} item>
-              <img
-                src={productData.product.imageUrl}
-                style={{ width: "100%" }}
-              />
+        <Box>
+          <Flex style={{ gap: "4rem", alignItems: "flex-start" }}>
+            <Grid sx={{ width: "50%" }} container spacing={theme.spacing(1)}>
+              <Grid md={6} item>
+                <img
+                  src={productData.product.imageUrl}
+                  style={{ width: "100%" }}
+                />
+              </Grid>
+              <Grid md={6} item>
+                <img
+                  src={productData.product.imageUrl}
+                  style={{ width: "100%" }}
+                />
+              </Grid>
+              <Grid md={6} item>
+                <img
+                  src={productData.product.imageUrl}
+                  style={{ width: "100%" }}
+                />
+              </Grid>
+              <Grid md={6} item>
+                <img
+                  src={productData.product.imageUrl}
+                  style={{ width: "100%" }}
+                />
+              </Grid>
             </Grid>
-            <Grid md={6} item>
-              <img
-                src={productData.product.imageUrl}
-                style={{ width: "100%" }}
-              />
-            </Grid>
-            <Grid md={6} item>
-              <img
-                src={productData.product.imageUrl}
-                style={{ width: "100%" }}
-              />
-            </Grid>
-            <Grid md={6} item>
-              <img
-                src={productData.product.imageUrl}
-                style={{ width: "100%" }}
-              />
-            </Grid>
-          </Grid>
-          <ProductControls
-            sx={{ width: "40%" }}
-            product={productData.product}
-          />
-        </Flex>
+            <ProductControls
+              sx={{ width: "50%" }}
+              product={productData.product}
+            />
+          </Flex>
+        </Box>
       ) : screenIsSmall ? (
-        <Flex style={{ gap: "2rem", alignItems: "flex-start" }}>
-          <Grid sx={{ width: "60%" }} container spacing={theme.spacing(1)}>
-            <Grid sm={12} item>
-              <img
-                src={productData.product.imageUrl}
-                style={{ width: "100%" }}
-              />
+        <Box>
+          <Flex style={{ gap: "2rem", alignItems: "flex-start" }}>
+            <Grid sx={{ width: "50%" }} container spacing={theme.spacing(1)}>
+              <Grid sm={12} item>
+                <img
+                  src={productData.product.imageUrl}
+                  style={{ width: "100%" }}
+                />
+              </Grid>
+              <Grid sm={12} item>
+                <img
+                  src={productData.product.imageUrl}
+                  style={{ width: "100%" }}
+                />
+              </Grid>
             </Grid>
-            <Grid sm={12} item>
-              <img
-                src={productData.product.imageUrl}
-                style={{ width: "100%" }}
-              />
-            </Grid>
-            <Grid sm={12} item>
-              <img
-                src={productData.product.imageUrl}
-                style={{ width: "100%" }}
-              />
-            </Grid>
-            <Grid sm={12} item>
-              <img
-                src={productData.product.imageUrl}
-                style={{ width: "100%" }}
-              />
-            </Grid>
-          </Grid>
-          <ProductControls
-            sx={{ width: "40%" }}
-            product={productData.product}
-          />
-        </Flex>
+            <ProductControls
+              sx={{ width: "50%" }}
+              product={productData.product}
+            />
+          </Flex>
+        </Box>
       ) : (
         <Box>
           <img

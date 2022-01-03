@@ -68,8 +68,8 @@ export const ProductList: React.FC<ProductListProps> = ({ products }) => {
               xs={12}
               sm={6}
               md={4}
-              lg={3}
-              xl={3}
+              lg={4}
+              xl={4}
             >
               <SingleProduct key={product.id} product={product} />
             </Grid>
@@ -77,9 +77,7 @@ export const ProductList: React.FC<ProductListProps> = ({ products }) => {
         </Grid>
       ) : (
         <Box>
-          <Typography>
-            No products found.
-          </Typography>
+          <Typography>No products found.</Typography>
         </Box>
       )}
     </>

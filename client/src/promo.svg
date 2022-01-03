@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="456" height="234" viewBox="0 0 456 234">
+  <defs>
+    <filter id="ULTRARIDE" x="42" y="43" width="413.5" height="124.5" filterUnits="userSpaceOnUse">
+      <feOffset dx="10" dy="10" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="ULTRARIDE-2" x="32" y="27" width="413.5" height="124.5" filterUnits="userSpaceOnUse">
+      <feOffset dx="10" dy="10" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="2.5" result="blur-2"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="ULTRARIDE-3" x="19" y="11" width="413.5" height="124.5" filterUnits="userSpaceOnUse">
+      <feOffset dx="10" dy="10" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="2.5" result="blur-3"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-3"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_8" data-name="Group 8" transform="translate(209 247)">
+    <rect id="Rectangle_8" data-name="Rectangle 8" width="456" height="234" transform="translate(-209 -247)"/>
+    <g id="Group_6" data-name="Group 6" transform="translate(-12 -6)">
+      <g transform="matrix(1, 0, 0, 1, -197, -241)" filter="url(#ULTRARIDE)">
+        <text id="ULTRARIDE-4" data-name="ULTRARIDE" transform="translate(42 43)" fill="#fff" font-size="89" font-family="FiraSansCondensed-ExtraBoldItalic, Fira Sans" font-weight="800" font-style="italic" opacity="0.11"><tspan x="0" y="83">ULTRARIDE</tspan></text>
+      </g>
+      <g transform="matrix(1, 0, 0, 1, -197, -241)" filter="url(#ULTRARIDE-2)">
+        <text id="ULTRARIDE-5" data-name="ULTRARIDE" transform="translate(32 27)" fill="#fff" font-size="89" font-family="FiraSansCondensed-ExtraBoldItalic, Fira Sans" font-weight="800" font-style="italic" opacity="0.41"><tspan x="0" y="83">ULTRARIDE</tspan></text>
+      </g>
+      <g transform="matrix(1, 0, 0, 1, -197, -241)" filter="url(#ULTRARIDE-3)">
+        <text id="ULTRARIDE-6" data-name="ULTRARIDE" transform="translate(19 11)" fill="#fff" font-size="89" font-family="FiraSansCondensed-ExtraBoldItalic, Fira Sans" font-weight="800" font-style="italic"><tspan x="0" y="83">ULTRARIDE</tspan></text>
+      </g>
+    </g>
+    <text id="THE_ONE-STOP_SHOP_FOR_SHOE_ENTHUSIASTS." data-name="THE ONE-STOP SHOP FOR SHOE ENTHUSIASTS." transform="translate(-190 -116)" fill="#fff" font-size="32" font-family="FiraSansCondensed-ExtraBoldItalic, Fira Sans" font-weight="800" font-style="italic"><tspan x="0" y="30">THE ONE-STOP SHOP FOR </tspan><tspan x="0" y="68">SHOE ENTHUSIASTS.</tspan></text>
+  </g>
+</svg>

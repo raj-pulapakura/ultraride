@@ -2,20 +2,23 @@ import React from "react";
 import { NavBar } from "./Navbar";
 import { Box } from "@mui/material";
 import { Menu } from "./Menu";
-import { useLayoutStyles } from "./Layout.styles";
-import { Footer } from "./Footer";
+import { useMediaQuery } from "@mui/material";
+import { theme } from "../../theme";
 
 interface LayoutProps {}
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const classes = useLayoutStyles();
+  const screenIsXSmall = useMediaQuery(theme.breakpoints.down("xs"));
+
+  const layoutMargin = screenIsXSmall
+    ? "1rem 1rem 1rem 1rem"
+    : "2rem 2rem 1rem 2rem";
 
   return (
     <>
       <NavBar />
       <Menu />
-      <Box className={classes.page}>{children}</Box>
-      {/* <Footer`  `  /> */}
+      <Box sx={{ margin: layoutMargin }}>{children}</Box>
     </>
   );
 };

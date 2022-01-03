@@ -107,8 +107,28 @@ export class ProductResolver {
         await TagEntity.create({ productId: newProduct.id, text: tag }).save()
     );
 
+    const createdTags = (
+      await TagEntity.find({ productId: newProduct.id })
+    ).map((tag) => ({
+      id: tag.id,
+      text: tag.text,
+      productId: tag.productId,
+      createdAt: tag.createdAt,
+      updatedAt: tag.updatedAt,
+    }));
+
     return {
-      product: newProduct,
+      product: {
+        tags: createdTags,
+        name: newProduct.name,
+        description: newProduct.description,
+        category: newProduct.category,
+        price: newProduct.price,
+        id: newProduct.id,
+        imageUrl: newProduct.imageUrl,
+        createdAt: newProduct.createdAt,
+        updatedAt: newProduct.updatedAt,
+      },
     };
   }
 
