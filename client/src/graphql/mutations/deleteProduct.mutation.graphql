@@ -1,0 +1,3 @@
+mutation DeleteProduct($productIdOrName: String!) {
+  deleteProduct(productIdOrName: $productIdOrName)
+}

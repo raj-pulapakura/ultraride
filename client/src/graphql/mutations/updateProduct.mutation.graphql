@@ -1,0 +1,26 @@
+mutation UpdateProduct($input: UpdateProductInput!) {
+  updateProduct(input: $input) {
+    error {
+      field
+      message
+      ufm
+    }
+    product {
+      createdAt
+      id
+      updatedAt
+      name
+      description
+      category
+      price
+      imageUrl
+      tags {
+        id
+        createdAt
+        updatedAt
+        productId
+        text
+      }
+    }
+  }
+}

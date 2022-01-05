@@ -1,9 +1,13 @@
 import { Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { MainForm } from "../../components/helper/MainForm";
+import { SimpleForm } from "../../shared/SimpleForm";
 import { graphqlClient } from "../../graphql/client";
 import { useLoginMutation } from "../../graphql/generated";
+import { FormContainer } from "../../shared/FormContainer";
+import { FormSubmitButton } from "../../shared/FormSubmitButton";
+import { FormTitle } from "../../shared/FormTitle";
+import { SimpleFormControl } from "../../shared/SimpleFormControl";
 
 interface LoginPageProps {}
 
@@ -44,37 +48,40 @@ export const LoginPage: React.FC<LoginPageProps> = ({}) => {
   };
 
   return (
-    <MainForm
-      title="Sign In"
-      button={loginIsLoading ? "Logining..." : "Login"}
-      onSubmit={onLoginFormSubmit}
-      fields={[
-        {
-          label: "Email",
-          value: loginFormState.email,
-          error: loginFormErrors.email,
-          onChange: (e) =>
+    <FormContainer>
+      <form onSubmit={onLoginFormSubmit}>
+        <FormTitle>Sign In</FormTitle>
+        <SimpleFormControl
+          value={loginFormState.email}
+          onChange={(e) =>
             setLoginFormState({
               ...loginFormState,
               email: e.target.value,
-            }),
-        },
-        {
-          label: "Password",
-          value: loginFormState.password,
-          error: loginFormErrors.password,
-          type: "password",
-          onChange: (e) =>
+            })
+          }
+          label="Email"
+          type="email"
+          error={loginFormErrors.email}
+        />
+        <SimpleFormControl
+          value={loginFormState.password}
+          onChange={(e) =>
             setLoginFormState({
               ...loginFormState,
               password: e.target.value,
-            }),
-        },
-      ]}
-    >
-      <Typography variant="subtitle2" marginTop="1rem">
-        Don't have an account? <Link to="/account/register">Sign up</Link>
-      </Typography>
-    </MainForm>
+            })
+          }
+          label="Password"
+          error={loginFormErrors.password}
+        />
+        <FormSubmitButton>
+          {loginIsLoading ? "Signing in..." : "Sign In"}
+        </FormSubmitButton>
+
+        <Typography variant="subtitle2" marginTop="1rem">
+          Don't have an account? <Link to="/account/register">Register</Link>
+        </Typography>
+      </form>
+    </FormContainer>
   );
 };

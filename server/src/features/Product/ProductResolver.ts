@@ -1,9 +1,13 @@
-import { Arg, Query, Resolver, ID, Mutation } from "type-graphql";
+import { Arg, Query, Resolver, ID, Mutation, Ctx } from "type-graphql";
 import { ProductEntity } from "./ProductEntity";
 import { ProductGraphql } from "./ProductGraphql";
 import { ProductGeneralResponse } from "./objects/ProductGeneralResponse";
 import { CreateProductInput } from "./inputs/CreateProductInput";
 import { TagEntity } from "../Tag/TagEntity";
+import { adminIsLoggedIn } from "../../utils/adminIsLoggedIn";
+import { Context } from "../../types";
+import { UpdateProductInput } from "./inputs/UpdateProductInput";
+import { ProductService } from "../../services/ProductService";
 
 @Resolver()
 export class ProductResolver {
@@ -75,61 +79,29 @@ export class ProductResolver {
 
   @Mutation(() => ProductGeneralResponse, { nullable: true })
   async createProduct(
+    @Ctx() { req }: Context,
     @Arg("input", () => CreateProductInput)
     createProductInput: CreateProductInput
   ): Promise<ProductGeneralResponse> {
-    const { name, description, price, category, imageUrl, tags } =
-      createProductInput;
-
-    const productAlreadyExists = await ProductEntity.findOne({
-      where: { name },
-    });
-    if (productAlreadyExists) {
+    if (!adminIsLoggedIn(req)) {
       return {
         error: {
-          field: "name",
-          message: "a product with that name already exists",
-          ufm: "A product with that name already exists. Please enter a different one.",
+          field: "",
+          message: "You are not authorised to do that",
+          ufm: "You are not authorised to do that",
         },
       };
     }
 
-    const newProduct = await ProductEntity.create({
-      name,
-      description,
-      price,
-      category,
-      imageUrl,
-    }).save();
+    return await ProductService.createProduct(createProductInput);
+  }
 
-    tags.forEach(
-      async (tag) =>
-        await TagEntity.create({ productId: newProduct.id, text: tag }).save()
-    );
-
-    const createdTags = (
-      await TagEntity.find({ productId: newProduct.id })
-    ).map((tag) => ({
-      id: tag.id,
-      text: tag.text,
-      productId: tag.productId,
-      createdAt: tag.createdAt,
-      updatedAt: tag.updatedAt,
-    }));
-
-    return {
-      product: {
-        tags: createdTags,
-        name: newProduct.name,
-        description: newProduct.description,
-        category: newProduct.category,
-        price: newProduct.price,
-        id: newProduct.id,
-        imageUrl: newProduct.imageUrl,
-        createdAt: newProduct.createdAt,
-        updatedAt: newProduct.updatedAt,
-      },
-    };
+  @Mutation(() => ProductGeneralResponse)
+  async updateProduct(
+    @Arg("input", () => UpdateProductInput)
+    updateProductInput: UpdateProductInput
+  ): Promise<ProductGeneralResponse> {
+    return await ProductService.updateProduct(updateProductInput);
   }
 
   @Mutation(() => Boolean)

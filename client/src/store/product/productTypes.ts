@@ -1,9 +1,11 @@
+import { ProductsQuery } from "../../graphql/generated";
+
 export enum ProductActionTypes {
   SET_FITLER_TAGS = "SET_FILTER_TAGS",
   SET_FILTER_TAGS_LOADED = "SET_FILTER_TAGS_LOADED",
-  SET_FILTER_CATEGORIES = "SET_FILTER_CATEGORIES",
-  SET_FILTER_CATEGORIES_LOADED = "SET_FILTER_CATEGORIES_LOADED",
   SET_SORTING_METHOD = "SET_SORTING_METHOD",
+  SET_FEATURED_PRODUCT_ID = "SET_FEATURED_PRODUCT_ID",
+  SET_FEATURED_PRODUCT_ID_LOADED = "SET_FEATURED_PRODUCT_ID_LOADED",
 }
 
 export enum SortingMethods {
@@ -18,6 +20,8 @@ export interface ProductState {
   filterCategories: string[];
   filterCategoriesLoaded: boolean;
   sortingMethod: SortingMethods;
+  featuredProductId: string;
+  featuredProductIdLoaded: boolean;
 }
 
 export interface SetFilterTagsAction {
@@ -35,19 +39,19 @@ export interface SetFilterTagsLoadedAction {
   payload: ProductState["filterTagsLoaded"];
 }
 
-export interface SetFilterCategoriesAction {
-  type: ProductActionTypes.SET_FILTER_CATEGORIES;
-  payload: ProductState["filterCategories"];
+export interface SetFeaturedProductIdAction {
+  type: ProductActionTypes.SET_FEATURED_PRODUCT_ID;
+  payload: ProductState["featuredProductId"];
 }
 
-export interface SetFilterCategoriesLoadedAction {
-  type: ProductActionTypes.SET_FILTER_CATEGORIES_LOADED;
-  payload: ProductState["filterCategoriesLoaded"];
+export interface SetFeaturedProductIdLoadedAction {
+  type: ProductActionTypes.SET_FEATURED_PRODUCT_ID_LOADED;
+  payload: ProductState["featuredProductIdLoaded"];
 }
 
 export type ProductAction =
   | SetFilterTagsAction
   | SetSortingMethodAction
   | SetFilterTagsLoadedAction
-  | SetFilterCategoriesAction
-  | SetFilterCategoriesLoadedAction;
+  | SetFeaturedProductIdAction
+  | SetFeaturedProductIdLoadedAction;

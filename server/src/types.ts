@@ -16,7 +16,8 @@ export type EnvironmentVariables = {
 
 export interface Context {
   req: Request & {
-    session: Session & Partial<SessionData> & { accountId: string };
+    session: Session &
+      Partial<SessionData> & { accountId: string; adminLoggedIn: boolean };
   };
   res: Response;
   redis: RedisClient;

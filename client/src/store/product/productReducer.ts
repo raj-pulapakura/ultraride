@@ -11,6 +11,8 @@ const initialState: ProductState = {
   filterCategories: [],
   filterCategoriesLoaded: false,
   sortingMethod: SortingMethods.NO_SORT,
+  featuredProductId: "",
+  featuredProductIdLoaded: false,
 };
 
 export const productReducer = (
@@ -34,15 +36,15 @@ export const productReducer = (
         ...state,
         filterTagsLoaded: action.payload,
       };
-    case ProductActionTypes.SET_FILTER_CATEGORIES:
+    case ProductActionTypes.SET_FEATURED_PRODUCT_ID:
       return {
         ...state,
-        filterCategories: action.payload,
+        featuredProductId: action.payload,
       };
-    case ProductActionTypes.SET_FILTER_CATEGORIES_LOADED:
+    case ProductActionTypes.SET_FEATURED_PRODUCT_ID_LOADED:
       return {
         ...state,
-        filterCategoriesLoaded: action.payload,
+        featuredProductIdLoaded: action.payload,
       };
     default:
       return state;

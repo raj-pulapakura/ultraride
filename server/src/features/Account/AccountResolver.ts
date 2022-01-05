@@ -6,8 +6,10 @@ import { hash, verify } from "argon2";
 import { AccountRegisterInput } from "./inputs/AccountRegisterInput";
 import { Context } from "../../types";
 import { AccountLoginInput } from "./inputs/AccountLoginInput";
-import { AUTH_COOKIE, env } from "../../constants";
+import { AUTH_COOKIE, env, TEN_YEARS } from "../../constants";
 import { AccountAdminLoginInput } from "./inputs/AccountAdminLoginInput";
+import { v4 as uuid } from "uuid";
+import { adminIsLoggedIn } from "../../utils/adminIsLoggedIn";
 
 @Resolver()
 export class AccountResolver {
@@ -77,10 +79,10 @@ export class AccountResolver {
       account: newAccount,
     };
   }
-
+ 
   @Query(() => AccountGeneralResponse, { nullable: true })
   async me(@Ctx() { req }: Context): Promise<AccountGeneralResponse | null> {
-    const { accountId } = req.session;
+    const { accountId, adminLoggedIn } = req.session;
     if (!accountId) return null;
     const account = await AccountEntity.findOne(accountId);
     if (!account) return null;
@@ -131,16 +133,40 @@ export class AccountResolver {
 
   @Mutation(() => Boolean)
   async adminLogin(
-    // @Ctx() { res }: Context,
+    @Ctx() { redis, res }: Context,
     @Arg("input", () => AccountAdminLoginInput)
     adminLoginInput: AccountAdminLoginInput
   ): Promise<Boolean> {
     const { adminId, adminPassword } = adminLoginInput;
 
-    if (adminId === env.ADMIN_ID && adminPassword === env.ADMIN_PASSWORD) {
-      return true;
+    if (adminId !== env.ADMIN_ID || adminPassword !== env.ADMIN_PASSWORD) {
+      return false;
     }
 
-    return false;
+    const sessionId = uuid();
+
+    redis.set(
+      sessionId,
+      JSON.stringify({ adminId, adminPassword }),
+      (error, reply) => {
+        if (error) {
+          throw error;
+        }
+      }
+    );
+
+    res.cookie("admin-cookie", sessionId, {
+      httpOnly: true,
+      maxAge: TEN_YEARS,
+      secure: false,
+      sameSite: "lax",
+    });
+
+    return true;
+  }
+
+  @Query(() => Boolean)
+  adminMe(@Ctx() { req }: Context) {
+    return adminIsLoggedIn(req);
   }
 }

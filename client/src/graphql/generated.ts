@@ -54,7 +54,6 @@ export type AccountGraphql = {
   firstName: Scalars["String"];
   id: Scalars["ID"];
   lastName: Scalars["String"];
-  password: Scalars["String"];
   role: Scalars["String"];
   updatedAt: Scalars["String"];
 };
@@ -106,6 +105,7 @@ export type Mutation = {
   logout: Scalars["Boolean"];
   purchaseProducts: Scalars["Boolean"];
   register?: Maybe<AccountGeneralResponse>;
+  updateProduct: ProductGeneralResponse;
 };
 
 export type MutationAdminLoginArgs = {
@@ -134,6 +134,10 @@ export type MutationPurchaseProductsArgs = {
 
 export type MutationRegisterArgs = {
   input: AccountRegisterInput;
+};
+
+export type MutationUpdateProductArgs = {
+  input: UpdateProductInput;
 };
 
 export type ProductGeneralResponse = {
@@ -187,6 +191,7 @@ export type Query = {
   __typename?: "Query";
   account?: Maybe<AccountGraphql>;
   accounts: Array<AccountGraphql>;
+  adminMe: Scalars["Boolean"];
   getPurchase?: Maybe<PurchaseGraphql>;
   getPurchases: Array<PurchaseGraphql>;
   me?: Maybe<AccountGeneralResponse>;
@@ -215,6 +220,23 @@ export type TagGraphql = {
   updatedAt: Scalars["String"];
 };
 
+export type UpdateProductInput = {
+  category?: InputMaybe<Scalars["String"]>;
+  description?: InputMaybe<Scalars["String"]>;
+  id: Scalars["ID"];
+  imageUrl?: InputMaybe<Scalars["String"]>;
+  name?: InputMaybe<Scalars["String"]>;
+  price?: InputMaybe<Scalars["Float"]>;
+  tags?: InputMaybe<Array<Scalars["String"]>>;
+};
+
+export type FieldErrorFragmentFragment = {
+  __typename?: "FieldError";
+  field: string;
+  message: string;
+  ufm: string;
+};
+
 export type ProductFragmentFragment = {
   __typename?: "ProductGraphql";
   id: string;
@@ -238,6 +260,56 @@ export type AdminLoginMutationVariables = Exact<{
 export type AdminLoginMutation = {
   __typename?: "Mutation";
   adminLogin: boolean;
+};
+
+export type CreateProductMutationVariables = Exact<{
+  input: CreateProductInput;
+}>;
+
+export type CreateProductMutation = {
+  __typename?: "Mutation";
+  createProduct?:
+    | {
+        __typename?: "ProductGeneralResponse";
+        product?:
+          | {
+              __typename?: "ProductGraphql";
+              id: string;
+              name: string;
+              description: string;
+              price: number;
+              category: string;
+              imageUrl: string;
+              tags: Array<{
+                __typename?: "TagGraphql";
+                id: string;
+                productId: string;
+                text: string;
+              }>;
+            }
+          | null
+          | undefined;
+        error?:
+          | {
+              __typename?: "FieldError";
+              field: string;
+              message: string;
+              ufm: string;
+            }
+          | null
+          | undefined;
+      }
+    | null
+    | undefined;
+};
+
+export type DeleteProductMutationVariables = Exact<{
+  productIdOrName: Scalars["String"];
+}>;
+
+export type DeleteProductMutation = {
+  __typename?: "Mutation";
+  deleteProduct: boolean;
 };
 
 export type LoginMutationVariables = Exact<{
@@ -290,7 +362,6 @@ export type RegisterMutation = {
               firstName: string;
               lastName: string;
               email: string;
-              password: string;
               role: string;
             }
           | null
@@ -308,6 +379,68 @@ export type RegisterMutation = {
     | null
     | undefined;
 };
+
+export type UpdateProductMutationVariables = Exact<{
+  input: UpdateProductInput;
+}>;
+
+export type UpdateProductMutation = {
+  __typename?: "Mutation";
+  updateProduct: {
+    __typename?: "ProductGeneralResponse";
+    error?:
+      | {
+          __typename?: "FieldError";
+          field: string;
+          message: string;
+          ufm: string;
+        }
+      | null
+      | undefined;
+    product?:
+      | {
+          __typename?: "ProductGraphql";
+          createdAt: string;
+          id: string;
+          updatedAt: string;
+          name: string;
+          description: string;
+          category: string;
+          price: number;
+          imageUrl: string;
+          tags: Array<{
+            __typename?: "TagGraphql";
+            id: string;
+            createdAt: string;
+            updatedAt: string;
+            productId: string;
+            text: string;
+          }>;
+        }
+      | null
+      | undefined;
+  };
+};
+
+export type AccountsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type AccountsQuery = {
+  __typename?: "Query";
+  accounts: Array<{
+    __typename?: "AccountGraphql";
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    role: string;
+  }>;
+};
+
+export type AdminMeQueryVariables = Exact<{ [key: string]: never }>;
+
+export type AdminMeQuery = { __typename?: "Query"; adminMe: boolean };
 
 export type MeQueryVariables = Exact<{ [key: string]: never }>;
 
@@ -388,6 +521,13 @@ export type ProductsQuery = {
   }>;
 };
 
+export const FieldErrorFragmentFragmentDoc = `
+    fragment FieldErrorFragment on FieldError {
+  field
+  message
+  ufm
+}
+    `;
 export const ProductFragmentFragmentDoc = `
     fragment ProductFragment on ProductGraphql {
   id
@@ -434,6 +574,76 @@ export const useAdminLoginMutation = <TError = unknown, TContext = unknown>(
       )(),
     options
   );
+export const CreateProductDocument = `
+    mutation CreateProduct($input: CreateProductInput!) {
+  createProduct(input: $input) {
+    product {
+      ...ProductFragment
+    }
+    error {
+      ...FieldErrorFragment
+    }
+  }
+}
+    ${ProductFragmentFragmentDoc}
+${FieldErrorFragmentFragmentDoc}`;
+export const useCreateProductMutation = <TError = unknown, TContext = unknown>(
+  client: GraphQLClient,
+  options?: UseMutationOptions<
+    CreateProductMutation,
+    TError,
+    CreateProductMutationVariables,
+    TContext
+  >,
+  headers?: RequestInit["headers"]
+) =>
+  useMutation<
+    CreateProductMutation,
+    TError,
+    CreateProductMutationVariables,
+    TContext
+  >(
+    "CreateProduct",
+    (variables?: CreateProductMutationVariables) =>
+      fetcher<CreateProductMutation, CreateProductMutationVariables>(
+        client,
+        CreateProductDocument,
+        variables,
+        headers
+      )(),
+    options
+  );
+export const DeleteProductDocument = `
+    mutation DeleteProduct($productIdOrName: String!) {
+  deleteProduct(productIdOrName: $productIdOrName)
+}
+    `;
+export const useDeleteProductMutation = <TError = unknown, TContext = unknown>(
+  client: GraphQLClient,
+  options?: UseMutationOptions<
+    DeleteProductMutation,
+    TError,
+    DeleteProductMutationVariables,
+    TContext
+  >,
+  headers?: RequestInit["headers"]
+) =>
+  useMutation<
+    DeleteProductMutation,
+    TError,
+    DeleteProductMutationVariables,
+    TContext
+  >(
+    "DeleteProduct",
+    (variables?: DeleteProductMutationVariables) =>
+      fetcher<DeleteProductMutation, DeleteProductMutationVariables>(
+        client,
+        DeleteProductDocument,
+        variables,
+        headers
+      )(),
+    options
+  );
 export const LoginDocument = `
     mutation Login($input: AccountLoginInput!) {
   login(input: $input) {
@@ -444,13 +654,11 @@ export const LoginDocument = `
       email
     }
     error {
-      field
-      message
-      ufm
+      ...FieldErrorFragment
     }
   }
 }
-    `;
+    ${FieldErrorFragmentFragmentDoc}`;
 export const useLoginMutation = <TError = unknown, TContext = unknown>(
   client: GraphQLClient,
   options?: UseMutationOptions<
@@ -506,17 +714,14 @@ export const RegisterDocument = `
       firstName
       lastName
       email
-      password
       role
     }
     error {
-      field
-      message
-      ufm
+      ...FieldErrorFragment
     }
   }
 }
-    `;
+    ${FieldErrorFragmentFragmentDoc}`;
 export const useRegisterMutation = <TError = unknown, TContext = unknown>(
   client: GraphQLClient,
   options?: UseMutationOptions<
@@ -538,6 +743,110 @@ export const useRegisterMutation = <TError = unknown, TContext = unknown>(
       )(),
     options
   );
+export const UpdateProductDocument = `
+    mutation UpdateProduct($input: UpdateProductInput!) {
+  updateProduct(input: $input) {
+    error {
+      field
+      message
+      ufm
+    }
+    product {
+      createdAt
+      id
+      updatedAt
+      name
+      description
+      category
+      price
+      imageUrl
+      tags {
+        id
+        createdAt
+        updatedAt
+        productId
+        text
+      }
+    }
+  }
+}
+    `;
+export const useUpdateProductMutation = <TError = unknown, TContext = unknown>(
+  client: GraphQLClient,
+  options?: UseMutationOptions<
+    UpdateProductMutation,
+    TError,
+    UpdateProductMutationVariables,
+    TContext
+  >,
+  headers?: RequestInit["headers"]
+) =>
+  useMutation<
+    UpdateProductMutation,
+    TError,
+    UpdateProductMutationVariables,
+    TContext
+  >(
+    "UpdateProduct",
+    (variables?: UpdateProductMutationVariables) =>
+      fetcher<UpdateProductMutation, UpdateProductMutationVariables>(
+        client,
+        UpdateProductDocument,
+        variables,
+        headers
+      )(),
+    options
+  );
+export const AccountsDocument = `
+    query Accounts {
+  accounts {
+    id
+    createdAt
+    updatedAt
+    firstName
+    lastName
+    email
+    role
+  }
+}
+    `;
+export const useAccountsQuery = <TData = AccountsQuery, TError = unknown>(
+  client: GraphQLClient,
+  variables?: AccountsQueryVariables,
+  options?: UseQueryOptions<AccountsQuery, TError, TData>,
+  headers?: RequestInit["headers"]
+) =>
+  useQuery<AccountsQuery, TError, TData>(
+    variables === undefined ? ["Accounts"] : ["Accounts", variables],
+    fetcher<AccountsQuery, AccountsQueryVariables>(
+      client,
+      AccountsDocument,
+      variables,
+      headers
+    ),
+    options
+  );
+export const AdminMeDocument = `
+    query AdminMe {
+  adminMe
+}
+    `;
+export const useAdminMeQuery = <TData = AdminMeQuery, TError = unknown>(
+  client: GraphQLClient,
+  variables?: AdminMeQueryVariables,
+  options?: UseQueryOptions<AdminMeQuery, TError, TData>,
+  headers?: RequestInit["headers"]
+) =>
+  useQuery<AdminMeQuery, TError, TData>(
+    variables === undefined ? ["AdminMe"] : ["AdminMe", variables],
+    fetcher<AdminMeQuery, AdminMeQueryVariables>(
+      client,
+      AdminMeDocument,
+      variables,
+      headers
+    ),
+    options
+  );
 export const MeDocument = `
     query Me {
   me {
@@ -549,13 +858,11 @@ export const MeDocument = `
       createdAt
     }
     error {
-      field
-      message
-      ufm
+      ...FieldErrorFragment
     }
   }
 }
-    `;
+    ${FieldErrorFragmentFragmentDoc}`;
 export const useMeQuery = <TData = MeQuery, TError = unknown>(
   client: GraphQLClient,
   variables?: MeQueryVariables,

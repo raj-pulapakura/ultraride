@@ -13,8 +13,5 @@ export class AccountGraphql extends BaseGraphql {
   email!: string;
 
   @Field(() => String)
-  password!: string;
-
-  @Field(() => String)
   role!: string;
 }

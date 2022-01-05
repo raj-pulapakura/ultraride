@@ -1,8 +1,8 @@
 import React from "react";
-import { CartItemList } from "./components/CartItemList";
+import { CartItemList } from "../../providers/cart/CartItemList";
 import { Box, Button, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { EmptyCart } from "./components/EmptyCart";
+import { EmptyCart } from "../../providers/cart/EmptyCart";
 import { useMeQuery } from "../../graphql/generated";
 import { graphqlClient } from "../../graphql/client";
 import { useNavigate } from "react-router-dom";

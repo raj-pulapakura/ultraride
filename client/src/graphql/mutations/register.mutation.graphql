@@ -5,13 +5,10 @@ mutation Register($input: AccountRegisterInput!) {
       firstName
       lastName
       email
-      password
       role
     }
     error {
-      field
-      message
-      ufm
+      ...FieldErrorFragment
     }
   }
 }

@@ -8,9 +8,7 @@ query Me {
       createdAt
     }
     error {
-      field
-      message
-      ufm
+      ...FieldErrorFragment
     }
   }
 }

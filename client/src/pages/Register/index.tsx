@@ -1,9 +1,13 @@
 import { Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import { MainForm } from "../../components/helper/MainForm";
+import { SimpleForm } from "../../shared/SimpleForm";
 import { graphqlClient } from "../../graphql/client";
 import { useRegisterMutation } from "../../graphql/generated";
+import { FormContainer } from "../../shared/FormContainer";
+import { FormSubmitButton } from "../../shared/FormSubmitButton";
+import { FormTitle } from "../../shared/FormTitle";
+import { SimpleFormControl } from "../../shared/SimpleFormControl";
 
 interface RegisterPageProps {}
 
@@ -58,57 +62,63 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({}) => {
   };
 
   return (
-    <MainForm
-      title="Create an account"
-      button={createAccountIsLoading ? "Registering..." : "Register"}
-      onSubmit={onRegisterFormSubmit}
-      fields={[
-        {
-          label: "First Name",
-          value: registerFormState.firstName,
-          error: registerFormErrors.firstName,
-          onChange: (e) =>
+    <FormContainer>
+      <form onSubmit={onRegisterFormSubmit}>
+        <FormTitle>Create an Account</FormTitle>
+        <SimpleFormControl
+          value={registerFormState.firstName}
+          onChange={(e) =>
             setRegisterFormState({
               ...registerFormState,
               firstName: e.target.value,
-            }),
-        },
-        {
-          label: "Last Name",
-          value: registerFormState.lastName,
-          error: registerFormErrors.lastName,
-          onChange: (e) =>
+            })
+          }
+          label="First Name"
+          error={registerFormErrors.firstName}
+        />
+        <SimpleFormControl
+          value={registerFormState.lastName}
+          onChange={(e) =>
             setRegisterFormState({
               ...registerFormState,
               lastName: e.target.value,
-            }),
-        },
-        {
-          label: "Email",
-          value: registerFormState.email,
-          error: registerFormErrors.email,
-          onChange: (e) =>
+            })
+          }
+          label="Last Name"
+          error={registerFormErrors.lastName}
+        />
+        <SimpleFormControl
+          value={registerFormState.email}
+          onChange={(e) =>
             setRegisterFormState({
               ...registerFormState,
               email: e.target.value,
-            }),
-        },
-        {
-          label: "Password",
-          value: registerFormState.password,
-          error: registerFormErrors.password,
-          type: "password",
-          onChange: (e) =>
+            })
+          }
+          label="Email"
+          type="email"
+          error={registerFormErrors.email}
+        />
+        <SimpleFormControl
+          value={registerFormState.password}
+          onChange={(e) =>
             setRegisterFormState({
               ...registerFormState,
               password: e.target.value,
-            }),
-        },
-      ]}
-    >
-      <Typography variant="subtitle2" marginTop="1rem">
-        Already have an account? <Link to="/account/sign-in">Sign in</Link>
-      </Typography>
-    </MainForm>
+            })
+          }
+          label="Password"
+          type="password"
+          error={registerFormErrors.password}
+        />
+        <FormSubmitButton>
+          {createAccountIsLoading ? "Registering..." : "Register"}
+        </FormSubmitButton>
+
+        <Typography variant="subtitle2" marginTop="1rem">
+          Already have an account? <Link to="/account/sign-in">Sign in</Link>
+        </Typography>
+      </form>
+    </FormContainer>
   );
 };

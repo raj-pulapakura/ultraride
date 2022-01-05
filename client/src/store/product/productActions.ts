@@ -1,19 +1,12 @@
 import {
   ProductActionTypes,
-  SetFilterCategoriesAction,
-  SetFilterCategoriesLoadedAction,
+  SetFeaturedProductIdAction,
+  SetFeaturedProductIdLoadedAction,
   SetFilterTagsAction,
   SetFilterTagsLoadedAction,
   SetSortingMethodAction,
   SortingMethods,
 } from "./productTypes";
-
-export const setFilterTags = (tags: string[]): SetFilterTagsAction => {
-  return {
-    type: ProductActionTypes.SET_FITLER_TAGS,
-    payload: tags,
-  };
-};
 
 export const setSortingMethod = (
   sortingMethod: SortingMethods
@@ -21,6 +14,13 @@ export const setSortingMethod = (
   return {
     type: ProductActionTypes.SET_SORTING_METHOD,
     payload: sortingMethod,
+  };
+};
+
+export const setFilterTags = (tags: string[]): SetFilterTagsAction => {
+  return {
+    type: ProductActionTypes.SET_FITLER_TAGS,
+    payload: tags,
   };
 };
 
@@ -33,20 +33,20 @@ export const setFilterTagsLoaded = (
   };
 };
 
-export const setFilterCategories = (
-  categories: string[]
-): SetFilterCategoriesAction => {
+export const setFeaturedProductId = (
+  productId: string
+): SetFeaturedProductIdAction => {
   return {
-    type: ProductActionTypes.SET_FILTER_CATEGORIES,
-    payload: categories,
+    type: ProductActionTypes.SET_FEATURED_PRODUCT_ID,
+    payload: productId,
   };
 };
 
-export const setFilterCategoriesLoaded = (
+export const setFeaturedProductIdLoaded = (
   loaded: boolean
-): SetFilterCategoriesLoadedAction => {
+): SetFeaturedProductIdLoadedAction => {
   return {
-    type: ProductActionTypes.SET_FILTER_CATEGORIES_LOADED,
+    type: ProductActionTypes.SET_FEATURED_PRODUCT_ID_LOADED,
     payload: loaded,
   };
 };

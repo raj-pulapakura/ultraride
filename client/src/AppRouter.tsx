@@ -1,19 +1,27 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Layout } from "./components/core/Layout";
-import { LogicBoard } from "./components/core/LogicBoard";
-import { Route404 } from "./components/core/Route404";
+import { Layout } from "./shared/Layout";
+import { LogicBoard } from "./shared/LogicBoard";
+import { Route404 } from "./shared/Route404";
 import { graphqlClient } from "./graphql/client";
-import { useMeQuery } from "./graphql/generated";
-import { AccountPage } from "./pages/Account";
-import { AllProductsPage } from "./pages/AllProducts";
-import { CartPage } from "./pages/Cart";
-import { HomePage } from "./pages/Home";
-import { LoginPage } from "./pages/Login";
-import { ProductDetailPage } from "./pages/ProductDetail";
-import { RegisterPage } from "./pages/Register";
+import { useMeQuery, useAdminMeQuery } from "./graphql/generated";
+import { AccountPage } from "./pages/account";
+import { AdminPage } from "./pages/admin";
+import { CreateProductPage } from "./pages/admin/create-product";
+import { AllProductsPage } from "./pages/products";
+import { CartPage } from "./pages/cart";
+import { HomePage } from "./pages/home";
+import { LoginPage } from "./pages/login";
+import { ProductDetailPage } from "./pages/product-detail";
+import { RegisterPage } from "./pages/register";
 
 export function AppRouter() {
   const { data: meData } = useMeQuery(
+    graphqlClient,
+    {},
+    { refetchInterval: 1000 }
+  );
+
+  const { data: adminMeData } = useAdminMeQuery(
     graphqlClient,
     {},
     { refetchInterval: 1000 }
@@ -32,10 +40,18 @@ export function AppRouter() {
             />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/account" element={<AccountPage />} />
+            <Route path="/admin" element={<AdminPage />} />
 
-            {meData?.me?.account ? (
-              <></>
-            ) : (
+            {adminMeData?.adminMe && (
+              <>
+                <Route
+                  path="/admin/create-product"
+                  element={<CreateProductPage />}
+                />
+              </>
+            )}
+
+            {!meData?.me?.account && (
               <>
                 <Route path="/account/register" element={<RegisterPage />} />
                 <Route path="/account/sign-in" element={<LoginPage />} />

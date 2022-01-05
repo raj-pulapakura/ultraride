@@ -1,7 +1,7 @@
 import { Button, ButtonGroup, Typography } from "@mui/material";
 import React from "react";
-import { CenterContainer } from "../../components/helper/CenterContainer";
-import { SimpleContainer } from "../../components/helper/SimpleContainer";
+import { CenterContainer } from "../../shared/CenterContainer";
+import { SimpleContainer } from "../../shared/SimpleContainer";
 import { graphqlClient } from "../../graphql/client";
 import { useMeQuery, useLogoutMutation } from "../../graphql/generated";
 import { useNavigate } from "react-router-dom";
