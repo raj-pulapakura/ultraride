@@ -7,12 +7,8 @@ import {
   Badge,
 } from "@mui/material";
 import { Flex } from "./Flex";
-import {
-  AccountCircle,
-  LocalOffer,
-  Menu,
-  ShoppingCart,
-} from "@mui/icons-material";
+import { AccountCircle, LocalOffer, Menu } from "@mui/icons-material";
+import ShoppingCart from "@mui/icons-material/ShoppingCart";
 import { useDispatch, useSelector } from "react-redux";
 import { setMenuOpen } from "../store/menu/menuActions";
 import { Link, useNavigate } from "react-router-dom";

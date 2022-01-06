@@ -11,10 +11,9 @@ import {
 import React, { useState } from "react";
 import { graphqlClient } from "../../graphql/client";
 import { ProductsQuery, useProductsQuery } from "../../graphql/generated";
-import { Settings } from "@mui/icons-material";
+import Settings from "@mui/icons-material/Settings";
 import { IconMenu } from "../../shared/IconMenu";
 import { EditProductModal } from "./EditProductModal";
-import { on } from "events";
 import { RemoveProductModal } from "./RemoveProductModal";
 import { useNavigate } from "react-router-dom";
 
@@ -59,7 +58,6 @@ export const ProductTable: React.FC<ProductTableProps> = ({}) => {
               <TableRow
                 key={product?.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                // onClick={() => console.log({ id: product.id })}
               >
                 <TableCell align="left">
                   <IconMenu

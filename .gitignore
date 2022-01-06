@@ -1,3 +1,4 @@
 /env
 /server/node_modules
-/web/node_modules
+/client/node_modules
+/stripe-api/node_modules

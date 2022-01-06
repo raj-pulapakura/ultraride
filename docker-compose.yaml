@@ -16,6 +16,16 @@ services:
       - "./app/dist"
     env_file:
       - "./env/server.env"
+  stripe-api:
+    build: "./stripe-api"
+    ports:
+      - "5000:80"
+    volumes:
+      - "./stripe-api:/app"
+      - "./app/node_modules"
+      - "./app/dist"
+    env_file:
+      - "./env/stripe-api.env"
   db:
     image: mysql
     ports: 
