@@ -30,7 +30,13 @@ export const FeaturedProduct: React.FC<FeaturedProductProps> = ({
   return (
     <SimpleContainer
       {...props}
-      sx={{ ...props.sx, padding: "0rem" }}
+      sx={{
+        ...props.sx,
+        padding: "0rem",
+        "&:hover": {
+          cursor: "pointer",
+        },
+      }}
       onClick={onFeaturedProductClick}
     >
       <img

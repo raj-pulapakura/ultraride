@@ -82,7 +82,7 @@ export const NavbarControls: React.FC<NavbarControlsProps> = ({}) => {
 
   const Brand = (
     <Flex style={{ gap: "1rem" }}>
-      <img src={ultrarideLogoWhite} ref={logoRef} />
+      {/* <img src={ultrarideLogoWhite} ref={logoRef} /> */}
       <Typography
         className={classes.brand}
         variant="h5"

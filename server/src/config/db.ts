@@ -2,7 +2,6 @@ import { ConnectionOptions } from "typeorm";
 import { env } from "../constants";
 import { AccountEntity } from "../features/Account/AccountEntity";
 import { ProductEntity } from "../features/Product/ProductEntity";
-import { PurchaseEntity } from "../features/Purchase/PurchaseEntity";
 import { TagEntity } from "../features/Tag/TagEntity";
 
 export const dbConfig: ConnectionOptions = {
@@ -13,5 +12,5 @@ export const dbConfig: ConnectionOptions = {
   port: env.DB_PORT,
   type: "mysql",
   synchronize: true,
-  entities: [AccountEntity, ProductEntity, PurchaseEntity, TagEntity],
+  entities: [AccountEntity, ProductEntity, TagEntity],
 };

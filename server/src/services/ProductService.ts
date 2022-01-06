@@ -1,4 +1,3 @@
-import { ID } from "type-graphql";
 import { CreateProductInput } from "../features/Product/inputs/CreateProductInput";
 import { UpdateProductInput } from "../features/Product/inputs/UpdateProductInput";
 import { ProductGeneralResponse } from "../features/Product/objects/ProductGeneralResponse";
@@ -8,7 +7,7 @@ import { TagGraphql } from "../features/Tag/TagGraphql";
 import { TagService } from "./TagService";
 
 export class ProductService {
-  static async checkProductAlreadyExists(name: string): Promise<boolean> {
+  static async checkProductExists(name: string): Promise<boolean> {
     const productAlreadyExists = await ProductEntity.findOne({
       where: { name },
     });
@@ -19,9 +18,7 @@ export class ProductService {
     input: CreateProductInput
   ): Promise<ProductGeneralResponse> {
     const { name, description, price, category, imageUrl, tags } = input;
-    const productAlreadyExists = await ProductService.checkProductAlreadyExists(
-      name
-    );
+    const productAlreadyExists = await ProductService.checkProductExists(name);
 
     if (productAlreadyExists) {
       return {
@@ -131,8 +128,6 @@ export class ProductService {
     if (updateProductPrice) {
       partialEntity.price = price;
     }
-
-    console.log(partialEntity);
 
     try {
       // update product

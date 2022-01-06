@@ -4,7 +4,7 @@ import cors from "cors";
 import session from "express-session";
 import { corsConfig } from "./config/cors";
 import connectRedis from "connect-redis";
-import { ADMIN_COOKIE, AUTH_COOKIE, env, SECRET } from "./constants";
+import { AUTH_COOKIE, env, SECRET } from "./constants";
 import { connectToRedis } from "./utils/connectToRedis";
 import { connectToDB } from "./utils/connectToDB";
 import { sessionCookieConfig } from "./config/sessionCookie";
@@ -12,7 +12,6 @@ import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { AccountResolver } from "./features/Account/AccountResolver";
 import { ProductResolver } from "./features/Product/ProductResolver";
-import { PurchaseResolver } from "./features/Purchase/PurchaseResolver";
 import cookieParser from "cookie-parser";
 import { Context } from "./types";
 import { getRedisStore } from "./utils/getRedisStore";
@@ -83,7 +82,7 @@ const main = async () => {
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
       validate: false,
-      resolvers: [AccountResolver, ProductResolver, PurchaseResolver],
+      resolvers: [AccountResolver, ProductResolver],
     }),
     context: ({ req, res }) => ({ req, res, redis: redisClient }),
   });

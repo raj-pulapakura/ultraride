@@ -1,0 +1,19 @@
+mutation PurchaseProducts($input: PurchaseProductsInput!) {
+  purchaseProducts(input: $input) {
+    purchases {
+      id
+      createdAt
+      updatedAt
+      accountId
+      productId
+      quantity
+      price
+      total
+    }
+    error {
+      field
+      message
+      ufm
+    }
+  }
+}

@@ -103,7 +103,7 @@ export type Mutation = {
   deleteProduct: Scalars["Boolean"];
   login: AccountGeneralResponse;
   logout: Scalars["Boolean"];
-  purchaseProducts: Scalars["Boolean"];
+  purchaseProducts: PurchasesGeneralResponse;
   register?: Maybe<AccountGeneralResponse>;
   updateProduct: ProductGeneralResponse;
 };
@@ -187,28 +187,34 @@ export type PurchaseProductsInput = {
   purchaseListings: Array<PurchaseListingInput>;
 };
 
+export type PurchasesGeneralResponse = {
+  __typename?: "PurchasesGeneralResponse";
+  error?: Maybe<FieldError>;
+  purchases?: Maybe<Array<PurchaseGraphql>>;
+};
+
 export type Query = {
   __typename?: "Query";
   account?: Maybe<AccountGraphql>;
   accounts: Array<AccountGraphql>;
   adminMe: Scalars["Boolean"];
-  getPurchase?: Maybe<PurchaseGraphql>;
-  getPurchases: Array<PurchaseGraphql>;
   me?: Maybe<AccountGeneralResponse>;
   product?: Maybe<ProductGraphql>;
   products: Array<ProductGraphql>;
+  purchase?: Maybe<PurchaseGraphql>;
+  purchases: Array<PurchaseGraphql>;
 };
 
 export type QueryAccountArgs = {
   accountIdOrEmail: Scalars["ID"];
 };
 
-export type QueryGetPurchaseArgs = {
-  purchaseId: Scalars["ID"];
-};
-
 export type QueryProductArgs = {
   productIdOrName: Scalars["ID"];
+};
+
+export type QueryPurchaseArgs = {
+  purchaseId: Scalars["ID"];
 };
 
 export type TagGraphql = {
@@ -345,6 +351,40 @@ export type LoginMutation = {
 export type LogoutMutationVariables = Exact<{ [key: string]: never }>;
 
 export type LogoutMutation = { __typename?: "Mutation"; logout: boolean };
+
+export type PurchaseProductsMutationVariables = Exact<{
+  input: PurchaseProductsInput;
+}>;
+
+export type PurchaseProductsMutation = {
+  __typename?: "Mutation";
+  purchaseProducts: {
+    __typename?: "PurchasesGeneralResponse";
+    purchases?:
+      | Array<{
+          __typename?: "PurchaseGraphql";
+          id: string;
+          createdAt: string;
+          updatedAt: string;
+          accountId: string;
+          productId: string;
+          quantity: number;
+          price: number;
+          total: number;
+        }>
+      | null
+      | undefined;
+    error?:
+      | {
+          __typename?: "FieldError";
+          field: string;
+          message: string;
+          ufm: string;
+        }
+      | null
+      | undefined;
+  };
+};
 
 export type RegisterMutationVariables = Exact<{
   input: AccountRegisterInput;
@@ -701,6 +741,56 @@ export const useLogoutMutation = <TError = unknown, TContext = unknown>(
       fetcher<LogoutMutation, LogoutMutationVariables>(
         client,
         LogoutDocument,
+        variables,
+        headers
+      )(),
+    options
+  );
+export const PurchaseProductsDocument = `
+    mutation PurchaseProducts($input: PurchaseProductsInput!) {
+  purchaseProducts(input: $input) {
+    purchases {
+      id
+      createdAt
+      updatedAt
+      accountId
+      productId
+      quantity
+      price
+      total
+    }
+    error {
+      field
+      message
+      ufm
+    }
+  }
+}
+    `;
+export const usePurchaseProductsMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  client: GraphQLClient,
+  options?: UseMutationOptions<
+    PurchaseProductsMutation,
+    TError,
+    PurchaseProductsMutationVariables,
+    TContext
+  >,
+  headers?: RequestInit["headers"]
+) =>
+  useMutation<
+    PurchaseProductsMutation,
+    TError,
+    PurchaseProductsMutationVariables,
+    TContext
+  >(
+    "PurchaseProducts",
+    (variables?: PurchaseProductsMutationVariables) =>
+      fetcher<PurchaseProductsMutation, PurchaseProductsMutationVariables>(
+        client,
+        PurchaseProductsDocument,
         variables,
         headers
       )(),

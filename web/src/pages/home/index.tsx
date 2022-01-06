@@ -102,7 +102,7 @@ export const HomePage: React.FC<HomePageProps> = ({}) => {
             style={{
               width: "100%",
               borderRadius: "0.5rem",
-              marginBottom: "3rem",
+              marginBottom: "1rem",
             }}
           />
           <Flex style={{ gap: "2rem", alignItems: "flex-start" }}>

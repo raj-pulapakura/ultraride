@@ -1,6 +1,5 @@
 import { Column, Entity, OneToMany } from "typeorm";
 import { BaseModel } from "../../objects/BaseModel";
-import { PurchaseEntity } from "../Purchase/PurchaseEntity";
 import { TagEntity } from "../Tag/TagEntity";
 
 @Entity("product")
@@ -19,9 +18,6 @@ export class ProductEntity extends BaseModel {
 
   @Column({ type: "varchar" })
   imageUrl!: string;
-
-  @OneToMany(() => PurchaseEntity, (purchase) => purchase.product)
-  purchases!: PurchaseEntity[];
 
   @OneToMany(() => TagEntity, (tag) => tag.product)
   tags!: TagEntity[];
