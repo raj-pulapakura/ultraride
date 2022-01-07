@@ -14,6 +14,10 @@ const initialState: ProductState = {
     data: "",
     loaded: false,
   },
+  filterBrands: {
+    data: [],
+    loaded: false,
+  },
   sortingMethod: SortingMethods.NO_SORT,
 };
 
@@ -23,7 +27,7 @@ export const productReducer = (
 ): ProductState => {
   const { type } = action;
   switch (type) {
-    case ProductActionTypes.SET_FITLER_TAGS_DATA:
+    case ProductActionTypes.SET_FILTER_TAGS_DATA:
       return {
         ...state,
         filterTags: {
@@ -59,6 +63,22 @@ export const productReducer = (
       return {
         ...state,
         sortingMethod: action.payload,
+      };
+    case ProductActionTypes.SET_FILTER_BRANDS_DATA:
+      return {
+        ...state,
+        filterBrands: {
+          ...state.filterBrands,
+          data: action.payload,
+        },
+      };
+    case ProductActionTypes.SET_FILTER_BRANDS_LOADED:
+      return {
+        ...state,
+        filterBrands: {
+          ...state.filterBrands,
+          loaded: action.payload,
+        },
       };
     default:
       return state;

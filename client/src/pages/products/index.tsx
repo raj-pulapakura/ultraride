@@ -66,7 +66,7 @@ export const AllProductsPage: React.FC<AllProductsPageProps> = ({}) => {
             Search Results
           </Typography>
           <Typography sx={{ marginBottom: "2rem" }}>
-            Search Results for '{query.get("q")}'
+            Search Results for '{query.get("q")}' ({products.length})
           </Typography>
         </>
       ) : (

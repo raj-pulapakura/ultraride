@@ -1,3 +1,4 @@
+import { Sort } from "@mui/icons-material";
 import { Button, ButtonProps } from "@mui/material";
 import React, { useState } from "react";
 import { Modal } from "../../shared/Modal";
@@ -20,6 +21,7 @@ export const SortButton: React.FC<SortButtonProps> = ({ ...props }) => {
     <>
       <Button
         {...props}
+        startIcon={<Sort />}
         onClick={onSortButtonClick}
         variant="contained"
         sx={{ marginBottom: "1rem", ...props.sx }}

@@ -2,7 +2,8 @@ import { Box, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ProductsQuery } from "../../graphql/generated";
-import { useFilterProducts } from "../../hooks/useFilterProducts";
+import { useFilterProductsByBrands } from "../../hooks/useFilterProductsByBrands";
+import { useFilterProductsByTags } from "../../hooks/useFilterProductsByTags";
 import { StoreState } from "../../store";
 import { SortingMethods } from "../../store/product/productTypes";
 import { SingleProduct } from "./SingleProduct";
@@ -20,9 +21,14 @@ export const ProductList: React.FC<ProductListProps> = ({ products }) => {
     (state) => state.product.filterTags.data
   ) as StoreState["product"]["filterTags"]["data"];
 
+  const filterBrands = useSelector<StoreState>(
+    (state) => state.product.filterBrands.data
+  ) as StoreState["product"]["filterBrands"]["data"];
+
   const dispatch = useDispatch();
   const [productList, setProductList] = useState(products);
-  const { filterProducts } = useFilterProducts();
+  const { filterProductsByTags } = useFilterProductsByTags();
+  const { filterProductsByBrands } = useFilterProductsByBrands();
 
   // sorting products
   useEffect(() => {
@@ -47,14 +53,15 @@ export const ProductList: React.FC<ProductListProps> = ({ products }) => {
     return setProductList(products.sort(compareFn));
   }, [sortingMethod, products]);
 
-  // filtering products by tags
+  // filtering products
   useEffect(() => {
-    setProductList(filterProducts(products, filterTags));
-  }, [filterTags]);
-
-  // useEffect(() => {
-  //   console.log({ productsLength: products.length });
-  // }, [products]);
+    setProductList(
+      filterProductsByBrands(
+        filterProductsByTags(products, filterTags),
+        filterBrands
+      )
+    );
+  }, [filterTags, filterBrands]);
 
   return (
     <>

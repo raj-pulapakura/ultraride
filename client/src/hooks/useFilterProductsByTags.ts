@@ -1,7 +1,7 @@
 import { ProductsQuery } from "../graphql/generated";
 
-export const useFilterProducts = () => {
-  const filterProducts = (
+export const useFilterProductsByTags = () => {
+  const filterProductsByTags = (
     products: ProductsQuery["products"],
     tags: string[]
   ) => {
@@ -15,5 +15,5 @@ export const useFilterProducts = () => {
       return false;
     });
   };
-  return { filterProducts };
+  return { filterProductsByTags };
 };

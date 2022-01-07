@@ -2,6 +2,8 @@ import {
   ProductActionTypes,
   SetFeaturedProductIdAction,
   SetFeaturedProductIdLoadedAction,
+  SetFilterBrandsDataAction,
+  SetFilterBrandsLoadedAction,
   SetFilterTagsDataAction,
   SetFilterTagsLoadedAction,
   SetSortingMethodAction,
@@ -19,7 +21,7 @@ export const setSortingMethod = (
 
 export const setFilterTags = (tags: string[]): SetFilterTagsDataAction => {
   return {
-    type: ProductActionTypes.SET_FITLER_TAGS_DATA,
+    type: ProductActionTypes.SET_FILTER_TAGS_DATA,
     payload: tags,
   };
 };
@@ -47,6 +49,24 @@ export const setFeaturedProductIdLoaded = (
 ): SetFeaturedProductIdLoadedAction => {
   return {
     type: ProductActionTypes.SET_FEATURED_PRODUCT_ID_LOADED,
+    payload: loaded,
+  };
+};
+
+export const setFilterBrands = (
+  brands: string[]
+): SetFilterBrandsDataAction => {
+  return {
+    type: ProductActionTypes.SET_FILTER_BRANDS_DATA,
+    payload: brands,
+  };
+};
+
+export const setFilterBrandsLoaded = (
+  loaded: boolean
+): SetFilterBrandsLoadedAction => {
+  return {
+    type: ProductActionTypes.SET_FILTER_BRANDS_LOADED,
     payload: loaded,
   };
 };

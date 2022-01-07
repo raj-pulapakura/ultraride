@@ -1,9 +1,11 @@
 export enum ProductActionTypes {
-  SET_FITLER_TAGS_DATA = "SET_FITLER_TAGS_DATA",
+  SET_FILTER_TAGS_DATA = "SET_FILTER_TAGS_DATA",
   SET_FILTER_TAGS_LOADED = "SET_FILTER_TAGS_LOADED",
   SET_SORTING_METHOD = "SET_SORTING_METHOD",
   SET_FEATURED_PRODUCT_ID = "SET_FEATURED_PRODUCT_ID",
   SET_FEATURED_PRODUCT_ID_LOADED = "SET_FEATURED_PRODUCT_ID_LOADED",
+  SET_FILTER_BRANDS_DATA = "SET_FILTER_BRANDS_DATA",
+  SET_FILTER_BRANDS_LOADED = "SET_FILTER_BRANDS_LOADED",
 }
 
 export enum SortingMethods {
@@ -21,11 +23,15 @@ export interface ProductState {
     data: string;
     loaded: boolean;
   };
+  filterBrands: {
+    data: string[];
+    loaded: boolean;
+  };
   sortingMethod: SortingMethods;
 }
 
 export interface SetFilterTagsDataAction {
-  type: ProductActionTypes.SET_FITLER_TAGS_DATA;
+  type: ProductActionTypes.SET_FILTER_TAGS_DATA;
   payload: ProductState["filterTags"]["data"];
 }
 
@@ -44,6 +50,16 @@ export interface SetFeaturedProductIdLoadedAction {
   payload: ProductState["featuredProductId"]["loaded"];
 }
 
+export interface SetFilterBrandsDataAction {
+  type: ProductActionTypes.SET_FILTER_BRANDS_DATA;
+  payload: ProductState["filterBrands"]["data"];
+}
+
+export interface SetFilterBrandsLoadedAction {
+  type: ProductActionTypes.SET_FILTER_BRANDS_LOADED;
+  payload: ProductState["filterBrands"]["loaded"];
+}
+
 export interface SetSortingMethodAction {
   type: ProductActionTypes.SET_SORTING_METHOD;
   payload: ProductState["sortingMethod"];
@@ -54,4 +70,6 @@ export type ProductAction =
   | SetSortingMethodAction
   | SetFilterTagsLoadedAction
   | SetFeaturedProductIdAction
-  | SetFeaturedProductIdLoadedAction;
+  | SetFeaturedProductIdLoadedAction
+  | SetFilterBrandsDataAction
+  | SetFilterBrandsLoadedAction;

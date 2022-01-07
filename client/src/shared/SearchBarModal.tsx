@@ -1,9 +1,16 @@
 import { Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ProductsQuery } from "../graphql/generated";
+import { useAllBrands } from "../hooks/useAllBrands";
+import { useAllTags } from "../hooks/useAllTags";
 import { useSearchProducts } from "../hooks/useSearchProducts";
+import {
+  setFilterBrands,
+  setFilterTags,
+} from "../store/product/productActions";
 import { Modal } from "./Modal";
 import { SmallProductDisplay } from "./SmallProductDisplay";
 
@@ -13,10 +20,18 @@ interface SearchBarModalProps {
 
 export const SearchBarModal: React.FC<SearchBarModalProps> = ({ onClose }) => {
   const [searchValue, setSearchValue] = useState("");
+
   const [products, setProducts] = useState<ProductsQuery["products"]>([]);
+
   const searchBarRef = useRef<HTMLInputElement>(null);
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const { searchProducts } = useSearchProducts();
+
+  const allTags = useAllTags();
+  const allBrands = useAllBrands();
 
   // when the user enters the search value, they are redirected to products page
   useEffect(() => {
@@ -25,6 +40,8 @@ export const SearchBarModal: React.FC<SearchBarModalProps> = ({ onClose }) => {
       searchBarRef.current.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
           navigate(`/products?q=${searchValue}`);
+          dispatch(setFilterTags(allTags));
+          dispatch(setFilterBrands(allBrands));
           onClose();
         }
       });
