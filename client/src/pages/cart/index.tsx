@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { CartItemList } from "../../providers/cart/CartItemList";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, useMediaQuery } from "@mui/material";
 import { EmptyCart } from "../../providers/cart/EmptyCart";
 import { useMeQuery } from "../../graphql/generated";
 import { graphqlClient } from "../../graphql/client";
@@ -11,6 +11,8 @@ import { StoreState } from "../../store";
 import { STRIPE_API } from "../../constants";
 import { convertCartItemProductsToLineItems } from "../../utils/convertCartItemProductsToLineItems";
 import { useStripe } from "@stripe/react-stripe-js";
+import { theme } from "../../theme";
+import { Flex } from "../../shared/Flex";
 
 interface CartPageProps {}
 
@@ -61,24 +63,60 @@ export const CartPage: React.FC<CartPageProps> = ({}) => {
     await stripe?.redirectToCheckout({ sessionId });
   };
 
+  const screenIsXSmall = useMediaQuery(theme.breakpoints.up("xs"));
+  const screenIsSmall = useMediaQuery(theme.breakpoints.up("sm"));
+  const screenIsMedium = useMediaQuery(theme.breakpoints.up("md"));
+
   return (
     <>
       {cartItemProducts.length ? (
-        <Box sx={{ width: "min(600p x, 100%)", margin: "auto" }}>
-          <Typography
-            variant="h5"
-            fontWeight="bold"
-          >{`Total Cost: $${totalCost}`}</Typography>
-          <CartItemList cartItems={cartItems} />
-          <Button
-            variant="contained"
-            fullWidth
-            onClick={onContinueToCheckoutClick}
-            sx={{ marginTop: "2rem" }}
-          >
-            Continue to Checkout
-          </Button>
-        </Box>
+        screenIsMedium ? (
+          <>
+            <Flex style={{ alignItems: "flex-start" }}>
+              <Box>
+                <Typography variant="h5" fontWeight="bold">
+                  Your Cart:
+                </Typography>
+                <CartItemList cartItems={cartItems} />
+              </Box>
+              <Box>
+                <Typography
+                  variant="h5"
+                  fontWeight="bold"
+                >{`Total Cost: $${totalCost}`}</Typography>
+                <Button
+                  variant="contained"
+                  onClick={onContinueToCheckoutClick}
+                  sx={{ marginTop: "1rem", width: "fit-content" }}
+                >
+                  Continue to Checkout
+                </Button>
+              </Box>
+            </Flex>
+          </>
+        ) : (
+          <>
+            <Box sx={{ width: "min(600p x, 100%)", margin: "auto" }}>
+              <Typography variant="h5" fontWeight="bold">
+                Your Cart
+              </Typography>
+              <CartItemList cartItems={cartItems} />{" "}
+              <Typography
+                variant="h5"
+                fontWeight="bold"
+                sx={{ marginTop: "1rem" }}
+              >{`Total Cost: $${totalCost}`}</Typography>
+              <Button
+                variant="contained"
+                fullWidth
+                onClick={onContinueToCheckoutClick}
+                sx={{ marginTop: "1rem" }}
+              >
+                Continue to Checkout
+              </Button>
+            </Box>
+          </>
+        )
       ) : (
         <EmptyCart />
       )}

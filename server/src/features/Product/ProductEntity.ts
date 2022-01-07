@@ -16,8 +16,11 @@ export class ProductEntity extends BaseModel {
   @Column({ type: "varchar" })
   category!: string;
 
-  @Column({ type: "varchar" })
+  @Column({ type: "text" })
   imageUrl!: string;
+
+  @Column({ type: "varchar" })
+  brand!: string;
 
   @OneToMany(() => TagEntity, (tag) => tag.product)
   tags!: TagEntity[];

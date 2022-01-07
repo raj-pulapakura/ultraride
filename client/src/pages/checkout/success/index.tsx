@@ -1,9 +1,25 @@
-import React from "react";
+import { Typography } from "@mui/material";
+import React, { useEffect } from "react";
+import { FloatContainer } from "../../../shared/FloatContainer";
+import { SimpleContainer } from "../../../shared/SimpleContainer";
 
 interface CheckoutSuccessPageProps {}
 
 export const CheckoutSuccessPage: React.FC<CheckoutSuccessPageProps> = ({}) => {
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
+
   return (
-    <div>The checkout succeeded! Thank you for buying from Ultraride!</div>
+    <FloatContainer noBackground>
+      <SimpleContainer>
+        <Typography sx={{ color: "green" }}>
+          The purchase was successful!
+        </Typography>
+        <Typography variant="h5" sx={{ marginTop: "1rem" }}>
+          Thank you for shopping with Ultraride.
+        </Typography>
+      </SimpleContainer>
+    </FloatContainer>
   );
 };

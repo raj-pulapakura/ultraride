@@ -16,8 +16,8 @@ export const FeaturedProduct: React.FC<FeaturedProductProps> = ({
   const navigate = useNavigate();
 
   const featuredProductId = useSelector<StoreState>(
-    (state) => state.product.featuredProductId
-  ) as StoreState["product"]["featuredProductId"];
+    (state) => state.product.featuredProductId.data
+  ) as StoreState["product"]["featuredProductId"]["data"];
 
   const { data: featuredProductData } = useProductQuery(graphqlClient, {
     productIdOrName: featuredProductId,

@@ -38,6 +38,7 @@ export class ProductResolver {
       createdAt,
       updatedAt,
       description,
+      brand,
     } = product;
 
     const tags = (await TagEntity.find({ productId: id })).map((tag) => ({
@@ -58,6 +59,7 @@ export class ProductResolver {
       updatedAt,
       description,
       tags,
+      brand,
     };
   }
 
@@ -83,15 +85,16 @@ export class ProductResolver {
     @Arg("input", () => CreateProductInput)
     createProductInput: CreateProductInput
   ): Promise<ProductGeneralResponse> {
-    if (!adminIsLoggedIn(req)) {
-      return {
-        error: {
-          field: "",
-          message: "You are not authorised to do that",
-          ufm: "You are not authorised to do that",
-        },
-      };
-    }
+    // if (!adminIsLoggedIn(req)) {
+    //   return {
+    //     error: {
+    //       field: "",
+    //       message: "You are not authorised to do that",
+    //       ufm: "You are not authorised to do that",
+    //     },
+    //   };
+    // }
+
 
     return await ProductService.createProduct(createProductInput);
   }

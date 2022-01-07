@@ -61,14 +61,14 @@ export const HomePage: React.FC<HomePageProps> = ({}) => {
               gridColumnEnd: "3",
             }}
           >
-            <Button
+            {/* <Button
               fullWidth
               variant="contained"
               onClick={() => navigate("/products")}
               size="large"
             >
               Browse all Shoes
-            </Button>
+            </Button> */}
             <Typography sx={{ marginTop: "1rem" }}>
               Ultraride is proud to be to world's largest retailer of the
               highest quality shoes. We believe everyone deserves fantastic
@@ -108,14 +108,14 @@ export const HomePage: React.FC<HomePageProps> = ({}) => {
           <Flex style={{ gap: "2rem", alignItems: "flex-start" }}>
             <FeaturedProduct sx={{ width: "50%" }} />
             <Box sx={{ width: "50%" }}>
-              <Button
+              {/* <Button
                 fullWidth
                 variant="contained"
                 onClick={() => navigate("/products")}
                 size="large"
               >
                 Browse all Shoes
-              </Button>
+              </Button> */}
               <Typography sx={{ marginTop: "1rem" }}>
                 Ultraride is proud to be to world's largest retailer of the
                 highest quality shoes. We believe everyone deserves fantastic
@@ -154,7 +154,7 @@ export const HomePage: React.FC<HomePageProps> = ({}) => {
             }}
           />
           <FeaturedProduct />
-          <Button
+          {/* <Button
             fullWidth
             variant="contained"
             onClick={() => navigate("/products")}
@@ -162,7 +162,7 @@ export const HomePage: React.FC<HomePageProps> = ({}) => {
             size="large"
           >
             Browse all Shoes
-          </Button>
+          </Button> */}
           <Box>
             <Typography sx={{ marginTop: "1rem" }}>
               Ultraride is proud to be to world's largest retailer of the

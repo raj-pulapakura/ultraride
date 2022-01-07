@@ -5,6 +5,7 @@ import {
   Typography,
   useMediaQuery,
   Badge,
+  Tooltip,
 } from "@mui/material";
 import { Flex } from "./Flex";
 import { AccountCircle, LocalOffer, Menu } from "@mui/icons-material";
@@ -135,12 +136,21 @@ export const NavbarControls: React.FC<NavbarControlsProps> = ({}) => {
             </Flex>
           ) : (
             <>
-              <SearchBarIcon />
-              <IconButton onClick={() => onLinkClick("/cart")}>
-                <Badge badgeContent={totalItems} color="secondary">
-                  <ShoppingCart htmlColor="white" />
-                </Badge>
-              </IconButton>
+              <Tooltip title="Search">
+                <SearchBarIcon />
+              </Tooltip>
+              <Tooltip title="Browse Shoes">
+                <IconButton onClick={() => onLinkClick("/products")}>
+                  <LocalOffer htmlColor="white" />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Cart">
+                <IconButton onClick={() => onLinkClick("/cart")}>
+                  <Badge badgeContent={totalItems} color="secondary">
+                    <ShoppingCart htmlColor="white" />
+                  </Badge>
+                </IconButton>
+              </Tooltip>
               <IconButton onClick={onMenuButtonClick}>
                 <Menu htmlColor="white" />
               </IconButton>

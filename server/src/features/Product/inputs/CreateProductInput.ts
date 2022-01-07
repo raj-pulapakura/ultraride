@@ -19,4 +19,7 @@ export class CreateProductInput {
 
   @Field(() => [String])
   tags!: string[];
+
+  @Field(() => String)
+  brand!: string;
 }

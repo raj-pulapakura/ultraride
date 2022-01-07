@@ -5,6 +5,7 @@ fragment ProductFragment on ProductGraphql {
   price
   category
   imageUrl
+  brand
   tags {
     id
     productId

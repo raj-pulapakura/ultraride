@@ -14,7 +14,7 @@ export const useSingleCartItemStyles = makeStyles({
     color: "grey",
   },
   productImage: {
-    width: "50%",
+    maxWidth: "250px",
     borderRadius: "1rem",
   },
   controls: {

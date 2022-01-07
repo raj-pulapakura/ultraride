@@ -47,6 +47,7 @@ export const ProductTable: React.FC<ProductTableProps> = ({}) => {
               <TableCell></TableCell>
               <TableCell align="left">Id</TableCell>
               <TableCell align="left">Name</TableCell>
+              <TableCell align="left">Brand</TableCell>
               <TableCell align="left">Description</TableCell>
               <TableCell align="left">Price ($USD)</TableCell>
               <TableCell align="left">Category</TableCell>
@@ -85,6 +86,7 @@ export const ProductTable: React.FC<ProductTableProps> = ({}) => {
                   {product.id}
                 </TableCell>
                 <TableCell align="left">{product.name}</TableCell>
+                <TableCell align="left">{product.brand}</TableCell>
                 <TableCell align="left">{product.description}</TableCell>
                 <TableCell align="left">{product.price}</TableCell>
                 <TableCell align="left">{product.category}</TableCell>

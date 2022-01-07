@@ -21,4 +21,7 @@ export class ProductGraphql extends BaseGraphql {
 
   @Field(() => [TagGraphql])
   tags!: TagGraphql[];
+
+  @Field(() => String)
+  brand!: string;
 }

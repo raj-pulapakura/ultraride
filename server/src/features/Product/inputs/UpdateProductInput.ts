@@ -22,4 +22,7 @@ export class UpdateProductInput {
 
   @Field(() => [String], { nullable: true })
   tags?: string[];
+
+  @Field(() => String, { nullable: true })
+  brand?: string;
 }

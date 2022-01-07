@@ -13,7 +13,11 @@ interface AdminPageProps {}
 
 export const AdminPage: React.FC<AdminPageProps> = ({}) => {
   const navigate = useNavigate();
-  const { data: adminMeData } = useAdminMeQuery(graphqlClient);
+  const { data: adminMeData } = useAdminMeQuery(
+    graphqlClient,
+    {},
+    { refetchInterval: 1000 }
+  );
   const adminIsLoggedIn = !!adminMeData?.adminMe;
 
   return adminIsLoggedIn ? (

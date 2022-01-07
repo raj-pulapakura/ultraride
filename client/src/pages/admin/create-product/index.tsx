@@ -27,6 +27,7 @@ export const CreateProductPage: React.FC<CreateProductPageProps> = ({}) => {
     imageUrl: "",
     category: "",
     tags: ["sports"],
+    brand: "",
   });
   const [createProductFormErrors, setCreateProductFormErrors] = useState({
     name: "",
@@ -35,6 +36,7 @@ export const CreateProductPage: React.FC<CreateProductPageProps> = ({}) => {
     imageUrl: "",
     category: "",
     tags: "",
+    brand: "",
   });
 
   const { mutateAsync: createAccount, isLoading: createAccountIsLoading } =
@@ -52,9 +54,8 @@ export const CreateProductPage: React.FC<CreateProductPageProps> = ({}) => {
       imageUrl: "",
       category: "",
       tags: "",
+      brand: "",
     });
-
-    console.log(createProductFormState);
 
     const data = await createAccount({
       input: { ...createProductFormState },
@@ -109,15 +110,15 @@ export const CreateProductPage: React.FC<CreateProductPageProps> = ({}) => {
 
         <FormControlDuoWrapper>
           <SimpleFormControl
-            value={createProductFormState.imageUrl}
+            value={createProductFormState.brand}
             onChange={(e) =>
               setCreateProductFormState({
                 ...createProductFormState,
-                imageUrl: e.target.value,
+                brand: e.target.value,
               })
             }
-            label="Image URL"
-            error={createProductFormErrors.imageUrl}
+            label="Brand"
+            error={createProductFormErrors.brand}
           />
           <SimpleFormControl
             value={createProductFormState.price}
@@ -132,6 +133,18 @@ export const CreateProductPage: React.FC<CreateProductPageProps> = ({}) => {
             error={createProductFormErrors.price}
           />
         </FormControlDuoWrapper>
+
+        <SimpleFormControl
+          value={createProductFormState.imageUrl}
+          onChange={(e) =>
+            setCreateProductFormState({
+              ...createProductFormState,
+              imageUrl: e.target.value,
+            })
+          }
+          label="Image URL"
+          error={createProductFormErrors.imageUrl}
+        />
 
         <SimpleFormControl
           value={createProductFormState.description}

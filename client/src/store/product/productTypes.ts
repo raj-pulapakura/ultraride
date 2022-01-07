@@ -1,7 +1,5 @@
-import { ProductsQuery } from "../../graphql/generated";
-
 export enum ProductActionTypes {
-  SET_FITLER_TAGS = "SET_FILTER_TAGS",
+  SET_FITLER_TAGS_DATA = "SET_FITLER_TAGS_DATA",
   SET_FILTER_TAGS_LOADED = "SET_FILTER_TAGS_LOADED",
   SET_SORTING_METHOD = "SET_SORTING_METHOD",
   SET_FEATURED_PRODUCT_ID = "SET_FEATURED_PRODUCT_ID",
@@ -15,18 +13,35 @@ export enum SortingMethods {
 }
 
 export interface ProductState {
-  filterTags: string[];
-  filterTagsLoaded: boolean;
-  filterCategories: string[];
-  filterCategoriesLoaded: boolean;
+  filterTags: {
+    data: string[];
+    loaded: boolean;
+  };
+  featuredProductId: {
+    data: string;
+    loaded: boolean;
+  };
   sortingMethod: SortingMethods;
-  featuredProductId: string;
-  featuredProductIdLoaded: boolean;
 }
 
-export interface SetFilterTagsAction {
-  type: ProductActionTypes.SET_FITLER_TAGS;
-  payload: ProductState["filterTags"];
+export interface SetFilterTagsDataAction {
+  type: ProductActionTypes.SET_FITLER_TAGS_DATA;
+  payload: ProductState["filterTags"]["data"];
+}
+
+export interface SetFilterTagsLoadedAction {
+  type: ProductActionTypes.SET_FILTER_TAGS_LOADED;
+  payload: ProductState["filterTags"]["loaded"];
+}
+
+export interface SetFeaturedProductIdAction {
+  type: ProductActionTypes.SET_FEATURED_PRODUCT_ID;
+  payload: ProductState["featuredProductId"]["data"];
+}
+
+export interface SetFeaturedProductIdLoadedAction {
+  type: ProductActionTypes.SET_FEATURED_PRODUCT_ID_LOADED;
+  payload: ProductState["featuredProductId"]["loaded"];
 }
 
 export interface SetSortingMethodAction {
@@ -34,23 +49,8 @@ export interface SetSortingMethodAction {
   payload: ProductState["sortingMethod"];
 }
 
-export interface SetFilterTagsLoadedAction {
-  type: ProductActionTypes.SET_FILTER_TAGS_LOADED;
-  payload: ProductState["filterTagsLoaded"];
-}
-
-export interface SetFeaturedProductIdAction {
-  type: ProductActionTypes.SET_FEATURED_PRODUCT_ID;
-  payload: ProductState["featuredProductId"];
-}
-
-export interface SetFeaturedProductIdLoadedAction {
-  type: ProductActionTypes.SET_FEATURED_PRODUCT_ID_LOADED;
-  payload: ProductState["featuredProductIdLoaded"];
-}
-
 export type ProductAction =
-  | SetFilterTagsAction
+  | SetFilterTagsDataAction
   | SetSortingMethodAction
   | SetFilterTagsLoadedAction
   | SetFeaturedProductIdAction

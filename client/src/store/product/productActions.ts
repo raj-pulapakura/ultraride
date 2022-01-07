@@ -2,7 +2,7 @@ import {
   ProductActionTypes,
   SetFeaturedProductIdAction,
   SetFeaturedProductIdLoadedAction,
-  SetFilterTagsAction,
+  SetFilterTagsDataAction,
   SetFilterTagsLoadedAction,
   SetSortingMethodAction,
   SortingMethods,
@@ -17,9 +17,9 @@ export const setSortingMethod = (
   };
 };
 
-export const setFilterTags = (tags: string[]): SetFilterTagsAction => {
+export const setFilterTags = (tags: string[]): SetFilterTagsDataAction => {
   return {
-    type: ProductActionTypes.SET_FITLER_TAGS,
+    type: ProductActionTypes.SET_FITLER_TAGS_DATA,
     payload: tags,
   };
 };

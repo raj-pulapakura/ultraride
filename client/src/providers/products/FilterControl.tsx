@@ -14,8 +14,8 @@ export const FilterControl: React.FC<FilterControlProps> = ({ ...props }) => {
   const globalClasses = useGlobalStyles();
 
   const filterTags = useSelector<StoreState>(
-    (state) => state.product.filterTags
-  ) as StoreState["product"]["filterTags"];
+    (state) => state.product.filterTags.data
+  ) as StoreState["product"]["filterTags"]["data"];
 
   const allTags = useAllTags();
 

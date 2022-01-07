@@ -17,8 +17,8 @@ export const ProductList: React.FC<ProductListProps> = ({ products }) => {
   ) as StoreState["product"]["sortingMethod"];
 
   const filterTags = useSelector<StoreState>(
-    (state) => state.product.filterTags
-  ) as StoreState["product"]["filterTags"];
+    (state) => state.product.filterTags.data
+  ) as StoreState["product"]["filterTags"]["data"];
 
   const dispatch = useDispatch();
   const [productList, setProductList] = useState(products);

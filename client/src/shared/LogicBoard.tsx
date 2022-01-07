@@ -24,12 +24,12 @@ export const LogicBoard: React.FC<LogicBoardProps> = ({ children }) => {
   );
 
   const filterTagsLoaded = useSelector<StoreState>(
-    (state) => state.product.filterTagsLoaded
-  ) as StoreState["product"]["filterTagsLoaded"];
+    (state) => state.product.filterTags.loaded
+  ) as StoreState["product"]["filterTags"]["loaded"];
 
   const featuredProductIdLoaded = useSelector<StoreState>(
-    (state) => state.product.featuredProductIdLoaded
-  ) as StoreState["product"]["featuredProductIdLoaded"];
+    (state) => state.product.featuredProductId.loaded
+  ) as StoreState["product"]["featuredProductId"]["loaded"];
 
   // set filter tags
   useEffect(() => {

@@ -17,7 +17,7 @@ export class ProductService {
   static async createProduct(
     input: CreateProductInput
   ): Promise<ProductGeneralResponse> {
-    const { name, description, price, category, imageUrl, tags } = input;
+    const { name, description, price, category, imageUrl, tags, brand } = input;
     const productAlreadyExists = await ProductService.checkProductExists(name);
 
     if (productAlreadyExists) {
@@ -36,6 +36,7 @@ export class ProductService {
       price,
       category,
       imageUrl,
+      brand,
     }).save();
 
     TagService.createTags(tags, newProduct.id);
@@ -61,6 +62,7 @@ export class ProductService {
         updatedAt: newProduct.updatedAt,
         name: newProduct.name,
         tags: createdTags,
+        brand: newProduct.brand,
       },
     };
   }
@@ -68,7 +70,8 @@ export class ProductService {
   static async updateProduct(
     input: UpdateProductInput
   ): Promise<ProductGeneralResponse> {
-    const { id, name, category, imageUrl, description, price, tags } = input;
+    const { id, name, category, imageUrl, description, price, tags, brand } =
+      input;
 
     const productById = await ProductEntity.findOne(id);
 
@@ -100,6 +103,7 @@ export class ProductService {
       description || existingProduct?.description;
     const updateProductImageUrl = imageUrl || existingProduct?.imageUrl;
     const updateProductPrice = price || existingProduct?.price;
+    const updateProductBrand = brand || existingProduct?.brand;
 
     const partialEntity: {
       name?: string;
@@ -107,6 +111,7 @@ export class ProductService {
       description?: string;
       imageUrl?: string;
       price?: number;
+      brand?: string;
     } = {};
 
     if (updateProductName) {
@@ -114,19 +119,23 @@ export class ProductService {
     }
 
     if (updateProductCategory) {
-      partialEntity.category = category;
+      partialEntity.category = updateProductCategory;
     }
 
     if (updateProductDescription) {
-      partialEntity.description = description;
+      partialEntity.description = updateProductDescription;
     }
 
     if (updateProductImageUrl) {
-      partialEntity.imageUrl = imageUrl;
+      partialEntity.imageUrl = updateProductImageUrl;
     }
 
     if (updateProductPrice) {
-      partialEntity.price = price;
+      partialEntity.price = updateProductPrice;
+    }
+
+    if (updateProductBrand) {
+      partialEntity.brand = updateProductBrand;
     }
 
     try {
@@ -167,6 +176,7 @@ export class ProductService {
           createdAt: newProduct.createdAt,
           updatedAt: newProduct.updatedAt,
           tags: newTags,
+          brand: newProduct.brand,
         },
       };
     } catch (e) {
