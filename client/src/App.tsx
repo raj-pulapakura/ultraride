@@ -7,19 +7,27 @@ import { theme } from "./theme";
 import { AppRouter } from "./AppRouter";
 import { store } from "./store";
 
-export const brandName = "ultraride";
+import { Elements as StripeProvider } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import { STRIPE_PUBLIC_KEY } from "./constants";
+
+export const stripePromise = loadStripe(
+  STRIPE_PUBLIC_KEY
+)
 
 function App() {
   const queryClient = new QueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <ReduxProvider store={store}>
-          <AppRouter />
-        </ReduxProvider>
-      </ThemeProvider>
-    </QueryClientProvider>
+    <StripeProvider stripe={stripePromise}>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <ReduxProvider store={store}>
+            <AppRouter />
+          </ReduxProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </StripeProvider>
   );
 }
 

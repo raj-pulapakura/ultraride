@@ -13,11 +13,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMenuOpen } from "../store/menu/menuActions";
 import { Link, useNavigate } from "react-router-dom";
 import { useNavbarControlsStyles } from "./NavbarControls.styles";
-import { brandName } from "../App";
+import { BRAND_NAME } from "../constants";
 import { brandFont, theme } from "../theme";
 import { SearchBarIcon } from "./SearchBarIcon";
 import { StoreState } from "../store";
-import ultrarideLogoWhite from "../assets/ultraride-logo-white.svg";
 
 interface NavbarControlsProps {}
 
@@ -87,7 +86,7 @@ export const NavbarControls: React.FC<NavbarControlsProps> = ({}) => {
         ref={brandRef}
       >
         <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-          {brandName.toUpperCase()}
+          {BRAND_NAME.toUpperCase()}
         </Link>
       </Typography>
     </Flex>

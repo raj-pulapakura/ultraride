@@ -11,7 +11,7 @@ export const CartItemList: React.FC<CartItemListProps> = ({ cartItems }) => {
   return (
     <Grid container>
       {cartItems.map((cartItem) => (
-        <Grid item xs={12}>
+        <Grid key={cartItem.productId} item xs={12}>
           <SingleCartItem key={cartItem.productId} cartItem={cartItem} />
         </Grid>
       ))}

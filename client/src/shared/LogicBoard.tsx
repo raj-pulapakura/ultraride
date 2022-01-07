@@ -4,6 +4,7 @@ import { graphqlClient } from "../graphql/client";
 import { ProductsQuery, useProductsQuery } from "../graphql/generated";
 import { useAllTags } from "../hooks/useAllTags";
 import { StoreState } from "../store";
+import { addCartItem } from "../store/cart/cartActions";
 import {
   setFeaturedProductId,
   setFeaturedProductIdLoaded,
@@ -30,6 +31,7 @@ export const LogicBoard: React.FC<LogicBoardProps> = ({ children }) => {
     (state) => state.product.featuredProductIdLoaded
   ) as StoreState["product"]["featuredProductIdLoaded"];
 
+  // set filter tags
   useEffect(() => {
     if (!filterTagsLoaded && allTags.length) {
       dispatch(setFilterTags(allTags));
@@ -37,12 +39,35 @@ export const LogicBoard: React.FC<LogicBoardProps> = ({ children }) => {
     }
   }, [allTags, filterTagsLoaded]);
 
+  // set featured product id
   useEffect(() => {
     if (!featuredProductIdLoaded && randomProduct) {
       dispatch(setFeaturedProductId(randomProduct.id));
       dispatch(setFeaturedProductIdLoaded(true));
     }
   }, [randomProduct, featuredProductIdLoaded]);
+
+  const cartItems = useSelector<StoreState>(
+    (state) => state.cart.items
+  ) as StoreState["cart"]["items"];
+
+  // find items in localstorage and set them as cart items
+  useEffect(() => {
+    const keys = Object.keys(localStorage);
+    for (const key of keys) {
+      const value = localStorage.getItem(key);
+      if (value) {
+        dispatch(addCartItem({ productId: key, quantity: parseInt(value) }));
+      }
+    }
+  }, []);
+
+  // update localstorage whenever cart items change
+  useEffect(() => {
+    cartItems.forEach((item) => {
+      localStorage.setItem(item.productId, item.quantity.toString());
+    });
+  }, [cartItems]);
 
   return <div>{children}</div>;
 };

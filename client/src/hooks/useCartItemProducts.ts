@@ -23,7 +23,7 @@ export const useCartItemProducts = () => {
           >(ProductDocument, { productIdOrName: cartItem.productId });
           return { ...response, quantity: cartItem.quantity };
         },
-        queryKey: ["cartItem", cartItem.productId],
+        queryKey: ["cartItem", cartItem.productId, cartItem.quantity],
       };
     })
   );

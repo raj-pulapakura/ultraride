@@ -13,6 +13,8 @@ import { HomePage } from "./pages/home";
 import { LoginPage } from "./pages/login";
 import { ProductDetailPage } from "./pages/product-detail";
 import { RegisterPage } from "./pages/register";
+import { CheckoutSuccessPage } from "./pages/checkout/success";
+import { CheckoutFailedPage } from "./pages/checkout/failed";
 
 export function AppRouter() {
   const { data: meData } = useMeQuery(
@@ -41,7 +43,10 @@ export function AppRouter() {
             <Route path="/cart" element={<CartPage />} />
             <Route path="/account" element={<AccountPage />} />
             <Route path="/admin" element={<AdminPage />} />
+            <Route path="/checkout/success" element={<CheckoutSuccessPage />} />
+            <Route path="/checkout/failed" element={<CheckoutFailedPage />} />
 
+            {/* only show these routes if user is an admin */}
             {adminMeData?.adminMe && (
               <>
                 <Route
@@ -51,6 +56,7 @@ export function AppRouter() {
               </>
             )}
 
+            {/* only show these routes if the user is not logged in to their normal account */}
             {!meData?.me?.account && (
               <>
                 <Route path="/account/register" element={<RegisterPage />} />
