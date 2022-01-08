@@ -1,7 +1,7 @@
 import { Box, BoxProps, Typography } from "@mui/material";
 import React from "react";
 import { ProductsQuery } from "../../graphql/generated";
-import { ProductCarousel } from "../../shared/ProductCarousel";
+import { ProductCarousel } from "../../components/misc/ProductCarousel";
 import { theme } from "../../theme";
 import { useNavigate } from "react-router-dom";
 import { grey } from "@mui/material/colors";

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { graphqlClient } from "../../graphql/client";
 import { useAdminLoginMutation } from "../../graphql/generated";
-import { SimpleForm } from "../../shared/SimpleForm";
+import { SimpleForm } from "../../components/forms/SimpleForm";
 
 interface AdminLoginFormProps {}
 

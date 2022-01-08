@@ -12,7 +12,7 @@ import { STRIPE_API } from "../../constants";
 import { convertCartItemProductsToLineItems } from "../../utils/convertCartItemProductsToLineItems";
 import { useStripe } from "@stripe/react-stripe-js";
 import { theme } from "../../theme";
-import { Flex } from "../../shared/Flex";
+import { Flex } from "../../components/wrappers/Flex";
 
 interface CartPageProps {}
 
@@ -46,7 +46,7 @@ export const CartPage: React.FC<CartPageProps> = ({}) => {
     if (!meData?.me?.account) {
       return navigate("/account/sign-up?next=cart");
     }
-  const body = {
+    const body = {
       line_items: convertCartItemProductsToLineItems(cartItemProducts),
     };
 

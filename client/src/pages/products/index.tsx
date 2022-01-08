@@ -9,9 +9,8 @@ import { Link, useLocation } from "react-router-dom";
 import { useSearchProducts } from "../../hooks/useSearchProducts";
 import { theme } from "../../theme";
 import { UtilityDrawer } from "../../providers/products/UtilityDrawer";
-import { Flex } from "../../shared/Flex";
-import { ChevronLeft } from "@mui/icons-material";
-import { BackToLink } from "../../shared/BackToLink";
+import { Flex } from "../../components/wrappers/Flex";
+import { BackToLink } from "../../components/misc/BackToLink";
 
 interface AllProductsPageProps {}
 

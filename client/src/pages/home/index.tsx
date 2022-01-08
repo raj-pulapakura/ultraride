@@ -1,10 +1,8 @@
 import { Box, Button, Typography, useMediaQuery } from "@mui/material";
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { graphqlClient } from "../../graphql/client";
 import { ProductsQuery, useProductsQuery } from "../../graphql/generated";
 import { FeatureSection } from "../../providers/home/FeatureSection";
-import { ProductCarousel } from "../../shared/ProductCarousel";
 import { theme } from "../../theme";
 
 interface HomePageProps {}

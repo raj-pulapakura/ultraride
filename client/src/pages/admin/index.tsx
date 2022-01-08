@@ -5,7 +5,7 @@ import { useAdminMeQuery } from "../../graphql/generated";
 import { ProductTable } from "../../providers/admin/ProductTable";
 import { AdminLoginForm } from "../../providers/admin/AdminLoginForm";
 import { AccountTable } from "../../providers/admin/AccountTable";
-import { CollapseField } from "../../shared/CollapseField";
+import { CollapseField } from "../../components/misc/CollapseField";
 import { grey } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
 

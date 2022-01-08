@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import { Flex } from "./Flex";
+import { Flex } from "../wrappers/Flex";
 import { grey } from "@mui/material/colors";
 import { BoxProps } from "@mui/material";
 

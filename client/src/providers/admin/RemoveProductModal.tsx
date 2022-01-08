@@ -5,10 +5,10 @@ import {
   ProductsQuery,
   useDeleteProductMutation,
 } from "../../graphql/generated";
-import { AttributeText } from "../../shared/AttributeText";
-import { Flex } from "../../shared/Flex";
-import { FormTitle } from "../../shared/FormTitle";
-import { Modal } from "../../shared/Modal";
+import { AttributeText } from "../../components/misc/AttributeText";
+import { Flex } from "../../components/wrappers/Flex";
+import { FormTitle } from "../../components/forms/FormTitle";
+import { Modal } from "../../components/modals/Modal";
 import { grey } from "@mui/material/colors";
 
 interface RemoveProductModalProps {

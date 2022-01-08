@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import { Box, Typography, Button } from "@mui/material";
-import { ProductQuery } from "../graphql/generated";
+import { ProductQuery } from "../../graphql/generated";
 import { useDispatch, useSelector } from "react-redux";
-import { addCartItem } from "../store/cart/cartActions";
-import { LoadingText } from "./LoadingText";
+import { addCartItem } from "../../store/cart/cartActions";
+import { LoadingText } from "../misc/LoadingText";
 import { Modal } from "./Modal";
-import { StoreState } from "../store";
+import { StoreState } from "../../store";
 import { useAddToCartModalStyles } from "./AddToCartModal.styles";
-import { SmallProductDisplay } from "./SmallProductDisplay";
-import { QuantityController } from "./QuantityController";
-import { Flex } from "./Flex";
-import { Close } from "@mui/icons-material";
+import { SmallProductDisplay } from "../misc/SmallProductDisplay";
+import { QuantityController } from "../misc/QuantityController";
+import { Flex } from "../wrappers/Flex";
 
 interface AddToCartModalProps {
   product: ProductQuery["product"];

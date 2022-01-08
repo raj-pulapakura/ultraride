@@ -3,7 +3,7 @@ import { NavBar } from "./Navbar";
 import { Box, Typography } from "@mui/material";
 import { Menu } from "./Menu";
 import { useMediaQuery } from "@mui/material";
-import { theme } from "../theme";
+import { theme } from "../../theme";
 
 interface LayoutProps {}
 

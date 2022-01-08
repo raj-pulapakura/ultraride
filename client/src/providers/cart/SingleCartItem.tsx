@@ -2,16 +2,11 @@ import React from "react";
 import { CartItem } from "../../store/cart/cartTypes";
 import { Box, Typography, Tooltip, IconButton } from "@mui/material";
 import { useProductQuery } from "../../graphql/generated";
-import { LoadingText } from "../../shared/LoadingText";
+import { LoadingText } from "../../components/misc/LoadingText";
 import { graphqlClient } from "../../graphql/client";
 import { useDispatch } from "react-redux";
 import { addCartItem, deleteCartItem } from "../../store/cart/cartActions";
 import { useSingleCartItemStyles } from "./SingleCartItem.styles";
-import { Delete, Add, Remove } from "@mui/icons-material";
-import { SimpleContainer } from "../../shared/SimpleContainer";
-import { theme } from "../../theme";
-import { grey } from "@mui/material/colors";
-import { Flex } from "../../shared/Flex";
 
 interface SingleCartItemProps {
   cartItem: CartItem;
@@ -71,27 +66,6 @@ export const SingleCartItem: React.FC<SingleCartItemProps> = ({ cartItem }) => {
         <Typography variant="subtitle1">
           {"Subtotal: $" + productData.product.price * cartItem.quantity}
         </Typography>
-        {/* <Flex
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            backgroundColor: grey[100],
-            width: "100%",
-            borderBottomRightRadius: "0.5rem",
-            justifyContent: "space-around",
-          }}
-        >
-          <IconButton>
-            <Delete htmlColor="black" />
-          </IconButton>
-          <IconButton>
-            <Add htmlColor="black" />
-          </IconButton>
-          <IconButton>
-            <Remove htmlColor="black" />
-          </IconButton>
-        </Flex> */}
       </Box>
     </Box>
   );

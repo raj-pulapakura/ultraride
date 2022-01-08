@@ -1,7 +1,7 @@
 import { Add, Remove } from "@mui/icons-material";
 import { Box, IconButton, Typography } from "@mui/material";
 import React, { useEffect, useRef } from "react";
-import { Flex } from "./Flex";
+import { Flex } from "../wrappers/Flex";
 
 interface QuantityControllerProps {
   value: number;

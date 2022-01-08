@@ -1,5 +1,5 @@
 import React from "react";
-import { Backdrop } from "./Backdrop";
+import { Backdrop } from "../misc/Backdrop";
 import { Box, IconButton } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { useModalStyles } from "./Modal.styles";

@@ -1,9 +1,9 @@
 import { Box, BoxProps, Button, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React, { useEffect, useRef, useState } from "react";
-import { ProductsQuery } from "../graphql/generated";
+import { ProductsQuery } from "../../graphql/generated";
 import { useNavigate } from "react-router-dom";
-import { Flex } from "./Flex";
+import { Flex } from "../wrappers/Flex";
 import { SmallProductDisplay } from "./SmallProductDisplay";
 
 type ProductCarouselProps = {

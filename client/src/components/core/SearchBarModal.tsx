@@ -3,16 +3,16 @@ import { grey } from "@mui/material/colors";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { ProductsQuery } from "../graphql/generated";
-import { useAllBrands } from "../hooks/useAllBrands";
-import { useAllTags } from "../hooks/useAllTags";
-import { useSearchProducts } from "../hooks/useSearchProducts";
-import { Modal } from "./Modal";
-import { SmallProductDisplay } from "./SmallProductDisplay";
+import { ProductsQuery } from "../../graphql/generated";
+import { useAllBrands } from "../../hooks/useAllBrands";
+import { useAllTags } from "../../hooks/useAllTags";
+import { useSearchProducts } from "../../hooks/useSearchProducts";
+import { Modal } from "../modals/Modal";
+import { SmallProductDisplay } from "../misc/SmallProductDisplay";
 import {
   setFilterBrands,
   setFilterTags,
-} from "../store/product/productActions";
+} from "../../store/product/productActions";
 
 interface SearchBarModalProps {
   onClose: () => void;

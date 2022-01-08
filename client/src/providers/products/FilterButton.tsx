@@ -1,7 +1,7 @@
 import { Button, ButtonProps } from "@mui/material";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Modal } from "../../shared/Modal";
+import { Modal } from "../../components/modals/Modal";
 import { FilterControl } from "./FilterControl";
 import { StoreState } from "../../store";
 import { useAllTags } from "../../hooks/useAllTags";

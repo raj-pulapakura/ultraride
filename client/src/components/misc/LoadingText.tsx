@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Typography } from "@mui/material";
-import { FloatContainer } from "./FloatContainer";
+import { FloatContainer } from "../wrappers/FloatContainer";
 
 interface LoadingTextProps {
   actionText?: string;

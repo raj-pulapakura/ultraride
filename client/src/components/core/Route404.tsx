@@ -1,7 +1,7 @@
 import { Button, ButtonGroup, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { FloatContainer } from "./FloatContainer";
+import { FloatContainer } from "../wrappers/FloatContainer";
 
 interface Route404Props {}
 

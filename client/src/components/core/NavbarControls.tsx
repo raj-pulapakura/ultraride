@@ -7,17 +7,17 @@ import {
   Badge,
   Tooltip,
 } from "@mui/material";
-import { Flex } from "./Flex";
+import { Flex } from "../wrappers/Flex";
 import { AccountCircle, LocalOffer, Menu } from "@mui/icons-material";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
 import { useDispatch, useSelector } from "react-redux";
-import { setMenuOpen } from "../store/menu/menuActions";
+import { setMenuOpen } from "../../store/menu/menuActions";
 import { Link, useNavigate } from "react-router-dom";
 import { useNavbarControlsStyles } from "./NavbarControls.styles";
-import { BRAND_NAME } from "../constants";
-import { brandFont, theme } from "../theme";
+import { BRAND_NAME } from "../../constants";
+import { brandFont, theme } from "../../theme";
 import { SearchBarIcon } from "./SearchBarIcon";
-import { StoreState } from "../store";
+import { StoreState } from "../../store";
 
 interface NavbarControlsProps {}
 
@@ -78,7 +78,6 @@ export const NavbarControls: React.FC<NavbarControlsProps> = ({}) => {
 
   const Brand = (
     <Flex style={{ gap: "1rem" }}>
-      {/* <img src={ultrarideLogoWhite} ref={logoRef} /> */}
       <Typography
         className={classes.brand}
         variant="h5"

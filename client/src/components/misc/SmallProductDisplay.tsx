@@ -1,6 +1,6 @@
 import { Box, BoxProps, Typography } from "@mui/material";
 import React from "react";
-import { ProductQuery } from "../graphql/generated";
+import { ProductQuery } from "../../graphql/generated";
 import { useSmallProductDisplayStyles } from "./SmallProductDisplay.styles";
 
 type SmallProductDisplayProps = {

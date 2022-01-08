@@ -12,7 +12,7 @@ import React, { useState } from "react";
 import { graphqlClient } from "../../graphql/client";
 import { ProductsQuery, useProductsQuery } from "../../graphql/generated";
 import Settings from "@mui/icons-material/Settings";
-import { IconMenu } from "../../shared/IconMenu";
+import { IconMenu } from "../../components/misc/IconMenu";
 import { EditProductModal } from "./EditProductModal";
 import { RemoveProductModal } from "./RemoveProductModal";
 import { useNavigate } from "react-router-dom";

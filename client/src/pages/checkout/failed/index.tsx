@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import React from "react";
-import { FloatContainer } from "../../../shared/FloatContainer";
-import { SimpleContainer } from "../../../shared/SimpleContainer";
+import { FloatContainer } from "../../../components/wrappers/FloatContainer";
+import { SimpleContainer } from "../../../components/wrappers/SimpleContainer";
 
 interface CheckoutFailedPageProps {}
 

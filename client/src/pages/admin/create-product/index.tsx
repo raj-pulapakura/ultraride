@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import { SimpleForm } from "../../../shared/SimpleForm";
 import { graphqlClient } from "../../../graphql/client";
 import { useCreateProductMutation } from "../../../graphql/generated";
-import { FormContainer } from "../../../shared/FormContainer";
-import { FormTitle } from "../../../shared/FormTitle";
-import { SimpleFormControl } from "../../../shared/SimpleFormControl";
-import { FormSubmitButton } from "../../../shared/FormSubmitButton";
-import { ListFormControl } from "../../../shared/ListFormControl";
-import { Box } from "@mui/material";
-import { Flex } from "../../../shared/Flex";
-import { FormControlDuoWrapper } from "../../../shared/FormControlDuoWrapper";
-import { BackToLink } from "../../../shared/BackToLink";
+import { FormContainer } from "../../../components/forms/FormContainer";
+import { FormTitle } from "../../../components/forms/FormTitle";
+import { SimpleFormControl } from "../../../components/forms/SimpleFormControl";
+import { FormSubmitButton } from "../../../components/forms/FormSubmitButton";
+import { ListFormControl } from "../../../components/forms/ListFormControl";
+import { FormControlDuoWrapper } from "../../../components/forms/FormControlDuoWrapper";
+import { BackToLink } from "../../../components/misc/BackToLink";
 
 interface CreateProductPageProps {}
 

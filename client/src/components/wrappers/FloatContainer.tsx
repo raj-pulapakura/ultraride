@@ -1,6 +1,6 @@
 import { Container, makeStyles, Box } from "@mui/material";
 import React from "react";
-import { theme } from "../theme";
+import { theme } from "../../theme";
 
 interface FloatContainerProps {
   noBackground?: boolean;

@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { graphqlClient } from "../graphql/client";
-import { ProductsQuery, useProductsQuery } from "../graphql/generated";
-import { useAllBrands } from "../hooks/useAllBrands";
-import { useAllTags } from "../hooks/useAllTags";
-import { StoreState } from "../store";
-import { addCartItem } from "../store/cart/cartActions";
+import { graphqlClient } from "../../graphql/client";
+import { ProductsQuery, useProductsQuery } from "../../graphql/generated";
+import { useAllBrands } from "../../hooks/useAllBrands";
+import { useAllTags } from "../../hooks/useAllTags";
+import { StoreState } from "../../store";
+import { addCartItem } from "../../store/cart/cartActions";
 import {
   setFeaturedProductId,
   setFeaturedProductIdLoaded,
@@ -13,8 +13,8 @@ import {
   setFilterBrandsLoaded,
   setFilterTags,
   setFilterTagsLoaded,
-} from "../store/product/productActions";
-import { randomChoice } from "../utils/randomChoice";
+} from "../../store/product/productActions";
+import { randomChoice } from "../../utils/randomChoice";
 
 interface LogicBoardProps {}
 

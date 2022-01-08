@@ -10,7 +10,7 @@ import { useAccountsQuery } from "../../graphql/generated";
 import { graphqlClient } from "../../graphql/client";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { Settings } from "@mui/icons-material";
-import { CollapseField } from "../../shared/CollapseField";
+import { CollapseField } from "../../components/misc/CollapseField";
 import { parseDate } from "../../utils/parseDate";
 
 interface AccountTableProps {}
@@ -50,7 +50,9 @@ export const AccountTable: React.FC<AccountTableProps> = () => {
               <TableCell align="left">{account.firstName}</TableCell>
               <TableCell align="left">{account.lastName}</TableCell>
               <TableCell align="left">{account.email}</TableCell>
-              <TableCell align="left">{parseDate(parseInt(account.createdAt))}</TableCell>
+              <TableCell align="left">
+                {parseDate(parseInt(account.createdAt))}
+              </TableCell>
               {/* <TableCell align="left">
                 <IconButton onClick={handleClick}>
                   <Settings />

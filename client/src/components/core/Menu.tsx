@@ -8,14 +8,14 @@ import {
   Button,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { StoreState } from "../store";
+import { StoreState } from "../../store";
 import { Close } from "@mui/icons-material";
-import { setMenuOpen } from "../store/menu/menuActions";
-import { useMeQuery } from "../graphql/generated";
-import { graphqlClient } from "../graphql/client";
+import { setMenuOpen } from "../../store/menu/menuActions";
+import { useMeQuery } from "../../graphql/generated";
+import { graphqlClient } from "../../graphql/client";
 import { useMenuStyles } from "./Menu.styles";
 import { useNavigate } from "react-router-dom";
-import { brandFont } from "../theme";
+import { brandFont } from "../../theme";
 
 interface MenuProps {}
 

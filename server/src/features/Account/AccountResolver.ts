@@ -10,12 +10,6 @@ import { AUTH_COOKIE, env, TEN_YEARS } from "../../constants";
 import { AccountAdminLoginInput } from "./inputs/AccountAdminLoginInput";
 import { v4 as uuid } from "uuid";
 import { adminIsLoggedIn } from "../../utils/adminIsLoggedIn";
-import { PurchaseProductsInput } from "../Purchase/inputs/PurchaseProductsInput";
-import { PurchaseResolver } from "../Purchase/PurchaseResolver";
-import { PurchaseEntity } from "../Purchase/PurchaseEntity";
-import { ProductEntity } from "../Product/ProductEntity";
-import { PurchasesGeneralResponse } from "../Purchase/objects/PurchasesGeneralResponse";
-import { PurchaseGraphql } from "../Purchase/PurchaseGraphql";
 
 @Resolver()
 export class AccountResolver {
@@ -88,7 +82,7 @@ export class AccountResolver {
 
   @Query(() => AccountGeneralResponse, { nullable: true })
   async me(@Ctx() { req }: Context): Promise<AccountGeneralResponse | null> {
-    const { accountId, adminLoggedIn } = req.session;
+    const { accountId } = req.session;
     if (!accountId) return null;
     const account = await AccountEntity.findOne(accountId);
     if (!account) return null;

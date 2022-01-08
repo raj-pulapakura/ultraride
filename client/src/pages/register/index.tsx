@@ -1,13 +1,13 @@
 import { Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import { SimpleForm } from "../../shared/SimpleForm";
+import { SimpleForm } from "../../components/forms/SimpleForm";
 import { graphqlClient } from "../../graphql/client";
 import { useRegisterMutation } from "../../graphql/generated";
-import { FormContainer } from "../../shared/FormContainer";
-import { FormSubmitButton } from "../../shared/FormSubmitButton";
-import { FormTitle } from "../../shared/FormTitle";
-import { SimpleFormControl } from "../../shared/SimpleFormControl";
+import { FormContainer } from "../../components/forms/FormContainer";
+import { FormSubmitButton } from "../../components/forms/FormSubmitButton";
+import { FormTitle } from "../../components/forms/FormTitle";
+import { SimpleFormControl } from "../../components/forms/SimpleFormControl";
 
 interface RegisterPageProps {}
 

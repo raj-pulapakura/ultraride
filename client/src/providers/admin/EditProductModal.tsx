@@ -4,12 +4,12 @@ import {
   ProductsQuery,
   useUpdateProductMutation,
 } from "../../graphql/generated";
-import { FormControlDuoWrapper } from "../../shared/FormControlDuoWrapper";
-import { FormSubmitButton } from "../../shared/FormSubmitButton";
-import { FormTitle } from "../../shared/FormTitle";
-import { ListFormControl } from "../../shared/ListFormControl";
-import { Modal } from "../../shared/Modal";
-import { SimpleFormControl } from "../../shared/SimpleFormControl";
+import { FormControlDuoWrapper } from "../../components/forms/FormControlDuoWrapper";
+import { FormSubmitButton } from "../../components/forms/FormSubmitButton";
+import { FormTitle } from "../../components/forms/FormTitle";
+import { ListFormControl } from "../../components/forms/ListFormControl";
+import { Modal } from "../../components/modals/Modal";
+import { SimpleFormControl } from "../../components/forms/SimpleFormControl";
 
 interface EditProductModalProps {
   onClose: () => void;

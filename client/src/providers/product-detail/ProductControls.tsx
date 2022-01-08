@@ -1,6 +1,6 @@
 import { Box, Button, Chip, Typography, BoxProps } from "@mui/material";
 import React, { useState } from "react";
-import { AddToCartModal } from "../../shared/AddToCartModal";
+import { AddToCartModal } from "../../components/modals/AddToCartModal";
 import { ProductQuery } from "../../graphql/generated";
 import { RelatedProducts } from "./RelatedProducts";
 

@@ -1,7 +1,7 @@
 import { Sort } from "@mui/icons-material";
 import { Button, ButtonProps } from "@mui/material";
 import React, { useState } from "react";
-import { Modal } from "../../shared/Modal";
+import { Modal } from "../../components/modals/Modal";
 import { SortControl } from "./SortControl";
 
 type SortButtonProps = {} & ButtonProps;

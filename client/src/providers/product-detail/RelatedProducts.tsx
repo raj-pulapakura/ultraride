@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { ProductQuery } from "../../graphql/generated";
 import { useRelatedProducts } from "../../hooks/useRelatedProducts";
 import { useNavigate } from "react-router-dom";
-import { ProductCarousel } from "../../shared/ProductCarousel";
+import { ProductCarousel } from "../../components/misc/ProductCarousel";
 
 type RelatedProductsProps = {
   product: ProductQuery["product"];

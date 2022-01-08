@@ -1,8 +1,8 @@
 import { Box, Button, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { CenterContainer } from "../../shared/CenterContainer";
-import { SimpleContainer } from "../../shared/SimpleContainer";
+import { CenterContainer } from "../../components/wrappers/CenterContainer";
+import { SimpleContainer } from "../../components/wrappers/SimpleContainer";
 
 interface EmptyCartProps {}
 

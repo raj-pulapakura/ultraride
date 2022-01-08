@@ -1,5 +1,5 @@
 import React from "react";
-import { CenterContainer } from "./CenterContainer";
+import { CenterContainer } from "../wrappers/CenterContainer";
 
 interface FormContainerProps {}
 

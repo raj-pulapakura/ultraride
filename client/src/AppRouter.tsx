@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Layout } from "./shared/Layout";
-import { LogicBoard } from "./shared/LogicBoard";
-import { Route404 } from "./shared/Route404";
+import { Layout } from "./components/core/Layout";
+import { LogicBoard } from "./components/core/LogicBoard";
+import { Route404 } from "./components/core/Route404";
 import { graphqlClient } from "./graphql/client";
 import { useMeQuery, useAdminMeQuery } from "./graphql/generated";
 import { AccountPage } from "./pages/account";

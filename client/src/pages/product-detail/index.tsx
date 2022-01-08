@@ -1,15 +1,15 @@
 import React from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Typography, Box, useMediaQuery, Chip, Grid } from "@mui/material";
-import { LoadingText } from "../../shared/LoadingText";
+import { LoadingText } from "../../components/misc/LoadingText";
 import { graphqlClient } from "../../graphql/client";
 import { useProductQuery } from "../../graphql/generated";
 import { theme } from "../../theme";
-import { Flex } from "../../shared/Flex";
+import { Flex } from "../../components/wrappers/Flex";
 import { ChevronLeft } from "@mui/icons-material";
 import { ProductControls } from "../../providers/product-detail/ProductControls";
 import { RelatedProducts } from "../../providers/product-detail/RelatedProducts";
-import { BackToLink } from "../../shared/BackToLink";
+import { BackToLink } from "../../components/misc/BackToLink";
 
 interface ProductDetailPageProps {}
 
