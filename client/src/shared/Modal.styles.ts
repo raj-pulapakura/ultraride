@@ -3,11 +3,11 @@ import { makeStyles } from "@mui/styles";
 export const useModalStyles = makeStyles({
   modal: {
     zIndex: 5,
-    top: "10%",
+    top: "15%",
     left: "50%",
     padding: "2rem",
     position: "fixed",
-    maxHeight: "80vh",
+    maxHeight: "70vh",
     overflowY: "auto",
     background: "white",
     borderRadius: "0.2rem",

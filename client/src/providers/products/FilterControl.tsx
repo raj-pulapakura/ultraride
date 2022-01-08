@@ -21,9 +21,9 @@ export const FilterControl: React.FC<FilterControlProps> = ({
   const dispatch = useDispatch();
   const globalClasses = useGlobalStyles();
 
-  useEffect(() => {
-    console.log({ header, sourceArray, currentArray });
-  }, [sourceArray, currentArray, header]);
+  // useEffect(() => {
+  //   console.log({ header, sourceArray, currentArray });
+  // }, [sourceArray, currentArray, header]);
 
   const onTagClick = (text: string) => {
     console.log({ currentArray, text });

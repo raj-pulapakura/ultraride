@@ -5,17 +5,21 @@ export const useSingleCartItemStyles = makeStyles({
     display: "flex",
     marginTop: "1rem",
     marginBottom: "1rem",
+    boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.25)",
+    borderRadius: "0.5rem",
   },
   productDetails: {
     padding: "1rem",
-    paddingTop: "0",
+    position: "relative",
+    width: "100%",
   },
   productCategory: {
     color: "grey",
   },
   productImage: {
-    maxWidth: "250px",
-    borderRadius: "1rem",
+    maxWidth: "min(250px, 50%)",
+    borderTopLeftRadius: "0.5rem",
+    borderBottomLeftRadius: "0.5rem",
   },
   controls: {
     display: "flex",

@@ -3,6 +3,7 @@ import {
   CartItem,
   CartActionTypes,
   DeleteCartItemAction,
+  ClearCartAction,
 } from "./cartTypes";
 
 export const addCartItem = (cartItem: CartItem): AddCartItemAction => {
@@ -19,5 +20,11 @@ export const deleteCartItem = (
   return {
     type: CartActionTypes.DELETE_ITEM,
     payload: productIdToDelete,
+  };
+};
+
+export const clearCart = (): ClearCartAction => {
+  return {
+    type: CartActionTypes.CLEAR_CART,
   };
 };

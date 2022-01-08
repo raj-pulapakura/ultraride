@@ -1,196 +1,82 @@
 import { Box, Button, Typography, useMediaQuery } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FeaturedProduct } from "../../providers/home/FeaturedProduct";
-import ultraRidePromoV2 from "../../assets/ultraride-promo-v2.svg";
+import { graphqlClient } from "../../graphql/client";
+import { ProductsQuery, useProductsQuery } from "../../graphql/generated";
+import { FeatureSection } from "../../providers/home/FeatureSection";
+import { ProductCarousel } from "../../shared/ProductCarousel";
 import { theme } from "../../theme";
-import { Flex } from "../../shared/Flex";
-import { PopularProducts } from "../../providers/home/PopularProducts";
 
 interface HomePageProps {}
 
 export const HomePage: React.FC<HomePageProps> = ({}) => {
-  const navigate = useNavigate();
-
   const screenIsXSmall = useMediaQuery(theme.breakpoints.up("xs"));
   const screenIsSmall = useMediaQuery(theme.breakpoints.up("sm"));
   const screenIsMedium = useMediaQuery(theme.breakpoints.up("md"));
   const screenIsLarge = useMediaQuery(theme.breakpoints.up("lg"));
 
-  useEffect(() => {
-    console.log({
-      screenIsXSmall,
-      screenIsSmall,
-      screenIsMedium,
-      screenIsLarge,
-    });
-  }, [screenIsXSmall, screenIsSmall, screenIsMedium, screenIsLarge]);
+  // useEffect(() => {
+  //   console.log({
+  //     screenIsXSmall,
+  //     screenIsSmall,
+  //     screenIsMedium,
+  //     screenIsLarge,
+  //   });
+  // }, [screenIsXSmall, screenIsSmall, screenIsMedium, screenIsLarge]);
+
+  const { data: productsData } = useProductsQuery(graphqlClient);
+
+  const nikeProducts = productsData?.products.filter(
+    (product) => product.brand.toLowerCase() === "nike"
+  );
+
+  const footballProducts = productsData?.products.filter(
+    (product) =>
+      product.category.toLowerCase().includes("football") ||
+      product.tags.map((tag) => tag.text.toLowerCase()).includes("football")
+  );
+
+  const adidasProducts = productsData?.products.filter(
+    (product) => product.brand.toLowerCase() === "adidas"
+  );
+
+  const runners = productsData?.products.filter(
+    (product) =>
+      product.category.includes("running") ||
+      product.tags.map((tag) => tag.text.toLowerCase()).includes("running")
+  );
 
   return (
     <>
-      {screenIsLarge ? (
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "1rem",
-          }}
-        >
-          <img
-            src={ultraRidePromoV2}
-            style={{
-              borderRadius: "0.5rem",
-              gridColumnStart: "1",
-              gridColumnEnd: "3",
-              gridRowStart: "1",
-              gridRowEnd: "2",
-              width: "100%",
-            }}
-          />
-          <FeaturedProduct
-            sx={{
-              gridRowStart: "1",
-              gridRowEnd: "span 2",
-            }}
-          />
-          <Box
-            sx={{
-              gridRowStart: "2",
-              gridRowEnd: "3",
-              gridColumnStart: "1",
-              gridColumnEnd: "3",
-            }}
-          >
-            {/* <Button
-              fullWidth
-              variant="contained"
-              onClick={() => navigate("/products")}
-              size="large"
-            >
-              Browse all Shoes
-            </Button> */}
-            <Typography sx={{ marginTop: "1rem" }}>
-              Ultraride is proud to be to world's largest retailer of the
-              highest quality shoes. We believe everyone deserves fantastic
-              shoes. Whether you're a runner, jogger, basketballer, footballer,
-              or you just want some damn good shoes, look no more.
-            </Typography>
-            <Typography sx={{ marginTop: "1rem" }}>
-              Ultraride is proud to be to world's largest retailer of the
-              highest quality shoes. We believe everyone deserves fantastic
-              shoes. Whether you're a runner, jogger, basketballer, footballer,
-              or you just want some damn good shoes, look no more.
-            </Typography>
-            <Typography sx={{ marginTop: "1rem" }}>
-              Ultraride is proud to be to world's largest retailer of the
-              highest quality shoes. We believe everyone deserves fantastic
-              shoes. Whether you're a runner, jogger, basketballer, footballer,
-              or you just want some damn good shoes, look no more.
-            </Typography>
-            <Typography sx={{ marginTop: "1rem" }}>
-              Ultraride is proud to be to world's largest retailer of the
-              highest quality shoes. We believe everyone deserves fantastic
-              shoes. Whether you're a runner, jogger, basketballer, footballer,
-              or you just want some damn good shoes, look no more.
-            </Typography>
-          </Box>
-        </Box>
-      ) : screenIsSmall ? (
-        <>
-          <img
-            src={ultraRidePromoV2}
-            style={{
-              width: "100%",
-              borderRadius: "0.5rem",
-              marginBottom: "1rem",
-            }}
-          />
-          <Flex style={{ gap: "2rem", alignItems: "flex-start" }}>
-            <FeaturedProduct sx={{ width: "50%" }} />
-            <Box sx={{ width: "50%" }}>
-              {/* <Button
-                fullWidth
-                variant="contained"
-                onClick={() => navigate("/products")}
-                size="large"
-              >
-                Browse all Shoes
-              </Button> */}
-              <Typography sx={{ marginTop: "1rem" }}>
-                Ultraride is proud to be to world's largest retailer of the
-                highest quality shoes. We believe everyone deserves fantastic
-                shoes. Whether you're a runner, jogger, basketballer,
-                footballer, or you just want some damn good shoes, look no more.
-              </Typography>
-              <Typography sx={{ marginTop: "1rem" }}>
-                Ultraride is proud to be to world's largest retailer of the
-                highest quality shoes. We believe everyone deserves fantastic
-                shoes. Whether you're a runner, jogger, basketballer,
-                footballer, or you just want some damn good shoes, look no more.
-              </Typography>
-              <Typography sx={{ marginTop: "1rem" }}>
-                Ultraride is proud to be to world's largest retailer of the
-                highest quality shoes. We believe everyone deserves fantastic
-                shoes. Whether you're a runner, jogger, basketballer,
-                footballer, or you just want some damn good shoes, look no more.
-              </Typography>
-              <Typography sx={{ marginTop: "1rem" }}>
-                Ultraride is proud to be to world's largest retailer of the
-                highest quality shoes. We believe everyone deserves fantastic
-                shoes. Whether you're a runner, jogger, basketballer,
-                footballer, or you just want some damn good shoes, look no more.
-              </Typography>
-            </Box>
-          </Flex>
-        </>
-      ) : (
-        <Box>
-          <img
-            src={ultraRidePromoV2}
-            style={{
-              width: "100%",
-              borderRadius: "0.5rem",
-              marginBottom: "1rem",
-            }}
-          />
-          <FeaturedProduct />
-          {/* <Button
-            fullWidth
-            variant="contained"
-            onClick={() => navigate("/products")}
-            sx={{ marginTop: "1rem" }}
-            size="large"
-          >
-            Browse all Shoes
-          </Button> */}
-          <Box>
-            <Typography sx={{ marginTop: "1rem" }}>
-              Ultraride is proud to be to world's largest retailer of the
-              highest quality shoes. We believe everyone deserves fantastic
-              shoes. Whether you're a runner, jogger, basketballer, footballer,
-              or you just want some damn good shoes, look no more.
-            </Typography>
-            <Typography sx={{ marginTop: "1rem" }}>
-              Ultraride is proud to be to world's largest retailer of the
-              highest quality shoes. We believe everyone deserves fantastic
-              shoes. Whether you're a runner, jogger, basketballer, footballer,
-              or you just want some damn good shoes, look no more.
-            </Typography>
-            <Typography sx={{ marginTop: "1rem" }}>
-              Ultraride is proud to be to world's largest retailer of the
-              highest quality shoes. We believe everyone deserves fantastic
-              shoes. Whether you're a runner, jogger, basketballer, footballer,
-              or you just want some damn good shoes, look no more.
-            </Typography>
-            <Typography sx={{ marginTop: "1rem" }}>
-              Ultraride is proud to be to world's largest retailer of the
-              highest quality shoes. We believe everyone deserves fantastic
-              shoes. Whether you're a runner, jogger, basketballer, footballer,
-              or you just want some damn good shoes, look no more.
-            </Typography>
-          </Box>
-        </Box>
-      )}
+      <FeatureSection
+        title="It's Nike or Nothin'"
+        subtitle="Only the best"
+        products={nikeProducts || []}
+      />
+      <FeatureSection
+        title="Football Galore"
+        subtitle="Score like a Pro"
+        products={footballProducts || []}
+        gradientStartColor="#f54542"
+        gradientEndColor="#f5c842"
+        sx={{ marginTop: "3rem" }}
+      />
+      <FeatureSection
+        title="Get Yo' Adidas On"
+        subtitle="Ultra Premium Style"
+        products={adidasProducts || []}
+        gradientStartColor="#ca13eb"
+        gradientEndColor="#4913eb"
+        sx={{ marginTop: "3rem" }}
+      />
+      <FeatureSection
+        title="Ace the Mile"
+        subtitle="Leave 'em in the dust"
+        products={runners || []}
+        gradientStartColor="#c26e25"
+        gradientEndColor="#eb4034"
+        sx={{ marginTop: "3rem" }}
+      />
     </>
   );
 };

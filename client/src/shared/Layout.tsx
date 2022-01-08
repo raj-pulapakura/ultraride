@@ -11,14 +11,14 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const screenIsXSmall = useMediaQuery(theme.breakpoints.down("xs"));
 
   const layoutMargin = screenIsXSmall
-    ? "1rem 1rem 1rem 1rem"
-    : "3rem 2rem 1rem 2rem";
+    ? "5rem 1rem 1rem 1rem"
+    : "7rem 2rem 1rem 2rem";
 
   return (
     <>
       <NavBar />
       <Menu />
-      <Box sx={{ margin: layoutMargin}}>{children}</Box>
+      <Box sx={{ margin: layoutMargin }}>{children}</Box>
     </>
   );
 };

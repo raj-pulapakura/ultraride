@@ -8,6 +8,10 @@ import { useDispatch } from "react-redux";
 import { addCartItem, deleteCartItem } from "../../store/cart/cartActions";
 import { useSingleCartItemStyles } from "./SingleCartItem.styles";
 import { Delete, Add, Remove } from "@mui/icons-material";
+import { SimpleContainer } from "../../shared/SimpleContainer";
+import { theme } from "../../theme";
+import { grey } from "@mui/material/colors";
+import { Flex } from "../../shared/Flex";
 
 interface SingleCartItemProps {
   cartItem: CartItem;
@@ -67,17 +71,27 @@ export const SingleCartItem: React.FC<SingleCartItemProps> = ({ cartItem }) => {
         <Typography variant="subtitle1">
           {"Subtotal: $" + productData.product.price * cartItem.quantity}
         </Typography>
-        <Box className={classes.controls}>
-          <IconButton onClick={onDeleteButtonClick}>
+        {/* <Flex
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            backgroundColor: grey[100],
+            width: "100%",
+            borderBottomRightRadius: "0.5rem",
+            justifyContent: "space-around",
+          }}
+        >
+          <IconButton>
             <Delete htmlColor="black" />
           </IconButton>
-          <IconButton onClick={onPlusButtonClick}>
+          <IconButton>
             <Add htmlColor="black" />
           </IconButton>
-          <IconButton onClick={onMinusButtonClick}>
+          <IconButton>
             <Remove htmlColor="black" />
           </IconButton>
-        </Box>
+        </Flex> */}
       </Box>
     </Box>
   );

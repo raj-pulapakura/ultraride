@@ -59,7 +59,7 @@ export function AppRouter() {
             {/* only show these routes if the user is not logged in to their normal account */}
             {!meData?.me?.account && (
               <>
-                <Route path="/account/register" element={<RegisterPage />} />
+                <Route path="/account/sign-up" element={<RegisterPage />} />
                 <Route path="/account/sign-in" element={<LoginPage />} />
               </>
             )}

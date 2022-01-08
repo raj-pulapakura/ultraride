@@ -69,61 +69,28 @@ export const Menu: React.FC<MenuProps> = ({}) => {
         classes={{ paper: classes.drawerPaper }}
         open={menuIsOpen}
         variant="temporary"
-        anchor="right"
+        anchor="left"
       >
-        <Box className={classes.mainBox}>
+        <Box className={classes.mainBox} sx={{ backgroundColor: "black" }}>
           <Box className={classes.closeButton}>
             <IconButton onClick={onCloseButtonClick}>
               <Close htmlColor="white" />
             </IconButton>
           </Box>
 
-          {meData?.me?.account ? (
-            <>
-              <Typography
-                variant="h4"
-                fontWeight="bold"
-                sx={{ color: "white" }}
-              >
-                {meDataIsLoading
-                  ? "Loading..."
-                  : `Welcome, ${meData?.me?.account?.firstName} ${meData?.me?.account?.lastName}`}
-              </Typography>
-              <Typography
-                variant="subtitle2"
-                marginTop="0.5rem"
-                sx={{ color: "white" }}
-              >
-                {meDataIsLoading
-                  ? "Loading..."
-                  : `${meData?.me?.account?.email}`}
-              </Typography>
-            </>
-          ) : (
-            <>
-              <Typography
-                variant="subtitle2"
-                sx={{ color: "white" }}
-                fontFamily={brandFont}
-                // fontWeight="bold"
-              >
-                ULTRARIDE
-              </Typography>
-              <Typography
-                variant="h4"
-                sx={{ color: "white" }}
-                fontFamily={brandFont}
-                fontWeight="bold"
-              >
-                Browse
-              </Typography>
-            </>
-          )}
+          <Typography
+            variant="h4"
+            sx={{ color: "white" }}
+            fontFamily={brandFont}
+            fontWeight="bold"
+          >
+            Browse
+          </Typography>
         </Box>
         <Box sx={{ padding: "2rem" }}>
           {!meData?.me?.account && (
             <ButtonGroup sx={{ marginBottom: "2rem" }}>
-              <Button onClick={() => onMenuLinkClicked("/account/sign-in")}>
+              <Button onClick={() => onMenuLinkClicked("/account/sign-up")}>
                 Sign Up
               </Button>
               <Button onClick={() => onMenuLinkClicked("/account/sign-in")}>

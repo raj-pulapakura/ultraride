@@ -29,6 +29,10 @@ export const cartReducer = (
           (item) => item.productId !== productIdToDelete
         ),
       };
+    case CartActionTypes.CLEAR_CART:
+      return {
+        items: [],
+      };
     default:
       return state;
   }

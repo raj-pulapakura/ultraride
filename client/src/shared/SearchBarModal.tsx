@@ -7,12 +7,12 @@ import { ProductsQuery } from "../graphql/generated";
 import { useAllBrands } from "../hooks/useAllBrands";
 import { useAllTags } from "../hooks/useAllTags";
 import { useSearchProducts } from "../hooks/useSearchProducts";
+import { Modal } from "./Modal";
+import { SmallProductDisplay } from "./SmallProductDisplay";
 import {
   setFilterBrands,
   setFilterTags,
 } from "../store/product/productActions";
-import { Modal } from "./Modal";
-import { SmallProductDisplay } from "./SmallProductDisplay";
 
 interface SearchBarModalProps {
   onClose: () => void;
@@ -20,7 +20,6 @@ interface SearchBarModalProps {
 
 export const SearchBarModal: React.FC<SearchBarModalProps> = ({ onClose }) => {
   const [searchValue, setSearchValue] = useState("");
-
   const [products, setProducts] = useState<ProductsQuery["products"]>([]);
 
   const searchBarRef = useRef<HTMLInputElement>(null);
@@ -33,20 +32,12 @@ export const SearchBarModal: React.FC<SearchBarModalProps> = ({ onClose }) => {
   const allTags = useAllTags();
   const allBrands = useAllBrands();
 
-  // when the user enters the search value, they are redirected to products page
+  // focus search bar
   useEffect(() => {
     if (searchBarRef.current) {
       searchBarRef.current.focus();
-      searchBarRef.current.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-          navigate(`/products?q=${searchValue}`);
-          dispatch(setFilterTags(allTags));
-          dispatch(setFilterBrands(allBrands));
-          onClose();
-        }
-      });
     }
-  }, [searchBarRef.current, searchValue]);
+  }, [searchBarRef.current]);
 
   // everytime the search value changes, the displayed products are updated
   useEffect(() => {
@@ -67,16 +58,25 @@ export const SearchBarModal: React.FC<SearchBarModalProps> = ({ onClose }) => {
   return (
     <Modal onClose={onClose} noCrossIcon>
       <input
+        placeholder="Search for fantastic shoes..."
         value={searchValue}
         ref={searchBarRef}
         onChange={(e) => setSearchValue(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            navigate(`/products?q=${searchValue}`);
+            dispatch(setFilterTags(allTags));
+            dispatch(setFilterBrands(allBrands));
+            onClose();
+          }
+        }}
         style={{
           width: "100%",
           outline: "none",
           border: "none",
           background: grey[200],
           fontSize: "1rem",
-          borderRadius: "1rem",
+          borderRadius: "0.5rem",
           padding: "1rem",
           fontFamily: "Work Sans",
         }}

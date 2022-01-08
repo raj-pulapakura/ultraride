@@ -1,6 +1,7 @@
 export enum CartActionTypes {
   ADD_ITEM = "ADD_ITEM",
   DELETE_ITEM = "DELETE_ITEM",
+  CLEAR_CART = "CLEAR_CART",
 }
 
 export interface CartItem {
@@ -22,4 +23,11 @@ export interface DeleteCartItemAction {
   payload: string;
 }
 
-export type CartAction = AddCartItemAction | DeleteCartItemAction;
+export interface ClearCartAction {
+  type: CartActionTypes.CLEAR_CART;
+}
+
+export type CartAction =
+  | AddCartItemAction
+  | DeleteCartItemAction
+  | ClearCartAction;

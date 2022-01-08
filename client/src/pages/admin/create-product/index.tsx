@@ -75,7 +75,7 @@ export const CreateProductPage: React.FC<CreateProductPageProps> = ({}) => {
       return navigate("/" + next);
     }
 
-    navigate("/");
+    navigate("/admin");
   };
 
   return (

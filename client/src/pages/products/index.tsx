@@ -11,6 +11,7 @@ import { theme } from "../../theme";
 import { UtilityDrawer } from "../../providers/products/UtilityDrawer";
 import { Flex } from "../../shared/Flex";
 import { ChevronLeft } from "@mui/icons-material";
+import { BackToLink } from "../../shared/BackToLink";
 
 interface AllProductsPageProps {}
 
@@ -48,15 +49,7 @@ export const AllProductsPage: React.FC<AllProductsPageProps> = ({}) => {
           <Box
             sx={{ display: "flex", alignItems: "center", marginBottom: "1rem" }}
           >
-            <ChevronLeft />
-            <Typography>
-              <Link
-                to="/products"
-                style={{ textDecoration: "none", color: "black" }}
-              >
-                All Products
-              </Link>
-            </Typography>
+            <BackToLink to="/products" label="All Products" />
           </Box>
           <Typography
             variant="h3"
@@ -71,6 +64,7 @@ export const AllProductsPage: React.FC<AllProductsPageProps> = ({}) => {
         </>
       ) : (
         <>
+          <BackToLink to="/" label="Home Page" />
           <Typography
             variant="h3"
             fontWeight="bold"

@@ -10,7 +10,7 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
 
   return (
     <Box className={classes.navbar}>
-      <Box className={classes.navbarInner}>
+      <Box>
         <NavbarControls />
       </Box>
     </Box>

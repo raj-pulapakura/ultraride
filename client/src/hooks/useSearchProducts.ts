@@ -11,8 +11,7 @@ export const useSearchProducts = () => {
       const productName = product.name.toLowerCase();
       const productCategory = product.category.toLowerCase();
       const productTags = product.tags.map((tag) => tag.text.toLowerCase());
-
-      // console.log({ productName, productCategory, searchValue });
+      const productBrand = product.brand.toLowerCase();
 
       const productNameContainsSearchValue = productName.includes(searchValue);
       const productCategoryContainsSearchValue =
@@ -25,6 +24,10 @@ export const useSearchProducts = () => {
         (acc, curr) => searchValue.includes(curr) || acc,
         false
       );
+      const productBrandIncludesSearchValue =
+        productBrand.includes(searchValue);
+      const searchValueIncludesProductBrand =
+        searchValue.includes(productBrand);
 
       return (
         productNameContainsSearchValue ||
@@ -32,7 +35,9 @@ export const useSearchProducts = () => {
         searchValueContainsProductName ||
         searchValueContainsProductCategory ||
         productTagsIncludeSearchValue ||
-        searchValueIncludesProductTags
+        searchValueIncludesProductTags ||
+        productBrandIncludesSearchValue ||
+        searchValueIncludesProductBrand
       );
     });
   };

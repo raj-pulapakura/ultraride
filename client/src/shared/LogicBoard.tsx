@@ -55,7 +55,6 @@ export const LogicBoard: React.FC<LogicBoardProps> = ({ children }) => {
   // set filter brands
   useEffect(() => {
     if (!filterBrandsLoaded && allBrands.length) {
-      console.log("FILTER BRANDS NOT LOADED");
       dispatch(setFilterBrands(allBrands));
       dispatch(setFilterBrandsLoaded(true));
     }

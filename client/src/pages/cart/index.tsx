@@ -44,9 +44,9 @@ export const CartPage: React.FC<CartPageProps> = ({}) => {
 
   const onContinueToCheckoutClick = async () => {
     if (!meData?.me?.account) {
-      navigate("/register?next=cart");
+      return navigate("/account/sign-up?next=cart");
     }
-    const body = {
+  const body = {
       line_items: convertCartItemProductsToLineItems(cartItemProducts),
     };
 
@@ -73,13 +73,13 @@ export const CartPage: React.FC<CartPageProps> = ({}) => {
         screenIsMedium ? (
           <>
             <Flex style={{ alignItems: "flex-start" }}>
-              <Box>
-                <Typography variant="h5" fontWeight="bold">
+              <Box sx={{ width: "70%" }}>
+                <Typography variant="h3" fontWeight="bold">
                   Your Cart:
                 </Typography>
                 <CartItemList cartItems={cartItems} />
               </Box>
-              <Box>
+              <Box sx={{ width: "20%" }}>
                 <Typography
                   variant="h5"
                   fontWeight="bold"
@@ -97,7 +97,7 @@ export const CartPage: React.FC<CartPageProps> = ({}) => {
         ) : (
           <>
             <Box sx={{ width: "min(600p x, 100%)", margin: "auto" }}>
-              <Typography variant="h5" fontWeight="bold">
+              <Typography variant="h3" fontWeight="bold">
                 Your Cart
               </Typography>
               <CartItemList cartItems={cartItems} />{" "}

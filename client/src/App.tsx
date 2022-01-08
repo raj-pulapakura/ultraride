@@ -11,9 +11,7 @@ import { Elements as StripeProvider } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { STRIPE_PUBLIC_KEY } from "./constants";
 
-export const stripePromise = loadStripe(
-  STRIPE_PUBLIC_KEY
-)
+export const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
 function App() {
   const queryClient = new QueryClient();

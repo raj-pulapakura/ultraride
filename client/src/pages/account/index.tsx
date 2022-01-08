@@ -17,11 +17,11 @@ export const AccountPage: React.FC<AccountProps> = ({}) => {
   const { mutateAsync: logout } = useLogoutMutation(graphqlClient);
 
   const onCreateAnAccountButtonClick = () => {
-    navigate("register");
+    navigate("/account/sign-up");
   };
 
   const onSignInButtonClick = () => {
-    navigate("sign-in");
+    navigate("/account/sign-in");
   };
 
   const onLogoutButtonClick = async () => {
@@ -71,14 +71,19 @@ export const AccountPage: React.FC<AccountProps> = ({}) => {
                 If you do not log in now, you will be prompted to do so when you
                 checkout.
               </Typography>
-              <ButtonGroup sx={{ display: "block", marginTop: "2rem" }}>
+              <ButtonGroup
+                sx={{ display: "block", marginTop: "2rem", width: "100%" }}
+              >
                 <Button
                   variant="contained"
                   onClick={onCreateAnAccountButtonClick}
+                  sx={{ width: "50%" }}
                 >
-                  Create an Account
+                  Sign Up
                 </Button>
-                <Button onClick={onSignInButtonClick}>Sign In</Button>
+                <Button onClick={onSignInButtonClick} sx={{ width: "50%" }}>
+                  Sign In
+                </Button>
               </ButtonGroup>
             </>
           </SimpleContainer>
