@@ -50,6 +50,8 @@ export const HomePage: React.FC<HomePageProps> = ({}) => {
         title="It's Nike or Nothin'"
         subtitle="Only the best"
         products={nikeProducts || []}
+        gradientStartColor="#0adaff"
+        gradientEndColor="#0a58ff"
       />
       <FeatureSection
         title="Football Galore"
@@ -71,8 +73,8 @@ export const HomePage: React.FC<HomePageProps> = ({}) => {
         title="Ace the Mile"
         subtitle="Leave 'em in the dust"
         products={runners || []}
-        gradientStartColor="#c26e25"
-        gradientEndColor="#eb4034"
+        gradientStartColor="#3bff0a"
+        gradientEndColor="#0adaff"
         sx={{ marginTop: "3rem" }}
       />
     </>

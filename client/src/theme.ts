@@ -1,7 +1,6 @@
 import { createTheme } from "@mui/material";
 
-export const primaryFont = "Work Sans";
-export const brandFont = "Fira Sans Condensed";
+export const brandFont = "Fira Sans";
 
 const colors = {
   royalPurple: "#6500ea",
