@@ -16,12 +16,12 @@ export const QuantityController: React.FC<QuantityControllerProps> = ({
 }) => {
   return (
     <Flex style={{ gap: "1rem", justifyContent: "" }}>
-      <IconButton onClick={onPlusButtonClick}>
-        <Add />
-      </IconButton>
-      <Typography>{value}</Typography>
       <IconButton onClick={onMinusButtonClick}>
         <Remove />
+      </IconButton>
+      <Typography>{value}</Typography>
+      <IconButton onClick={onPlusButtonClick}>
+        <Add />
       </IconButton>
     </Flex>
   );

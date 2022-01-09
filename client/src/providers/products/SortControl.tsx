@@ -38,12 +38,12 @@ export const SortControl: React.FC<SortControlProps> = ({ ...props }) => {
       >
         <FormControlLabel
           value={SortingMethods.SORT_BY_PRICE}
-          control={<Radio color="secondary" />}
+          control={<Radio color="primary" />}
           label={SortingMethods.SORT_BY_PRICE}
         />
         <FormControlLabel
           value={SortingMethods.SORT_BY_NAME}
-          control={<Radio color="secondary" />}
+          control={<Radio color="primary" />}
           label={SortingMethods.SORT_BY_NAME}
         />
       </RadioGroup>

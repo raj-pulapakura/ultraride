@@ -45,9 +45,7 @@ export const AllProductsPage: React.FC<AllProductsPageProps> = ({}) => {
     <>
       {query.get("q") ? (
         <>
-          <Box
-            sx={{ display: "flex", alignItems: "center", marginBottom: "1rem" }}
-          >
+          <Box sx={{ display: "flex", alignItems: "center" }}>
             <BackToLink to="/products" label="All Products" />
           </Box>
           <Typography

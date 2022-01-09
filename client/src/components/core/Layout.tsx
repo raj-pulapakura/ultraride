@@ -11,8 +11,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const screenIsXSmall = useMediaQuery(theme.breakpoints.down("xs"));
 
   const layoutMargin = screenIsXSmall
-    ? "5rem 1rem 1rem 1rem"
-    : "7rem 2rem 1rem 2rem";
+    ? "5rem 1rem 4rem 1rem"
+    : "7rem 2rem 4rem 2rem";
 
   return (
     <>

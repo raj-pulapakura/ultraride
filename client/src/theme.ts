@@ -4,8 +4,6 @@ export const brandFont = "Fira Sans";
 
 const colors = {
   royalPurple: "#6500ea",
-  sublimeTeal: "#d2ffee",
-  orange: "#FF4500",
 };
 
 export const theme = createTheme({
@@ -14,10 +12,10 @@ export const theme = createTheme({
   },
   palette: {
     primary: {
-      main: colors.royalPurple,
+      main: "#6500ea",
     },
     secondary: {
-      main: colors.orange,
+      main: "#ca13eb",
     },
     background: {
       default: "#fff",

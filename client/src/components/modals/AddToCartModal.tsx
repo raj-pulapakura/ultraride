@@ -64,7 +64,9 @@ export const AddToCartModal: React.FC<AddToCartModalProps> = ({
           <QuantityController
             value={productQuantity}
             onPlusButtonClick={() => setProductQuantity(productQuantity + 1)}
-            onMinusButtonClick={() => setProductQuantity(productQuantity - 1)}
+            onMinusButtonClick={() =>
+              setProductQuantity(Math.max(productQuantity - 1, 1))
+            }
           />
         </Flex>
         <Flex>

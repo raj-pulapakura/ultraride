@@ -4,7 +4,6 @@ import { LogicBoard } from "./components/core/LogicBoard";
 import { Route404 } from "./components/core/Route404";
 import { graphqlClient } from "./graphql/client";
 import { useMeQuery, useAdminMeQuery } from "./graphql/generated";
-import { AccountPage } from "./pages/account";
 import { AdminPage } from "./pages/admin";
 import { CreateProductPage } from "./pages/admin/create-product";
 import { AllProductsPage } from "./pages/products";
@@ -41,7 +40,6 @@ export function AppRouter() {
               element={<ProductDetailPage />}
             />
             <Route path="/cart" element={<CartPage />} />
-            <Route path="/account" element={<AccountPage />} />
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/checkout/success" element={<CheckoutSuccessPage />} />
             <Route path="/checkout/failed" element={<CheckoutFailedPage />} />

@@ -14,20 +14,20 @@ export const EmptyCart: React.FC<EmptyCartProps> = ({}) => {
   };
 
   return (
-    <CenterContainer>
-      <SimpleContainer>
-        <Typography variant="h6" textAlign="center">
-          You have no products in your cart.
-        </Typography>
-      </SimpleContainer>
+    <>
+      <Typography variant="h4" fontWeight="bold" gutterBottom>
+        Your cart is empty.
+      </Typography>
+      <Typography>
+        When you add some shoes to your cart, they will appear here.
+      </Typography>
       <Button
-        fullWidth
         variant="contained"
         sx={{ marginTop: "1rem" }}
         onClick={onContinueShoppingButtonClick}
       >
         Continue Shopping
       </Button>
-    </CenterContainer>
+    </>
   );
 };

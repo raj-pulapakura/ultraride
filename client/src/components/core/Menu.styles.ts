@@ -12,7 +12,6 @@ export const useMenuStyles = makeStyles({
   },
   mainBox: {
     width: "100%",
-    background: theme.palette.primary.main,
     position: "relative",
     padding: "2rem",
   },

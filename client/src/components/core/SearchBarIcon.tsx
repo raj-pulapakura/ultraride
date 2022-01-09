@@ -1,11 +1,11 @@
 import { Search } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
+import { IconButton, IconButtonProps } from "@mui/material";
 import React, { useState } from "react";
 import { SearchBarModal } from "./SearchBarModal";
 
-interface SearchBarIconProps {}
+type SearchBarIconProps = {} & IconButtonProps;
 
-export const SearchBarIcon: React.FC<SearchBarIconProps> = ({}) => {
+export const SearchBarIcon: React.FC<SearchBarIconProps> = ({ ...props }) => {
   const [isSearchModalVisible, setSearchModalVisible] = useState(false);
 
   const onSearchBarIconClick = () => {
@@ -21,7 +21,7 @@ export const SearchBarIcon: React.FC<SearchBarIconProps> = ({}) => {
       {isSearchModalVisible && (
         <SearchBarModal onClose={onSearchBarModalClose} />
       )}
-      <IconButton onClick={onSearchBarIconClick}>
+      <IconButton {...props} onClick={onSearchBarIconClick}>
         <Search htmlColor="white" />
       </IconButton>
     </>

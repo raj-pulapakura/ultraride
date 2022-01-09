@@ -24,59 +24,55 @@ export const HomePage: React.FC<HomePageProps> = ({}) => {
 
   const { data: productsData } = useProductsQuery(graphqlClient);
 
-  const nikeProducts = productsData?.products.filter(
-    (product) => product.brand.toLowerCase() === "nike"
-  );
-
   const footballProducts = productsData?.products.filter(
     (product) =>
       product.category.toLowerCase().includes("football") ||
       product.tags.map((tag) => tag.text.toLowerCase()).includes("football")
   );
 
-  const adidasProducts = productsData?.products.filter(
-    (product) => product.brand.toLowerCase() === "adidas"
-  );
-
   const runners = productsData?.products.filter(
     (product) =>
-      product.category.includes("running") ||
+      product.category.toLowerCase().includes("running") ||
       product.tags.map((tag) => tag.text.toLowerCase()).includes("running")
   );
 
+  const golfProducts = productsData?.products.filter(
+    (product) =>
+      product.category.includes("golf") ||
+      product.tags.map((tag) => tag.text.toLowerCase()).includes("golf")
+  );
+
   return (
-    <>
+    <Box sx={{ maxWidth: "60rem", margin: "auto" }}>
       <FeatureSection
-        title="It's Nike or Nothin'"
-        subtitle="Only the best"
-        products={nikeProducts || []}
-        gradientStartColor="#0adaff"
-        gradientEndColor="#0a58ff"
-      />
-      <FeatureSection
-        title="Football Galore"
+        title="Football Fiesta"
         subtitle="Score like a Pro"
-        products={footballProducts || []}
-        gradientStartColor="#f54542"
-        gradientEndColor="#f5c842"
-        sx={{ marginTop: "3rem" }}
+        product={footballProducts ? footballProducts[0] : null}
+        viewSearch={{
+          searchValue: "football",
+          label: "View all Football Shoes",
+        }}
       />
       <FeatureSection
-        title="Get Yo' Adidas On"
-        subtitle="Ultra Premium Style"
-        products={adidasProducts || []}
-        gradientStartColor="#ca13eb"
-        gradientEndColor="#4913eb"
-        sx={{ marginTop: "3rem" }}
-      />
-      <FeatureSection
-        title="Ace the Mile"
+        title="Conquer the Mile"
         subtitle="Leave 'em in the dust"
-        products={runners || []}
-        gradientStartColor="#3bff0a"
-        gradientEndColor="#0adaff"
+        product={runners ? runners[0] : null}
         sx={{ marginTop: "3rem" }}
+        viewSearch={{
+          searchValue: "running",
+          label: "View all Running shoes",
+        }}
       />
-    </>
+      <FeatureSection
+        title="Birdies all the way"
+        subtitle="Golf shoes that are as slick as you"
+        product={golfProducts ? golfProducts[0] : null}
+        sx={{ marginTop: "3rem" }}
+        viewSearch={{
+          searchValue: "golf",
+          label: "View all Golf Shoes",
+        }}
+      />
+    </Box>
   );
 };

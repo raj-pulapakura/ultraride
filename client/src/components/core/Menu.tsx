@@ -71,7 +71,7 @@ export const Menu: React.FC<MenuProps> = ({}) => {
         variant="temporary"
         anchor="left"
       >
-        <Box className={classes.mainBox} sx={{ backgroundColor: "black" }}>
+        {/* <Box className={classes.mainBox} sx={{ backgroundColor: "black" }}>
           <Box className={classes.closeButton}>
             <IconButton onClick={onCloseButtonClick}>
               <Close htmlColor="white" />
@@ -86,6 +86,11 @@ export const Menu: React.FC<MenuProps> = ({}) => {
           >
             Browse
           </Typography>
+        </Box> */}
+        <Box className={classes.closeButton}>
+          <IconButton onClick={onCloseButtonClick}>
+            <Close htmlColor="black" />
+          </IconButton>
         </Box>
         <Box sx={{ padding: "2rem" }}>
           {!meData?.me?.account && (

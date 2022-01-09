@@ -63,9 +63,7 @@ export const FilterControl: React.FC<FilterControlProps> = ({
           onClick={() => onTagClick("All")}
           sx={{ marginBottom: "0.5rem", marginRight: "0.5rem" }}
           color={
-            checkArraysEqual(sourceArray, currentArray)
-              ? "secondary"
-              : "default"
+            checkArraysEqual(sourceArray, currentArray) ? "primary" : "default"
           }
         />
         {sourceArray.map((tag) => (
@@ -78,7 +76,7 @@ export const FilterControl: React.FC<FilterControlProps> = ({
             color={
               currentArray.includes(tag) &&
               !checkArraysEqual(sourceArray, currentArray)
-                ? "secondary"
+                ? "primary"
                 : "default"
             }
           />

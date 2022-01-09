@@ -1,64 +1,71 @@
 import { Box, BoxProps, Typography } from "@mui/material";
 import React from "react";
 import { ProductsQuery } from "../../graphql/generated";
-import { ProductCarousel } from "../../components/misc/ProductCarousel";
 import { theme } from "../../theme";
 import { useNavigate } from "react-router-dom";
+import { FeatureSectionProduct } from "./FeatureSectionProduct";
+import { BackToLink } from "../../components/misc/BackToLink";
 
 type FeatureSectionProps = {
   title: string;
   subtitle: string;
-  products: ProductsQuery["products"];
+  product: ProductsQuery["products"][0] | null;
   gradientStartColor?: string;
   gradientEndColor?: string;
+  viewSearch?: {
+    searchValue: string;
+    label: string;
+  };
 } & BoxProps;
 
 export const FeatureSection: React.FC<FeatureSectionProps> = ({
   title,
   subtitle,
-  products,
+  product,
   gradientStartColor,
   gradientEndColor,
+  viewSearch,
   ...props
 }) => {
   const navigate = useNavigate();
 
-  const onProductClick = (product: ProductsQuery["products"][0]) => {
-    navigate(`/products/${product.id}`);
-  };
+  const headerStartColor = gradientStartColor || theme.palette.secondary.main;
+  const headerEndColor = gradientEndColor || theme.palette.primary.main;
 
-  const headerStartColor = gradientStartColor || theme.palette.primary.main;
-  const headerEndColor = gradientEndColor || "#42e3f5";
+  if (!product) {
+    return null;
+  }
 
   return (
     <Box {...props} sx={{ ...props.sx }}>
-      <Box
+      <Typography
+        variant="h3"
         sx={{
-          marginBottom: "1rem",
+          fontWeight: 900,
+          textTransform: "uppercase",
+          background: `linear-gradient(to top right, ${headerStartColor}, ${headerEndColor})`,
+          backgroundClip: "text",
+          color: "transparent",
         }}
       >
-        <Typography
-          variant="h3"
-          sx={{
-            fontWeight: 900,
-            textTransform: "uppercase",
-            background: `linear-gradient(to top right, ${headerStartColor}, ${headerEndColor})`,
-            backgroundClip: "text",
-            color: "transparent",
-          }}
-        >
-          {title}
-        </Typography>
-        <Typography
-          variant="h5"
-          sx={{ textTransform: "uppercase" }}
-          fontWeight="bold"
-        >
-          {subtitle}
-        </Typography>
-      </Box>
-
-      <ProductCarousel products={products} onProductClick={onProductClick} />
+        {title}
+      </Typography>
+      <Typography
+        variant="h5"
+        sx={{ textTransform: "uppercase", marginBottom: "1rem" }}
+        fontWeight="bold"
+      >
+        {subtitle}
+      </Typography>
+      {viewSearch && (
+        <BackToLink
+          to={`/products?q=${viewSearch?.searchValue}`}
+          label={viewSearch?.label}
+          direction="right"
+          side="right"
+        />
+      )}
+      <FeatureSectionProduct product={product} />
     </Box>
   );
 };

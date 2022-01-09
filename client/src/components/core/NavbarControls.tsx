@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import { Flex } from "../wrappers/Flex";
-import { AccountCircle, LocalOffer, Menu } from "@mui/icons-material";
+import { LocalOffer, Menu } from "@mui/icons-material";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
 import { useDispatch, useSelector } from "react-redux";
 import { setMenuOpen } from "../../store/menu/menuActions";
@@ -18,6 +18,7 @@ import { BRAND_NAME } from "../../constants";
 import { brandFont, theme } from "../../theme";
 import { SearchBarIcon } from "./SearchBarIcon";
 import { StoreState } from "../../store";
+import { AccountDetailsIcon } from "./AccountDetailsIcon";
 
 interface NavbarControlsProps {}
 
@@ -33,28 +34,6 @@ export const NavbarControls: React.FC<NavbarControlsProps> = ({}) => {
 
   const totalItems = cartItems.reduce((acc, curr) => acc + curr.quantity, 0);
 
-  const navbarLinks: { text: string; to: string; icon: JSX.Element }[] = [
-    {
-      text: "SHOP",
-      to: "/products",
-      icon: <LocalOffer htmlColor="white" />,
-    },
-    {
-      text: "CART",
-      to: "/cart",
-      icon: (
-        <Badge badgeContent={totalItems} color="secondary">
-          <ShoppingCart htmlColor="white" />
-        </Badge>
-      ),
-    },
-    {
-      text: "ACCOUNT",
-      to: "/account",
-      icon: <AccountCircle htmlColor="white" />,
-    },
-  ];
-
   const onMenuButtonClick = () => {
     dispatch(setMenuOpen(true));
   };
@@ -65,16 +44,6 @@ export const NavbarControls: React.FC<NavbarControlsProps> = ({}) => {
 
   const screenIsSmall = useMediaQuery(theme.breakpoints.up("sm"));
   const screenIsMedium = useMediaQuery(theme.breakpoints.up("md"));
-  const logoRef = useRef<HTMLImageElement>(null);
-  const brandRef = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    const logo = logoRef.current;
-    const brand = brandRef.current;
-    if (logo && brand) {
-      logo.style.height = brand.getBoundingClientRect().height + "px";
-    }
-  }, [logoRef, brandRef]);
 
   const Brand = (
     <Flex style={{ gap: "1rem" }}>
@@ -83,7 +52,6 @@ export const NavbarControls: React.FC<NavbarControlsProps> = ({}) => {
         variant="h5"
         fontFamily={brandFont}
         fontWeight="bold"
-        ref={brandRef}
       >
         <Link to="/" style={{ textDecoration: "none", color: "white" }}>
           {BRAND_NAME.toUpperCase()}
@@ -95,67 +63,47 @@ export const NavbarControls: React.FC<NavbarControlsProps> = ({}) => {
   return (
     <>
       <Flex>
-        <Box>{Brand}</Box>
-        <Flex>
-          {screenIsMedium ? (
-            <Flex style={{ gap: "2rem" }}>
-              {navbarLinks.map((navbarLink) => (
-                <Link
-                  key={navbarLink.text}
-                  style={{ textDecoration: "none", color: "white" }}
-                  to={navbarLink.to}
-                >
-                  <Flex style={{ gap: "0.5rem", alignItems: "center" }}>
-                    {navbarLink.icon}
-                    <Typography fontWeight="bold">{navbarLink.text}</Typography>
-                  </Flex>
-                </Link>
-              ))}
-              <SearchBarIcon />
-            </Flex>
-          ) : screenIsSmall ? (
-            <Flex style={{ gap: "2rem" }}>
-              {navbarLinks.map((navbarLink) => (
-                <Badge
-                  badgeContent={navbarLink.to === "/cart" ? totalItems : 0}
-                  color="secondary"
-                  key={navbarLink.text}
-                >
-                  <Typography fontWeight="bold">
-                    <Link
-                      style={{ textDecoration: "none", color: "white" }}
-                      to={navbarLink.to}
-                    >
-                      {navbarLink.text}
-                    </Link>
-                  </Typography>
-                </Badge>
-              ))}
-              <SearchBarIcon />
-            </Flex>
-          ) : (
-            <>
-              <Tooltip title="Search">
-                <SearchBarIcon />
-              </Tooltip>
-              <Tooltip title="Browse Shoes">
-                <IconButton onClick={() => onLinkClick("/products")}>
-                  <LocalOffer htmlColor="white" />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Cart">
-                <IconButton onClick={() => onLinkClick("/cart")}>
-                  <Badge badgeContent={totalItems} color="secondary">
-                    <ShoppingCart htmlColor="white" />
-                  </Badge>
-                </IconButton>
-              </Tooltip>
-              <IconButton onClick={onMenuButtonClick}>
-                <Menu htmlColor="white" />
+        {screenIsMedium ? (
+          <>
+            <Flex style={{ gap: "0.5rem" }}>
+              <AccountDetailsIcon />
+              <IconButton onClick={() => onLinkClick("/products")}>
+                <LocalOffer htmlColor="white" />
               </IconButton>
-            </>
-          )}
-        </Flex>
+            </Flex>
+            {Brand}
+            <Flex style={{ gap: "0.5rem" }}>
+              <IconButton onClick={() => onLinkClick("/cart")}>
+                <ShoppingCart htmlColor="white" />
+              </IconButton>
+              <SearchBarIcon />
+            </Flex>
+          </>
+        ) : screenIsSmall ? (
+          <>
+            <Flex style={{ gap: "0.5rem" }}>
+              <AccountDetailsIcon />
+              <IconButton onClick={() => onLinkClick("/products")}>
+                <LocalOffer htmlColor="white" />
+              </IconButton>
+            </Flex>
+            {Brand}
+            <Flex style={{ gap: "0.5rem" }}>
+              <IconButton onClick={() => onLinkClick("/cart")}>
+                <ShoppingCart htmlColor="white" />
+              </IconButton>
+              <SearchBarIcon />
+            </Flex>
+          </>
+        ) : (
+          <>
+            <IconButton onClick={onMenuButtonClick}>
+              <Menu htmlColor="white" />
+            </IconButton>
+            {Brand}
+            <SearchBarIcon />
+          </>
+        )}
       </Flex>
     </>
   );
