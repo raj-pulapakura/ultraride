@@ -2,7 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dbConfig = void 0;
 const constants_1 = require("../constants");
-const Account_1 = require("../entities/Account");
+const AccountEntity_1 = require("../features/Account/AccountEntity");
+const ProductEntity_1 = require("../features/Product/ProductEntity");
+const TagEntity_1 = require("../features/Tag/TagEntity");
 exports.dbConfig = {
     username: constants_1.env.DB_USERNAME,
     password: constants_1.env.DB_PASSWORD,
@@ -11,5 +13,5 @@ exports.dbConfig = {
     port: constants_1.env.DB_PORT,
     type: "mysql",
     synchronize: true,
-    entities: [Account_1.Account],
+    entities: [AccountEntity_1.AccountEntity, ProductEntity_1.ProductEntity, TagEntity_1.TagEntity],
 };

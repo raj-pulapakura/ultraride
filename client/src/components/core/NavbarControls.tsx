@@ -66,7 +66,7 @@ export const NavbarControls: React.FC<NavbarControlsProps> = ({}) => {
         {screenIsMedium ? (
           <>
             <Flex style={{ gap: "0.5rem" }}>
-              <AccountDetailsIcon />
+              <AccountDetailsIcon onClick={() => onLinkClick("/admin")} />
               <IconButton onClick={() => onLinkClick("/products")}>
                 <LocalOffer htmlColor="white" />
               </IconButton>

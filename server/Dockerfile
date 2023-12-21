@@ -6,6 +6,8 @@ COPY package.json .
 
 RUN npm i
 
+RUN npm i --save-dev
+
 COPY . . 
 
 EXPOSE 80

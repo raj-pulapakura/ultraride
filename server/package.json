@@ -5,10 +5,10 @@
   "main": "./dist/index.js",
   "scripts": {
     "dev": "node ./dist/index.js",
-    "dev:watch": "nodemon ./dist/index.js",
-    "build": "tsc",
-    "build:watch": "tsc -w",
-    "dev-build": "concurrently 'npm run build:watch' 'npm run dev:watch'"
+    "dev:watch": "./node_modules/nodemon/bin/nodemon.js ./dist/index.js",
+    "build": "./node_modules/typescript/bin/tsc",
+    "build:watch": "./node_modules/typescript/bin/tsc -w",
+    "dev-build": "./node_modules/concurrently/bin/concurrently.js \"npm run build:watch\" \"npm run dev:watch\" "
   },
   "keywords": [],
   "author": "",
